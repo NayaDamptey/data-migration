@@ -1,0 +1,5 @@
+CompanyID,Name,Sector,Web,Tel,Town,PostCode,OwnerID
+CL-2081,Harlow Foods Ltd,Food manufacturing,harlowfoods.example,0113 496 0123,Leeds,LS4 2AZ,U-0012
+CL-2090,Pennine Logistics,Logistics,penninelog.example,0161 496 0777,Manchester,M1 2AB,U-0014
+CL-2102,Aire Valley Health,Healthcare,airevalley.example,01274 496 010,Bradford,BD1 1AA,U-0020
+CL-2115,Kestrel Engineering,Engineering,kestreleng.example,0114 496 0550,Sheffield,S1 2BB,U-0012

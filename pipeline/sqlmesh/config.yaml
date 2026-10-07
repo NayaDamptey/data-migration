@@ -1,0 +1,10 @@
+gateways:
+  local:
+    connection:
+      type: duckdb
+      database: ../../.data/migration.duckdb
+
+default_gateway: local
+
+model_defaults:
+  dialect: duckdb

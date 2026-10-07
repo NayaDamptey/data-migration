@@ -1,0 +1,18 @@
+.env
+.data/
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.next/
+profile.json
+# Never commit real client data
+uploads/
+runs/
+
+# Build and test caches
+*.tsbuildinfo
+next-env.d.ts
+.pytest_cache/
+# Client SQL scripts used for reference: keep out of git
+reference/sql/
