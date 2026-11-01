@@ -6,21 +6,21 @@ import type { ReactNode } from "react";
 import { useStore } from "../lib/store";
 import { ENTITIES, type FieldStatus } from "../lib/mock";
 
-// DataMigrator's own logo (datamigrator.net), stored in public/brand.
-// On dark backgrounds it's shown white, as on the company site's banner.
-const ON_DARK = { filter: "brightness(0) invert(1)" };
-
+// Neutral placeholder mark: two stacked arrows (source -> target). Shown white on dark backgrounds.
 export function LogoMark({ size = 26, dark = false }: { size?: number; dark?: boolean }) {
-  // eslint-disable-next-line @next/next/no-img-element
-  return <img src="/brand/datamigrator-mark.png" alt="" aria-hidden width={size} height={size} className="shrink-0" style={{ width: size, height: size, ...(dark ? ON_DARK : {}) }} />;
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden className={`shrink-0 ${dark ? "text-white" : "text-ink"}`} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 8h14M13 4l4 4-4 4" />
+      <path d="M21 16H7M11 12l-4 4 4 4" opacity={0.55} />
+    </svg>
+  );
 }
 
 export function Logo({ dark = false, height = 26 }: { dark?: boolean; height?: number }) {
   return (
     <div className="flex items-center gap-2.5">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/brand/datamigrator-logo.png" alt="DataMigrator" width={Math.round(height * 5.43)} height={height} style={{ height, width: "auto", ...(dark ? ON_DARK : {}) }} />
-      <span className={`font-medium tracking-tight pl-2.5 border-l ${dark ? "text-white border-white/30" : "text-ink border-line"}`} style={{ fontSize: Math.round(height * 0.58) }}>Studio</span>
+      <LogoMark size={height} dark={dark} />
+      <span className={`font-semibold tracking-tight ${dark ? "text-white" : "text-ink"}`} style={{ fontSize: Math.round(height * 0.62) }}>Migryr</span>
     </div>
   );
 }

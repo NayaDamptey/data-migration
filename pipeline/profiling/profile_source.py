@@ -154,9 +154,9 @@ def main() -> None:
     args = ap.parse_args()
     result = profile_folder(args.folder, args.samples)
     args.out.write_text(json.dumps(result, indent=2, default=str))
-    print(f"Profiled {result['table_count']} tables, {result['total_rows']:,} rows → {args.out}")
+    print(f"Profiled {result['table_count']} tables, {result['total_rows']:,} rows -> {args.out}")
     for fk in result["foreign_keys"]:
-        print(f"  FK  {fk['from']} → {fk['to']}  ({fk['match_rate']:.0%})")
+        print(f"  FK  {fk['from']} -> {fk['to']}  ({fk['match_rate']:.0%})")
 
 
 if __name__ == "__main__":

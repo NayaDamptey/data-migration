@@ -1,4 +1,4 @@
-# Migration Platform
+# Migryr
 
 An AI-assisted platform that moves recruitment data from any source system
 (Tracker, JobAdder, Bullhorn, Seven20, Vincere and others) into any target

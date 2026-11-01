@@ -5,7 +5,7 @@ import { StoreProvider } from "../lib/store";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
-export const metadata = { title: "DataMigrator Studio" };
+export const metadata = { title: "Migryr" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
