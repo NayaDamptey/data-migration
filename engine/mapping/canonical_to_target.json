@@ -1,0 +1,333 @@
+{
+  "_meta": {
+    "description": "Stage 2 — Canonical entities mapped to target tables. Target-specific transforms live here.",
+    "version": "1.0",
+    "note": "Confidence here is generally high as canonical is designed to align with the target. Low scores flag structural mismatches."
+  },
+  "mappings": {
+    "canonical_company": {
+      "target_table": "Company",
+      "columns": [
+        { "canonical": "id",                  "target": "ID",            "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "name",                "target": "CompanyName",   "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "type",                "target": "CompanyType",   "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "industry",            "target": "Industry",      "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "website",             "target": "Website",       "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "background",          "target": "Background",    "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "phone",               "target": "Telephone",     "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "email",               "target": "Email",         "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "fax",                 "target": "Fax",           "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "location_id",         "target": "LocationID",    "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "owner_id",            "target": "Company_OwnerID","transform": "direct",          "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_by",          "target": "AddedBy",       "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at",          "target": "AddedDate",     "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_at",          "target": "UpdatedDate",   "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "is_deleted",          "target": "Isdeleted",     "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "is_archived",         "target": "IsArchive",     "transform": "direct",           "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_address_to_company_location": {
+      "target_table": "CompanyLocation",
+      "source_canonical": "canonical_address",
+      "note": "Addresses linked to Accounts are written here",
+      "columns": [
+        { "canonical": "id",        "target": "ID",           "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "line1",     "target": "AddressLine1", "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "line2",     "target": "AddressLine2", "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "city",      "target": "City",         "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "county",    "target": "County",       "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "post_code", "target": "PostCode",     "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "country",   "target": "Country",      "transform": "direct", "confidence": 1.0, "notes": "" }
+      ]
+    },
+    "canonical_address_to_contact_location": {
+      "target_table": "ContactLocation",
+      "source_canonical": "canonical_address",
+      "note": "Addresses linked to Associates are written here",
+      "columns": [
+        { "canonical": "id",        "target": "ID",           "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "line1",     "target": "AddressLine1", "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "line2",     "target": "AddressLine2", "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "city",      "target": "City",         "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "county",    "target": "County",       "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "post_code", "target": "PostCode",     "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "country",   "target": "Country",      "transform": "direct", "confidence": 1.0, "notes": "" }
+      ]
+    },
+    "canonical_address_to_position_location": {
+      "target_table": "PositionLocation",
+      "source_canonical": "canonical_address",
+      "note": "Addresses linked to Req/Jobs are written here",
+      "columns": [
+        { "canonical": "id",        "target": "ID",           "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "line1",     "target": "AddressLine1", "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "line2",     "target": "AddressLine2", "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "city",      "target": "City",         "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "county",    "target": "County",       "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "post_code", "target": "PostCode",     "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "country",   "target": "Country",      "transform": "direct", "confidence": 1.0, "notes": "" }
+      ]
+    },
+    "canonical_contact": {
+      "target_table": "Contact",
+      "columns": [
+        { "canonical": "id",            "target": "ID",             "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "title",         "target": "PositionTitle",  "transform": "direct", "confidence": 0.90, "notes": "Title used as position title — verify intent" },
+        { "canonical": "contact_type",  "target": "Contacttype",    "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "location_id",   "target": "LocationID",     "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "department_id", "target": "DepartmentID",   "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "role",          "target": "Role",           "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "owner_id",      "target": "ContactOwnerID", "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "is_deleted",    "target": "IsDeleted",      "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "is_archived",   "target": "IsArchived",     "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_by",    "target": "AddedBy",        "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_by",    "target": "ModifiedBy",     "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at",    "target": "AddedAt",        "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_at",    "target": "ModifiedAt",     "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "notes",         "target": "Notes",          "transform": "direct", "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_applicant": {
+      "target_table": "Applicant",
+      "columns": [
+        { "canonical": "id",              "target": "ApplicantID",   "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "first_name",      "target": "FirstName",     "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "middle_name",     "target": "MiddleName",    "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "last_name",       "target": "LastName",      "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "dob",             "target": "DateOfBirth",   "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "location_id",     "target": "LocationID",    "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "status",          "target": "Status",        "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "employment_type", "target": "EmploymentType","transform": "direct", "confidence": 0.85, "notes": "Employment type label may need normalisation" },
+        { "canonical": "job_title",       "target": "JobTitle",      "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "ni_number",       "target": "SSN",           "transform": "direct", "confidence": 0.80, "notes": "NI number stored in SSN field — confirm with target team" },
+        { "canonical": "source",          "target": "Source",        "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "owner_id",        "target": "ApplicantOwner","transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_by",      "target": "AddedBy",       "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_by",      "target": "UpdatedBy",     "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at",      "target": "AddedAt",       "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_at",      "target": "UpdatedAt",     "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "is_deleted",      "target": "Deleted",       "transform": "direct", "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_user": {
+      "target_table": "User",
+      "columns": [
+        { "canonical": "id",         "target": "UserID",           "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "username",   "target": "Loginname",        "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "full_name",  "target": "FullName",         "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "email",      "target": "Email",            "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "role",       "target": "Role",             "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "manager_id", "target": "ManagerId",        "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "created_at", "target": "EnteredDateTime",  "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "updated_at", "target": "UpdatedDateTime",  "transform": "direct", "confidence": 1.0, "notes": "" }
+      ]
+    },
+    "canonical_job": {
+      "target_table": "Position",
+      "columns": [
+        { "canonical": "id",          "target": "ID",                 "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "title",       "target": "PositionName",       "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "description", "target": "PositionDesc",       "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "company_id",  "target": "CompanyID",          "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "contact_id",  "target": "ContactID",          "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "status",      "target": "Status",             "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "currency",    "target": "Currency",           "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "pay_rate",    "target": "PositionPayRate",    "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "charge_rate", "target": "PositionChargeRate", "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "salary",      "target": "Salary",             "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "po_number",   "target": "PurchaseOrderNo",    "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "location_id", "target": "PositionLocationID", "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "start_date",  "target": "DateBegins",         "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "end_date",    "target": "DateEnds",           "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "expiry_date", "target": "DatePublished",      "transform": "direct", "confidence": 0.80, "notes": "Closest match — confirm with business" },
+        { "canonical": "created_by",  "target": "Addedby",            "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at",  "target": "Addedat",            "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_by",  "target": "UpdatedBy",          "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_at",  "target": "UpdatedAt",          "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "is_deleted",  "target": "Deleted",            "transform": "direct", "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_placement": {
+      "target_table": "Placements",
+      "columns": [
+        { "canonical": "id",           "target": "ID",            "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "applicant_id", "target": "ApplicantID",   "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "job_id",       "target": "PositionID",    "transform": "cast_to_int",      "confidence": 0.90, "notes": "PositionID is INT in target" },
+        { "canonical": "company_id",   "target": "CompanyID",     "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "work_type",    "target": "EmploymentType","transform": "direct",           "confidence": 0.88, "notes": "Work type label may need normalisation" },
+        { "canonical": "start_date",   "target": "StartDate",     "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "end_date",     "target": "EndDate",       "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "pay_rate",     "target": "PayRate",       "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "charge_rate",  "target": "ChargeRate",    "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "fee",          "target": "Fee",           "transform": "cast_to_float",    "confidence": 0.95, "notes": "" },
+        { "canonical": "status",       "target": "Status",        "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "owner_id",     "target": "OwnerID",       "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at",   "target": "AddedAt",       "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_by",   "target": "AddedBy",       "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_by",   "target": "UpdatedBy",     "transform": "direct",           "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_consent": {
+      "target_table": "Marketing",
+      "columns": [
+        { "canonical": "person_id",     "target": "ApplicantID",     "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "email_consent", "target": "Email",           "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "phone_consent", "target": "Phone",           "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "text_consent",  "target": "Text",            "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "gdpr_consent",  "target": "GDPRConsent",     "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "created_at",    "target": "AddedAt",         "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "updated_at",    "target": "UpdatedAt",       "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "created_by",    "target": "AddedBy",         "transform": "direct", "confidence": 1.0, "notes": "" },
+        { "canonical": "updated_by",    "target": "UpdatedBy",       "transform": "direct", "confidence": 1.0, "notes": "" }
+      ]
+    },
+    "canonical_document": {
+      "target_table": "Attachments",
+      "columns": [
+        { "canonical": "id",          "target": "AttachmentID",   "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "name",        "target": "AttachmentName", "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "description", "target": "Description",    "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "file_path",   "target": "FilePath",       "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "doc_type",    "target": "AttachmentType", "transform": "direct",           "confidence": 0.90, "notes": "" },
+        { "canonical": "file_size",   "target": "FileType",       "transform": "direct",           "confidence": 0.72, "notes": "Low confidence — FileType expects mime type, source has size string" },
+        { "canonical": "created_by",  "target": "UploadedBy",     "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at",  "target": "UploadedAt",     "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "canonical": "is_deleted",  "target": "IsDeleted",      "transform": "direct",           "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_timesheet": {
+      "target_table": "Timesheets",
+      "columns": [
+        { "canonical": "id",           "target": "ID",              "transform": "cast_to_int",  "confidence": 1.0,  "notes": "" },
+        { "canonical": "type",         "target": "TimesheetType",   "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "pay_rate",     "target": "Payrate",         "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "charge_rate",  "target": "ChargeRate",      "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "currency",     "target": "Currency",        "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "start_date",   "target": "StartDate",       "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "end_date",     "target": "EndDate",         "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "total_hours",  "target": "TotalWeekHours",  "transform": "direct",       "confidence": 0.88, "notes": "Source has item-level hours — may need summing" },
+        { "canonical": "status",       "target": "Status",          "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "approved_by",  "target": "ApprovedBy",      "transform": "direct",       "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_timesheet_item": {
+      "target_table": "TimesheetActivity",
+      "columns": [
+        { "canonical": "id",           "target": "ActivityID",  "transform": "cast_to_int", "confidence": 0.90, "notes": "" },
+        { "canonical": "timesheet_id", "target": "TimesheetID", "transform": "cast_to_int", "confidence": 1.0,  "notes": "" },
+        { "canonical": "person_id",    "target": "AssocID",     "transform": "cast_to_int", "confidence": 0.88, "notes": "Person maps to Associate in this context" },
+        { "canonical": "total_hours",  "target": "HoursWorked", "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_by",   "target": "AddedBy",     "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at",   "target": "AddedAt",     "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_at",   "target": "UpdatedAt",   "transform": "direct",      "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_invoice": {
+      "target_table": "Invoice",
+      "columns": [
+        { "canonical": "id",            "target": "ID",          "transform": "cast_to_int",  "confidence": 1.0,  "notes": "" },
+        { "canonical": "type",          "target": "Type",        "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "invoice_no",    "target": "InvoiceNo",   "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "amount",        "target": "Amount",      "transform": "cast_to_decimal","confidence": 1.0, "notes": "" },
+        { "canonical": "tax_amount",    "target": "TaxAmount",   "transform": "cast_to_decimal","confidence": 1.0, "notes": "" },
+        { "canonical": "currency",      "target": "Currency",    "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "invoice_date",  "target": "InvoiceDate", "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "due_date",      "target": "DueDate",     "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "status",        "target": "Status",      "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "notes",         "target": "Notes",       "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_by",    "target": "AddedBy",     "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_by",    "target": "UpdatedBy",   "transform": "direct",       "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_purchase_order": {
+      "target_table": "PurchaseOrder",
+      "columns": [
+        { "canonical": "po_number",    "target": "PONo",      "transform": "direct",          "confidence": 1.0,  "notes": "" },
+        { "canonical": "vendor_id",    "target": "CompanyID", "transform": "direct",          "confidence": 1.0,  "notes": "" },
+        { "canonical": "status",       "target": "Status",    "transform": "direct",          "confidence": 1.0,  "notes": "" },
+        { "canonical": "amount",       "target": "POAmount",  "transform": "cast_to_decimal", "confidence": 0.95, "notes": "" },
+        { "canonical": "issue_date",   "target": "PODate",    "transform": "direct",          "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at",   "target": "AddedAt",   "transform": "direct",          "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_at",   "target": "UpdatedAt", "transform": "direct",          "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_by",   "target": "AddedBy",   "transform": "direct",          "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_by",   "target": "UpdatedBy", "transform": "direct",          "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_lead": {
+      "target_table": "Leads",
+      "columns": [
+        { "canonical": "id",        "target": "ID",            "transform": "cast_to_int", "confidence": 1.0,  "notes": "" },
+        { "canonical": "full_name", "target": "Fullname",      "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "status",    "target": "PipelineStage", "transform": "direct",      "confidence": 0.80, "notes": "Status values may differ — verify mapping with business" },
+        { "canonical": "company_id","target": "CompanyID",     "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "source",    "target": "Source",        "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "notes",     "target": "Notes",         "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "is_deleted","target": "Deleted",       "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_by","target": "AddedBy",       "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_by","target": "UpdatedBy",     "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at","target": "AddedAt",       "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_at","target": "UpdatedAt",     "transform": "direct",      "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_work_history": {
+      "target_table": "Work_History",
+      "columns": [
+        { "canonical": "id",                 "target": "ID",              "transform": "cast_to_int", "confidence": 1.0,  "notes": "" },
+        { "canonical": "application_id",     "target": "ApplicationID",   "transform": "direct",      "confidence": 0.85, "notes": "Links via Emp_Profile to Applicant" },
+        { "canonical": "company_name",       "target": "CompanyName",     "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "position_title",     "target": "PositionTitle",   "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "employment_type",    "target": "EmploymentType",  "transform": "direct",      "confidence": 0.88, "notes": "" },
+        { "canonical": "start_date",         "target": "StartDate",       "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "end_date",           "target": "EndDate",         "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "reason_for_leaving", "target": "ReasonForLeaving","transform": "direct",      "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_activity": {
+      "target_table": "Task",
+      "columns": [
+        { "canonical": "id",         "target": "ID",           "transform": "cast_to_int", "confidence": 0.95, "notes": "" },
+        { "canonical": "type",       "target": "TaskType",     "transform": "direct",      "confidence": 0.88, "notes": "ScheduleType values (Interview, Call, etc.) map to TaskType — verify labels match" },
+        { "canonical": "notes",      "target": "Note",         "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "status",     "target": "Status",       "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "owner_id",   "target": "OwnerUserID",  "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "start_date", "target": "StartDate",    "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "end_date",   "target": "Enddate",      "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "completed",  "target": "Completed",    "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at", "target": "AddedAt",      "transform": "direct",      "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_at", "target": "UpdatedAt",    "transform": "direct",      "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_activity_items": {
+      "target_table": "TaskItem",
+      "source_canonical": "canonical_activity",
+      "note": "One TaskItem row per entity linked to the activity (company, person, job)",
+      "columns": [
+        { "canonical": "company_id",  "target": "ObjectID",   "transform": "direct", "confidence": 0.82, "notes": "Written once per linked entity type" },
+        { "canonical": "job_id",      "target": "ObjectID",   "transform": "direct", "confidence": 0.82, "notes": "Written as separate row with ObjectType=Position" },
+        { "canonical": "person_id",   "target": "ObjectID",   "transform": "direct", "confidence": 0.82, "notes": "Written as separate row with ObjectType=person_type value" },
+        { "canonical": "person_type", "target": "ObjectType", "transform": "direct", "confidence": 0.88, "notes": "" },
+        { "canonical": "created_by",  "target": "AddedBy",   "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_by",  "target": "UpdatedBy", "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at",  "target": "AddedAt",   "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_at",  "target": "UpdatedAt", "transform": "direct", "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "canonical_reference": {
+      "target_table": "References",
+      "columns": [
+        { "canonical": "id",             "target": "ID",            "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "applicant_id",   "target": "ApplicantID",   "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "full_name",      "target": "Fullname",      "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "position_title", "target": "PositionTitle", "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "company_name",   "target": "CompanyName",   "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "relationship",   "target": "Relationship",  "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "email",          "target": "Email",         "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "phone",          "target": "PhoneContact",  "transform": "direct", "confidence": 0.95, "notes": "" },
+        { "canonical": "reference_type", "target": "ReferenceType", "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "notes",          "target": "Notes",         "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "created_at",     "target": "AddedAt",       "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "canonical": "updated_at",     "target": "UpdatedAt",     "transform": "direct", "confidence": 1.0,  "notes": "" }
+      ]
+    }
+  }
+}

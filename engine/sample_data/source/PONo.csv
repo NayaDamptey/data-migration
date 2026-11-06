@@ -1,0 +1,61 @@
+PONo,VendorID,ReqID,DepartmentID,CreatedBy,UpdatedBy,ApprovedBy,POStatus,Issue_Date,DateDue,Currency,Amount,TaxAmount,Payment_Terms,Desc,Notes,CreatedAt,UpdatedAt
+PO00001,5,167,3,3,18,28,Open,2022-01-15,2022-04-15,GBP,77299.98,9813.79,14 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00002,36,67,1,26,15,12,Pending,2022-01-15,2022-04-15,GBP,53497.19,9729.4,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00003,117,203,3,23,3,22,Closed,2022-01-15,2022-04-15,GBP,51386.39,4158.42,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00004,13,163,5,22,26,27,Closed,2022-01-15,2022-04-15,GBP,31631.43,6281.24,14 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00005,36,67,4,9,6,6,Closed,2022-01-15,2022-04-15,GBP,62300.06,5036.52,14 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00006,116,236,1,26,23,29,Pending,2022-01-15,2022-04-15,GBP,73495.58,3981.19,30 days,Purchase order for recruitment services,,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00007,191,93,3,22,10,12,Cancelled,2022-01-15,2022-04-15,GBP,84176.7,931.03,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00008,107,173,1,28,19,5,Closed,2022-01-15,2022-04-15,GBP,85233.59,3988.1,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00009,5,167,1,3,21,13,Closed,2022-01-15,2022-04-15,GBP,92907.37,9035.53,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00010,14,73,4,6,7,27,Closed,2022-01-15,2022-04-15,GBP,31452.38,8712.91,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00011,144,238,5,11,29,24,Pending,2022-01-15,2022-04-15,GBP,5480.4,1345.11,14 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00012,133,208,2,6,23,9,Cancelled,2022-01-15,2022-04-15,GBP,27835.2,1794.37,60 days,Purchase order for recruitment services,,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00013,172,14,3,1,16,3,Open,2022-01-15,2022-04-15,GBP,79698.61,9458.23,14 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00014,16,59,1,4,19,12,Open,2022-01-15,2022-04-15,GBP,62989.75,8516.48,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00015,169,166,1,11,6,14,Open,2022-01-15,2022-04-15,GBP,76015.5,914.39,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00016,113,181,1,27,19,5,Closed,2022-01-15,2022-04-15,GBP,9165.76,4892.57,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00017,175,218,1,1,16,9,Open,2022-01-15,2022-04-15,GBP,88339.37,5953.02,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00018,84,108,3,8,26,21,Closed,2022-01-15,2022-04-15,GBP,80757.63,5458.08,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00019,147,57,2,28,28,14,Pending,2022-01-15,2022-04-15,GBP,17492.98,2942.36,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00020,106,239,1,20,26,24,Closed,2022-01-15,2022-04-15,GBP,97853.4,2420.75,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00021,22,212,2,29,25,24,Open,2022-01-15,2022-04-15,GBP,8374.56,3656.76,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00022,144,238,5,13,8,22,Closed,2022-01-15,2022-04-15,GBP,11528.47,8977.82,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00023,147,57,3,15,9,17,Closed,2022-01-15,2022-04-15,GBP,37052.54,9224.76,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00024,104,58,3,18,14,2,Cancelled,2022-01-15,2022-04-15,GBP,47541.44,6088.72,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00025,65,228,3,30,18,17,Closed,2022-01-15,2022-04-15,GBP,56980.43,9692.89,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00026,98,191,3,13,30,5,Open,2022-01-15,2022-04-15,GBP,36430.59,1004.19,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00027,181,95,1,13,12,15,Pending,2022-01-15,2022-04-15,GBP,38481.73,3960.11,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00028,163,204,2,24,27,1,Open,2022-01-15,2022-04-15,GBP,56380.0,3666.41,60 days,Purchase order for recruitment services,,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00029,77,82,3,24,1,22,Open,2022-01-15,2022-04-15,GBP,89500.91,1447.43,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00030,176,179,5,13,4,20,Open,2022-01-15,2022-04-15,GBP,18520.8,8151.69,14 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00031,175,218,4,2,22,23,Closed,2022-01-15,2022-04-15,GBP,20978.06,726.03,14 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00032,181,95,3,27,30,30,Pending,2022-01-15,2022-04-15,GBP,71370.1,1290.0,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00033,22,212,2,6,15,29,Pending,2022-01-15,2022-04-15,GBP,79568.69,9050.93,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00034,16,59,1,6,28,14,Open,2022-01-15,2022-04-15,GBP,12499.29,1554.44,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00035,47,68,3,26,21,22,Pending,2022-01-15,2022-04-15,GBP,46814.68,8960.67,60 days,Purchase order for recruitment services,,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00036,6,168,1,27,16,4,Cancelled,2022-01-15,2022-04-15,GBP,71897.53,8522.99,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00037,13,81,3,23,24,19,Pending,2022-01-15,2022-04-15,GBP,66171.76,9177.83,14 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00038,143,200,1,1,13,10,Closed,2022-01-15,2022-04-15,GBP,97134.3,7842.18,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00039,184,254,1,1,9,12,Closed,2022-01-15,2022-04-15,GBP,94080.33,8843.73,60 days,Purchase order for recruitment services,,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00040,122,196,3,3,3,18,Pending,2022-01-15,2022-04-15,GBP,64551.79,9143.64,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00041,31,78,5,20,29,6,Pending,2022-01-15,2022-04-15,GBP,37880.28,7625.41,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00042,88,183,2,2,12,13,Open,2022-01-15,2022-04-15,GBP,8159.48,4371.79,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00043,148,232,1,21,1,13,Cancelled,2022-01-15,2022-04-15,GBP,94575.94,9133.92,14 days,Purchase order for recruitment services,,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00044,140,79,4,23,15,16,Pending,2022-01-15,2022-04-15,GBP,9188.44,7106.79,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00045,129,214,3,23,22,5,Closed,2022-01-15,2022-04-15,GBP,67910.17,5917.62,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00046,179,223,3,28,8,1,Open,2022-01-15,2022-04-15,GBP,42299.9,4855.52,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00047,3,222,2,6,21,12,Open,2022-01-15,2022-04-15,GBP,11923.46,2518.91,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00048,174,231,4,6,10,4,Cancelled,2022-01-15,2022-04-15,GBP,56037.7,2245.82,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00049,170,60,5,23,25,5,Closed,2022-01-15,2022-04-15,GBP,79981.3,3423.3,30 days,Purchase order for recruitment services,,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00050,129,214,1,19,2,21,Cancelled,2022-01-15,2022-04-15,GBP,84698.37,940.75,30 days,Purchase order for recruitment services,,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00051,196,51,5,18,30,14,Pending,2022-01-15,2022-04-15,GBP,28082.69,1938.93,30 days,Purchase order for recruitment services,,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00052,134,242,4,8,26,5,Open,2022-01-15,2022-04-15,GBP,31751.04,6944.21,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00053,130,97,5,26,18,15,Pending,2022-01-15,2022-04-15,GBP,86434.94,8676.69,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00054,68,159,5,25,14,10,Closed,2022-01-15,2022-04-15,GBP,42547.93,2693.98,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00055,46,77,1,29,23,5,Cancelled,2022-01-15,2022-04-15,GBP,40154.18,5446.28,30 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00056,65,228,1,23,20,5,Open,2022-01-15,2022-04-15,GBP,91196.44,1588.08,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00057,134,242,5,1,6,7,Cancelled,2022-01-15,2022-04-15,GBP,71540.28,2098.36,14 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00058,78,75,2,3,12,30,Open,2022-01-15,2022-04-15,GBP,54614.13,9143.68,14 days,Purchase order for recruitment services,,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00059,94,235,5,4,14,4,Open,2022-01-15,2022-04-15,GBP,52797.62,2508.64,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00
+PO00060,141,111,1,24,19,29,Pending,2022-01-15,2022-04-15,GBP,59052.63,4905.63,60 days,Purchase order for recruitment services,Approved by finance director.,2022-01-10 09:00:00,2022-01-10 09:00:00

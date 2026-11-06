@@ -1,0 +1,4 @@
+InvoiceType_ID,Type_Name,Desc,CreatedBy,UpdatedBy,Deleted
+1,Placement Fee,One-off permanent placement invoice,1,1,0
+2,Timesheet,Weekly contractor timesheet invoice,1,1,0
+3,Credit Note,Invoice correction or reversal,1,1,0

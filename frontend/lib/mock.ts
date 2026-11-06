@@ -3,7 +3,7 @@
 // Replace with API calls (lib/api.ts) once the backend routes are filled in.
 import type { UploadItem } from "./upload";
 
-export const SOURCE_SYSTEMS = ["Tracker", "JobAdder", "Bullhorn", "Seven20", "Vincere", "Other"];
+export const SOURCE_SYSTEMS = ["Tracker", "JobAdder", "Bullhorn", "Seven20", "Vincere", "RecruitCRM", "Other"];
 export const SOURCE_FORMATS = ["CSV files", "Database backup", "JSON", "API connection"];
 export const TARGET_SYSTEMS = ["Bullhorn", "JobAdder", "Vincere", "Seven20", "Tracker", "Custom schema"];
 export const TARGET_DATABASES = ["PostgreSQL", "MySQL", "SQL Server (T-SQL)"];

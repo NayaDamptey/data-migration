@@ -6,12 +6,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { useStore } from "../lib/store";
 import {
-  ACCEPT, MAX_FILES, checkFile, formatBytes, fromDrop, fromFileList, startUploads, uploadOne,
+  ACCEPT, MAX_FILES, checkFile, deleteStored, uploadMode, formatBytes, fromDrop, fromFileList, startUploads, uploadOne,
   type Picked, type StartedFile, type UploadItem,
 } from "../lib/upload";
 import { Check, Spinner } from "./ui";
 
-const CONCURRENT_FILES = 3;
+// local uploads are quick small POSTs: more in flight; S3 multipart parts already run 3 per file
+const CONCURRENT_FILES = uploadMode === "local" ? 6 : 3;
 type Filter = "all" | "attention" | "active";
 
 export function BulkUpload({ onNotice }: { onNotice: (m: string) => void }) {
@@ -25,13 +26,18 @@ export function BulkUpload({ onNotice }: { onNotice: (m: string) => void }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
 
-  useEffect(() => { ref.current = uploads; }, [uploads]);
+  // `ref` is the queue's source of truth. Only adopt the store's list when it changed from OUTSIDE this
+  // component (e.g. stored files loaded on start). Our own committed lists can arrive here late, after newer
+  // commits: copying one back would wipe "uploaded" statuses, leave slots looking busy and stall the queue.
+  const committed = useRef(new WeakSet<UploadItem[]>());
+  useEffect(() => { if (!committed.current.has(uploads)) ref.current = uploads; }, [uploads]);
   useEffect(() => { folderInput.current?.setAttribute("webkitdirectory", ""); }, []);
   useEffect(() => () => controllers.current.forEach((c) => c.abort()), []);
 
   // Keep the ref and React state in step, so the queue sees changes immediately
   const commit = useCallback((fn: (items: UploadItem[]) => UploadItem[]) => {
     ref.current = fn(ref.current);
+    committed.current.add(ref.current);
     setUploads(ref.current);
   }, [setUploads]);
   const patch = useCallback((id: string, changes: Partial<UploadItem>) => {
@@ -104,6 +110,8 @@ export function BulkUpload({ onNotice }: { onNotice: (m: string) => void }) {
   const cancel = (id: string) => controllers.current.get(id)?.abort();
   const remove = (ids: string[]) => {
     ids.forEach((id) => { controllers.current.get(id)?.abort(); started.current.delete(id); });
+    // local mode: uploaded files are stored on the API's disk, so delete them there too
+    ref.current.filter((i) => ids.includes(i.id) && i.status === "uploaded").forEach((i) => { deleteStored(projectId, i.name).catch(() => {}); });
     commit((all) => all.filter((i) => !ids.includes(i.id)));
   };
 

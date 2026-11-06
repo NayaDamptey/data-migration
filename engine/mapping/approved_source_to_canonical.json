@@ -1,0 +1,2509 @@
+{
+  "_meta": {
+    "description": "Stage 1 \u2014 Source tables mapped to canonical entities. System-specific transforms live here.",
+    "version": "1.0",
+    "note": "Confidence: 1.0=exact, 0.9+=high, 0.7-0.9=review, <0.7=verify manually"
+  },
+  "mappings": {
+    "Accounts": {
+      "canonical_entity": "canonical_company",
+      "filter": null,
+      "columns": [
+        {
+          "source": "Account_ID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "INT to NVARCHAR",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Account_name",
+          "canonical": "name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Industry",
+          "canonical": "industry",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Website",
+          "canonical": "website",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "About",
+          "canonical": "background",
+          "transform": "direct",
+          "confidence": 0.92,
+          "notes": "Renamed field",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "InvoiceAddressID",
+          "canonical": "invoice_location_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "ParentAccountID",
+          "canonical": "parent_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Terms",
+          "canonical": "terms",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "AccountReferenceNo",
+          "canonical": "reference_no",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Note",
+          "canonical": "notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Deleted",
+          "canonical": "is_deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "AccountTypeID",
+          "canonical": "type",
+          "transform": "lookup_account_type",
+          "confidence": 0.85,
+          "notes": "Join AccountType table for description",
+          "reviewed": true,
+          "decision": "approved"
+        },
+        {
+          "source": "AddressID",
+          "canonical": "location_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.88,
+          "notes": "FK \u2014 resolved via Addresses table",
+          "reviewed": true,
+          "decision": "approved"
+        },
+        {
+          "source": "Division_ID",
+          "canonical": "division",
+          "transform": "lookup_division",
+          "confidence": 0.82,
+          "notes": "Join Division table for name",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "Associates": {
+      "canonical_entity": "canonical_contact",
+      "filter": null,
+      "columns": [
+        {
+          "source": "AssociateID",
+          "canonical": "id",
+          "transform": "direct",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "AssociateTitle",
+          "canonical": "title",
+          "transform": "direct",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "DivisionID",
+          "canonical": "division_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "DeptID",
+          "canonical": "department_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Photo",
+          "canonical": "photo",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Active",
+          "canonical": "active",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Associate_Tag",
+          "canonical": "tag",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "AssociateTypeDescription",
+          "canonical": "contact_type",
+          "transform": "direct",
+          "confidence": 0.88,
+          "notes": "",
+          "reviewed": true,
+          "decision": "approved"
+        },
+        {
+          "source": "Associate_AddressID",
+          "canonical": "location_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.88,
+          "notes": "",
+          "reviewed": true,
+          "decision": "approved"
+        },
+        {
+          "source": "Associate_RoleID",
+          "canonical": "role",
+          "transform": "lookup_role",
+          "confidence": 0.82,
+          "notes": "Join Roles table for description",
+          "reviewed": true,
+          "decision": "approved"
+        },
+        {
+          "source": "Associate_StatusID",
+          "canonical": "is_deleted",
+          "transform": "status_to_bool",
+          "confidence": 0.75,
+          "notes": "Status 3/4=closed, treat as deleted \u2014 verify with business",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "Person": {
+      "canonical_entity": "canonical_applicant",
+      "filter": null,
+      "columns": [
+        {
+          "source": "Person_ID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "First_Name",
+          "canonical": "first_name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Middle_name",
+          "canonical": "middle_name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Last_Name",
+          "canonical": "last_name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "DOB",
+          "canonical": "dob",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Associate",
+          "canonical": "is_associate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Emp",
+          "canonical": "is_employee",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Deleted",
+          "canonical": "is_deleted",
+          "transform": "coalesce_or",
+          "confidence": 0.92,
+          "notes": "OR with IsArchived",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "IsArchived",
+          "canonical": "is_deleted",
+          "transform": "coalesce_or",
+          "confidence": 0.8,
+          "notes": "Either flag marks record inactive",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "Recruiter": {
+      "canonical_entity": "canonical_user",
+      "filter": null,
+      "columns": [
+        {
+          "source": "RecruiterID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Username",
+          "canonical": "username",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Fullname",
+          "canonical": "full_name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "email",
+          "canonical": "email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "ReportsTo",
+          "canonical": "manager_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Role_ID",
+          "canonical": "role",
+          "transform": "lookup_roles_table",
+          "confidence": 0.88,
+          "notes": "Join Roles table for description",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "Req": {
+      "canonical_entity": "canonical_job",
+      "filter": null,
+      "columns": [
+        {
+          "source": "ReqID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Req_Title",
+          "canonical": "title",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Req_Description",
+          "canonical": "description",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "AccountID",
+          "canonical": "company_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "AssociateID",
+          "canonical": "contact_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "ReqStat",
+          "canonical": "status",
+          "transform": "direct",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CurrencyCode",
+          "canonical": "currency",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Worktype",
+          "canonical": "work_type",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Vacancy",
+          "canonical": "vacancy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "WorkingHours",
+          "canonical": "working_hours",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "PONumber",
+          "canonical": "po_number",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Compensation_package",
+          "canonical": "compensation_package",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "StartDate",
+          "canonical": "start_date",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "EndDate",
+          "canonical": "end_date",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "ExpiryDate",
+          "canonical": "expiry_date",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Deleted",
+          "canonical": "is_deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Address_ID",
+          "canonical": "location_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.88,
+          "notes": "",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "Req_Rates": {
+      "canonical_entity": "canonical_job",
+      "filter": null,
+      "join": {
+        "canonical_key": "id",
+        "source_key": "Req_ID"
+      },
+      "columns": [
+        {
+          "source": "Payrate",
+          "canonical": "pay_rate",
+          "transform": "direct",
+          "confidence": 0.95,
+          "notes": "Folded into canonical_job via Req_ID join",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "BillRate",
+          "canonical": "charge_rate",
+          "transform": "direct",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Salary",
+          "canonical": "salary",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.88,
+          "notes": "DECIMAL to NVARCHAR for flexibility",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "Req_Hired": {
+      "canonical_entity": "canonical_placement",
+      "filter": "Hired_Status = 1",
+      "columns": [
+        {
+          "source": "Req_HiredID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Associate_ID",
+          "canonical": "applicant_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Req_ID",
+          "canonical": "job_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Account_ID",
+          "canonical": "company_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Worktype",
+          "canonical": "work_type",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "StartDate",
+          "canonical": "start_date",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "EndDate",
+          "canonical": "end_date",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Burden",
+          "canonical": "burden",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "FeeValue",
+          "canonical": "fee",
+          "transform": "cast_to_float",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CurrencyCode",
+          "canonical": "currency",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Pipeline_Stage",
+          "canonical": "pipeline_stage",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Source",
+          "canonical": "source",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Owner_ID",
+          "canonical": "owner_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Second_OwnerID",
+          "canonical": "second_owner_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Deleted",
+          "canonical": "is_deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Hired_Status",
+          "canonical": "status",
+          "transform": "bit_to_status_text",
+          "confidence": 0.85,
+          "notes": "1=Placed, 0=Pipeline",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "GDPR_Consent": {
+      "canonical_entity": "canonical_consent",
+      "filter": null,
+      "columns": [
+        {
+          "source": "GDPR_ConsentID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Person_ID",
+          "canonical": "person_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Email",
+          "canonical": "email_consent",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Phone",
+          "canonical": "phone_consent",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Text",
+          "canonical": "text_consent",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Email",
+          "canonical": "gdpr_consent",
+          "transform": "coalesce_any_true",
+          "confidence": 0.88,
+          "notes": "True if any channel opted in",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "CV_Docs": {
+      "canonical_entity": "canonical_document",
+      "filter": null,
+      "columns": [
+        {
+          "source": "Doc_ID",
+          "canonical": "id",
+          "transform": "direct",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Desc",
+          "canonical": "description",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Path",
+          "canonical": "file_path",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CV_AssocID",
+          "canonical": "owner_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "AgencyCV",
+          "canonical": "is_agency_cv",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Deleted",
+          "canonical": "is_deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Uploaded_Id",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Updated_Id",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "Documents": {
+      "canonical_entity": "canonical_document",
+      "filter": null,
+      "columns": [
+        {
+          "source": "Doc_ID",
+          "canonical": "id",
+          "transform": "direct",
+          "confidence": 0.95,
+          "notes": "Offset applied to avoid ID collision with CV_Docs",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Desc",
+          "canonical": "description",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Path",
+          "canonical": "file_path",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Doc_AssocID",
+          "canonical": "owner_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "ObjectType",
+          "canonical": "owner_type",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Personal_Doc",
+          "canonical": "is_personal",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Private",
+          "canonical": "is_private",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Filesize",
+          "canonical": "file_size",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Deleted",
+          "canonical": "is_deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Uploaded_Id",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Updated_Id",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Typeid",
+          "canonical": "doc_type",
+          "transform": "lookup_doc_type",
+          "confidence": 0.85,
+          "notes": "Join DocumentType for description",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "TimeSheets": {
+      "canonical_entity": "canonical_timesheet",
+      "filter": null,
+      "columns": [
+        {
+          "source": "ID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "PONo",
+          "canonical": "po_number",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Payrate",
+          "canonical": "pay_rate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Billrate",
+          "canonical": "charge_rate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "StartDate",
+          "canonical": "start_date",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Enddate",
+          "canonical": "end_date",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Status",
+          "canonical": "status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Approved_By",
+          "canonical": "approved_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Approved_Date",
+          "canonical": "approved_date",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Timesheet_TypeID",
+          "canonical": "type",
+          "transform": "lookup_ts_type",
+          "confidence": 0.85,
+          "notes": "Join TimesheetType for description",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "TimesheetItems": {
+      "canonical_entity": "canonical_timesheet_item",
+      "filter": null,
+      "columns": [
+        {
+          "source": "ItemID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Timesheet_ID",
+          "canonical": "timesheet_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Person_ID",
+          "canonical": "person_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Req_ID",
+          "canonical": "job_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "StartTime",
+          "canonical": "start_time",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "EndTime",
+          "canonical": "end_time",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "TotalHours",
+          "canonical": "total_hours",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Timesheet_TypeID",
+          "canonical": "type",
+          "transform": "lookup_ts_type",
+          "confidence": 0.85,
+          "notes": "",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "Invoice": {
+      "canonical_entity": "canonical_invoice",
+      "filter": null,
+      "columns": [
+        {
+          "source": "InvoiceID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Invoice_No",
+          "canonical": "invoice_no",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "PONo",
+          "canonical": "po_number",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Vendor_ID",
+          "canonical": "vendor_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "InvoiceDate",
+          "canonical": "invoice_date",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "DateDue",
+          "canonical": "due_date",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Currency",
+          "canonical": "currency",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Status",
+          "canonical": "status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Amount",
+          "canonical": "amount",
+          "transform": "cast_to_decimal",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "NETAmount",
+          "canonical": "net_amount",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Amount_Paid",
+          "canonical": "amount_paid",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Balance_Due",
+          "canonical": "balance_due",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Payment_Terms",
+          "canonical": "payment_terms",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Desc",
+          "canonical": "description",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Approved_By",
+          "canonical": "approved_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "InvoiceType_ID",
+          "canonical": "type",
+          "transform": "lookup_inv_type",
+          "confidence": 0.88,
+          "notes": "Join InvoiceTypes for name",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "PONo": {
+      "canonical_entity": "canonical_purchase_order",
+      "filter": null,
+      "columns": [
+        {
+          "source": "PONo",
+          "canonical": "po_number",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "VendorID",
+          "canonical": "vendor_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "ReqID",
+          "canonical": "job_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "DepartmentID",
+          "canonical": "department_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "POStatus",
+          "canonical": "status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Amount",
+          "canonical": "amount",
+          "transform": "cast_to_decimal",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "TaxAmount",
+          "canonical": "tax_amount",
+          "transform": "cast_to_decimal",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Currency",
+          "canonical": "currency",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Issue_Date",
+          "canonical": "issue_date",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "DateDue",
+          "canonical": "due_date",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Payment_Terms",
+          "canonical": "payment_terms",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Desc",
+          "canonical": "description",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Notes",
+          "canonical": "notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "ApprovedBy",
+          "canonical": "approved_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "Leads": {
+      "canonical_entity": "canonical_lead",
+      "filter": null,
+      "columns": [
+        {
+          "source": "Lead_ID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Name",
+          "canonical": "name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Lead_Name",
+          "canonical": "full_name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Lead_Source",
+          "canonical": "source",
+          "transform": "direct",
+          "confidence": 0.92,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Account_ID",
+          "canonical": "company_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Associate_ID",
+          "canonical": "applicant_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Req_ID",
+          "canonical": "job_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Email",
+          "canonical": "email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Phone",
+          "canonical": "phone",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Note",
+          "canonical": "notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Consent_GDPR",
+          "canonical": "gdpr_consent",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Lead_Score",
+          "canonical": "score",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "URL",
+          "canonical": "url",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Address_Line1",
+          "canonical": "address_line1",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Address_Line2",
+          "canonical": "address_line2",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "City",
+          "canonical": "city",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Country",
+          "canonical": "country",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Document_ID",
+          "canonical": "document_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Sourced_Date",
+          "canonical": "sourced_date",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Assigned_To",
+          "canonical": "assigned_to",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Lead_Status",
+          "canonical": "status",
+          "transform": "direct",
+          "confidence": 0.88,
+          "notes": "Status values may differ from target \u2014 review mapping",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "EmpHist": {
+      "canonical_entity": "canonical_work_history",
+      "filter": null,
+      "columns": [
+        {
+          "source": "Hist_ID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "PlaceofWork",
+          "canonical": "company_name",
+          "transform": "direct",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Title",
+          "canonical": "position_title",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Started_At",
+          "canonical": "start_date",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Ended_At",
+          "canonical": "end_date",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Deleted",
+          "canonical": "is_deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "Referees": {
+      "canonical_entity": "canonical_reference",
+      "filter": null,
+      "columns": [
+        {
+          "source": "Referee_ID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Fullname",
+          "canonical": "full_name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "email",
+          "canonical": "email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Telephone",
+          "canonical": "phone",
+          "transform": "direct",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Company",
+          "canonical": "company_name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Job_Title",
+          "canonical": "position_title",
+          "transform": "direct",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Notes",
+          "canonical": "notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "Schedule": {
+      "canonical_entity": "canonical_activity",
+      "filter": null,
+      "columns": [
+        {
+          "source": "Schedule_ID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "ScheduleType",
+          "canonical": "type",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Account_ID",
+          "canonical": "company_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Req_ID",
+          "canonical": "job_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Person_ID",
+          "canonical": "person_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Person_Type",
+          "canonical": "person_type",
+          "transform": "direct",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "StartDate",
+          "canonical": "start_date",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "EndDate",
+          "canonical": "end_date",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Notes",
+          "canonical": "notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedBy",
+          "canonical": "updated_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "Interview_Feedback": {
+      "canonical_entity": "canonical_interview_feedback",
+      "filter": null,
+      "columns": [
+        {
+          "source": "Interview_FeedbackID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Interviewer_ID",
+          "canonical": "interviewer_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Interviewee_ID",
+          "canonical": "interviewee_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Second_InterviewerID",
+          "canonical": "second_interviewer_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Other_InterviewerID",
+          "canonical": "other_interviewer_id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Interview_Date",
+          "canonical": "interview_date",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Notes",
+          "canonical": "notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Callback",
+          "canonical": "callback",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "UpdatedAt",
+          "canonical": "updated_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "Addresses": {
+      "canonical_entity": "canonical_address",
+      "filter": null,
+      "columns": [
+        {
+          "source": "AddressID",
+          "canonical": "id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Address_line1",
+          "canonical": "line1",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Address_line2",
+          "canonical": "line2",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "City",
+          "canonical": "city",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "ZipCode",
+          "canonical": "post_code",
+          "transform": "direct",
+          "confidence": 0.95,
+          "notes": "UK postcode stored as ZipCode",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Province",
+          "canonical": "county",
+          "transform": "direct",
+          "confidence": 0.9,
+          "notes": "Province maps to County in UK context",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Country",
+          "canonical": "country",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Email",
+          "canonical": "email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Phone",
+          "canonical": "phone",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "OtherPhone",
+          "canonical": "other_phone",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "WorkPhone",
+          "canonical": "work_phone",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Longitude",
+          "canonical": "longitude",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "Latitude",
+          "canonical": "latitude",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedAt",
+          "canonical": "created_at",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "source": "CreatedBy",
+          "canonical": "created_by",
+          "transform": "cast_to_nvarchar",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    }
+  }
+}

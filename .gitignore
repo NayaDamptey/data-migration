@@ -16,3 +16,10 @@ next-env.d.ts
 .pytest_cache/
 # Client SQL scripts used for reference: keep out of git
 reference/sql/
+
+# merged engine / local runs
+storage/
+*.bak
+engine/**/__pycache__/
+engine/.pytest_cache/
+frontend/.env.local

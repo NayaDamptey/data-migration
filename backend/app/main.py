@@ -3,9 +3,9 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import projects, runs, uploads
+from app.routers import dq, local_files, projects, runs, uploads
 
-app = FastAPI(title="Migration Platform API", version="0.1.0")
+app = FastAPI(title="Migryr API", version="0.2.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[o.strip() for o in os.getenv("FRONTEND_ORIGIN", "http://localhost:3000").split(",")],
@@ -15,6 +15,8 @@ app.add_middleware(
 app.include_router(projects.router, prefix="/projects", tags=["projects"])
 app.include_router(uploads.router, tags=["uploads"])
 app.include_router(runs.router, tags=["runs"])
+app.include_router(dq.router, prefix="/dq", tags=["data quality"])
+app.include_router(local_files.router, tags=["local uploads"])
 
 
 @app.get("/health")

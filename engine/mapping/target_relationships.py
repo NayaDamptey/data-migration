@@ -1,0 +1,98 @@
+"""
+mapping/target_relationships.py
+
+Foreign-key model of the TARGET platform (`Target Schema.csv` flags FK columns
+but never says what they reference, and leaves some unflagged, e.g. Contact.CompanyID).
+
+(child_table, child_column, parent_table, parent_column)
+Audit columns (AddedBy / UpdatedBy / ModifiedBy / Addedby) reference User.UserID.
+
+Not modelled (documented): polymorphic Comms.ObjectID, TaskItem.ObjectID,
+TimesheetActivity.AssocID, MailItems.SenderID/RecipientID; Applicant.LocationID
+(no applicant-location table); Employment_Details.Employment_TypeID and
+Position_Details.PositionTypeID (no keyed lookup table).
+"""
+
+TARGET_AUDIT_COLUMNS = ("AddedBy", "UpdatedBy", "ModifiedBy", "Addedby")
+
+TARGET_FOREIGN_KEYS = [
+    ("Applicant", "ApplicantCommsID", "Comms", "ID"),
+    ("ApplicantAttachment", "AttachmentID", "Attachments", "AttachmentID"),
+    ("ApplicantAttachment", "ApplicantID", "Applicant", "ApplicantID"),
+    ("ApplicantSkills", "SkillID", "Skills", "ID"),
+    ("ApplicantSkills", "ApplicantID", "Applicant", "ApplicantID"),
+    ("Company", "LocationID", "CompanyLocation", "ID"),
+    ("Company", "Company_OwnerID", "User", "UserID"),
+    ("CompanyAttachment", "AttachmentID", "Attachments", "AttachmentID"),
+    ("CompanyAttachment", "CompanyID", "Company", "ID"),
+    ("CompanyLocation", "CompanyID", "Company", "ID"),
+    ("Contact", "CompanyID", "Company", "ID"),
+    ("Contact", "DepartmentID", "Department", "ID"),
+    ("Contact", "LocationID", "ContactLocation", "ID"),
+    ("Contact", "ContactOwnerID", "User", "UserID"),
+    ("ContactAttachment", "AttachmentID", "Attachments", "AttachmentID"),
+    ("ContactAttachment", "ContactID", "Contact", "ID"),
+    ("ContactLocation", "ContactID", "Contact", "ID"),
+    ("Deal", "PlacementID", "Placements", "ID"),
+    ("Deal", "RecruiterID", "User", "UserID"),
+    ("Deal", "CompanyID", "Company", "ID"),
+    ("Deal", "InvoiceID", "Invoice", "ID"),
+    ("Deal_Stage", "DealID", "Deal", "ID"),
+    ("Employment_Details", "ApplicantID", "Applicant", "ApplicantID"),
+    ("Employment_Details", "ContactID", "Contact", "ID"),
+    ("Expense", "PlacementID", "Placements", "ID"),
+    ("Expense", "ReceiptID", "Attachments", "AttachmentID"),
+    ("Expense", "SubmittedBy", "User", "UserID"),
+    ("Expense", "ApprovedBy", "User", "UserID"),
+    ("Expense", "InvoiceID", "Invoice", "ID"),
+    ("Invoice", "PlacementID", "Placements", "ID"),
+    ("Invoice", "DealID", "Deal", "ID"),
+    ("Leads", "CompanyID", "Company", "ID"),
+    ("Leads", "CommID", "Comms", "ID"),
+    ("Mail", "MailOwner", "User", "UserID"),
+    ("MailItems", "MailID", "Mail", "ID"),
+    ("Marketing", "ApplicantID", "Applicant", "ApplicantID"),
+    ("Notes", "ApplicantID", "Applicant", "ApplicantID"),
+    ("Notes", "CompanyID", "Company", "ID"),
+    ("Notes", "PositionID", "Position", "ID"),
+    ("Notes", "ContactID", "Contact", "ID"),
+    ("Notes", "UserID", "User", "UserID"),
+    ("Offer", "PlacementID", "Placements", "ID"),
+    ("Offer", "RecruiterID", "User", "UserID"),
+    ("Placements", "ApplicantID", "Applicant", "ApplicantID"),
+    ("Placements", "PositionID", "Position", "ID"),
+    ("Placements", "CompanyID", "Company", "ID"),
+    ("Placements", "OwnerID", "User", "UserID"),
+    ("Position", "ContactID", "Contact", "ID"),
+    ("Position", "PositionLocationID", "PositionLocation", "ID"),
+    ("Position", "PositionOwnerID", "User", "UserID"),
+    ("Position", "CompanyID", "Company", "ID"),
+    ("PositionAttachment", "AttachmentID", "Attachments", "AttachmentID"),
+    ("PositionAttachment", "PositionID", "Position", "ID"),
+    ("PositionLocation", "PositionID", "Position", "ID"),
+    ("Position_Applicant", "PositionID", "Position", "ID"),
+    ("Position_Applicant", "ApplicantID", "Applicant", "ApplicantID"),
+    ("Position_Applicant", "CompanyID", "Company", "ID"),
+    ("Position_Details", "PositionID", "Position", "ID"),
+    ("PurchaseOrder", "CompanyID", "Company", "ID"),
+    ("PurchaseOrderItems", "PONo", "PurchaseOrder", "PONo"),
+    ("PurchaseOrderItems", "PositionID", "Position", "ID"),
+    ("PurchaseOrderItems", "PlacementID", "Placements", "ID"),
+    ("References", "ApplicantID", "Applicant", "ApplicantID"),
+    ("References", "VerifiedBy", "User", "UserID"),
+    ("Shift", "PositionID", "Position", "ID"),
+    ("Shift", "ApplicantID", "Applicant", "ApplicantID"),
+    ("Shift", "CompanyID", "Company", "ID"),
+    ("Shift", "TimesheetID", "Timesheets", "ID"),
+    ("Shortlist", "PositionID", "Position", "ID"),
+    ("Shortlist", "ApplicantID", "Applicant", "ApplicantID"),
+    ("Skills", "SkillCategoryID", "SkillCategory", "ID"),
+    ("Task", "OwnerUserID", "User", "UserID"),
+    ("TaskItem", "TaskID", "Task", "ID"),
+    ("TimesheetActivity", "TimesheetID", "Timesheets", "ID"),
+    ("TimesheetActivity", "InvoiceID", "Invoice", "ID"),
+    ("TimesheetActivity", "ShiftID", "Shift", "ID"),
+    ("Timesheets", "ApprovedBy", "User", "UserID"),
+    ("User", "ManagerId", "User", "UserID"),
+    ("Work_History", "ApplicationID", "Applicant", "ApplicantID"),
+]

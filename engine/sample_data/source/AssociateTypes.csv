@@ -1,0 +1,6 @@
+Associate_TypeID,TypeName,DivisionID,DepartmentID
+1,Candidate,3,5
+2,Contact,4,4
+3,Employee,3,2
+4,Contractor,2,5
+5,Consultant,4,2

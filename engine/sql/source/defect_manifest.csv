@@ -1,0 +1,58 @@
+defect_id,category,table,pk_column,pk_value,column,original_value,injected_value,detail
+D0001,DUPLICATE_ACCOUNT,Accounts,Account_ID,201,*,copy of Account_ID=191,Account_name=Greenworth Software Limited; AccountReferenceNo=None; CreatedAt=2023-06-01 09:00:00; Note=None,duplicate of Account_ID 191 ('Greenworth Software Ltd')
+D0002,SPLIT_HISTORY,Req,ReqID,282,AccountID,191,201,job moved from Account_ID 191 to its duplicate
+D0003,DUPLICATE_ACCOUNT,Accounts,Account_ID,202,*,copy of Account_ID=179,Account_name=Northhaven Wealth Ltd UK; AccountReferenceNo=None; CreatedAt=2023-06-01 09:00:00; Note=None,duplicate of Account_ID 179 ('Northhaven Wealth Ltd')
+D0004,SPLIT_HISTORY,Req,ReqID,267,AccountID,179,202,job moved from Account_ID 179 to its duplicate
+D0005,DUPLICATE_ACCOUNT,Accounts,Account_ID,203,*,copy of Account_ID=134,Account_name=Wolfstone Systems Group.; AccountReferenceNo=None; CreatedAt=2023-06-01 09:00:00; Note=None,duplicate of Account_ID 134 ('Wolfstone Systems Group')
+D0006,SPLIT_HISTORY,Req,ReqID,312,AccountID,134,203,job moved from Account_ID 134 to its duplicate
+D0007,DUPLICATE_ACCOUNT,Accounts,Account_ID,204,*,copy of Account_ID=181,Account_name=The Ravenscroft Data Ltd; AccountReferenceNo=None; CreatedAt=2023-06-01 09:00:00; Note=None,duplicate of Account_ID 181 ('Ravenscroft Data Ltd')
+D0008,SPLIT_HISTORY,Req,ReqID,305,AccountID,181,204,job moved from Account_ID 181 to its duplicate
+D0009,DUPLICATE_ACCOUNT,Accounts,Account_ID,205,*,copy of Account_ID=78,Account_name=Underwood Solicitors (UK); AccountReferenceNo=None; CreatedAt=2023-06-01 09:00:00; Note=None,duplicate of Account_ID 78 ('Underwood Solicitors')
+D0010,SPLIT_HISTORY,Req,ReqID,302,AccountID,78,205,job moved from Account_ID 78 to its duplicate
+D0011,DUPLICATE_ACCOUNT,Accounts,Account_ID,206,*,copy of Account_ID=124,Account_name=Westgate Software; AccountReferenceNo=None; CreatedAt=2023-06-01 09:00:00; Note=None,duplicate of Account_ID 124 ('Westgate Software')
+D0012,SPLIT_HISTORY,Req,ReqID,272,AccountID,124,206,job moved from Account_ID 124 to its duplicate
+D0013,DUPLICATE_ACCOUNT,Accounts,Account_ID,207,*,copy of Account_ID=135,Account_name=Northbury Securities Group tLd; AccountReferenceNo=None; CreatedAt=2023-06-01 09:00:00; Note=None,duplicate of Account_ID 135 ('Northbury Securities Group Ltd')
+D0014,SPLIT_HISTORY,Req,ReqID,262,AccountID,135,207,job moved from Account_ID 135 to its duplicate
+D0015,DUPLICATE_ACCOUNT,Accounts,Account_ID,208,*,copy of Account_ID=171,Account_name=Millbury Digital Ltd - London; AccountReferenceNo=None; CreatedAt=2023-06-01 09:00:00; Note=None,duplicate of Account_ID 171 ('Millbury Digital Ltd')
+D0016,SPLIT_HISTORY,Req,ReqID,274,AccountID,171,208,job moved from Account_ID 171 to its duplicate
+D0017,DUPLICATE_PERSON,Person,Person_ID,10001,*,copy of Person_ID=502,DOB=None; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 502: DOB missing on duplicate
+D0018,DUPLICATE_PERSON,Person,Person_ID,10002,*,copy of Person_ID=34,Last_Name=Hassan; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 34: transposed letters in surname
+D0019,DUPLICATE_PERSON,Person,Person_ID,10003,*,copy of Person_ID=279,DOB=None; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=1; Emp=0,duplicate of Person_ID 279: DOB missing on duplicate
+D0020,DUPLICATE_ASSOCIATE,Associates,AssociateID,301,*,copy of AssociateID=279,Person_ID=10003; CreatedAt=2022-02-14 11:05:00,duplicate contact of AssociateID 279
+D0021,DUPLICATE_PERSON,Person,Person_ID,10004,*,copy of Person_ID=388,Middle_name=None; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 388: no middle name
+D0022,DUPLICATE_PERSON,Person,Person_ID,10005,*,copy of Person_ID=370,DOB=None; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 370: DOB missing on duplicate
+D0023,DUPLICATE_PERSON,Person,Person_ID,10006,*,copy of Person_ID=191,First_Name=Mike; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 191: nickname
+D0024,DUPLICATE_PERSON,Person,Person_ID,10007,*,copy of Person_ID=496,Last_Name=Stweart; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 496: transposed letters in surname
+D0025,DUPLICATE_PERSON,Person,Person_ID,10008,*,copy of Person_ID=222,DOB=None; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 222: DOB missing on duplicate
+D0026,DUPLICATE_PERSON,Person,Person_ID,10009,*,copy of Person_ID=447,Middle_name=None; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 447: no middle name
+D0027,DUPLICATE_PERSON,Person,Person_ID,10010,*,copy of Person_ID=410,DOB=None; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 410: DOB missing on duplicate
+D0028,DUPLICATE_PERSON,Person,Person_ID,10011,*,copy of Person_ID=446,First_Name=Mike; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 446: nickname
+D0029,DUPLICATE_PERSON,Person,Person_ID,10012,*,copy of Person_ID=172,Last_Name=Geogrescu; GDPRConsent_ID=None; CreatedAt=2022-02-14 11:00:00; Associate=0; Emp=0,duplicate of Person_ID 172: transposed letters in surname
+D0030,DUPLICATE_TRANSACTION,TimesheetItems,ItemID,801,*,copy of ItemID=680,,double entry of ItemID 680
+D0031,DUPLICATE_TRANSACTION,TimesheetItems,ItemID,802,*,copy of ItemID=19,,double entry of ItemID 19
+D0032,DUPLICATE_TRANSACTION,TimesheetItems,ItemID,803,*,copy of ItemID=362,,double entry of ItemID 362
+D0033,DUPLICATE_TRANSACTION,TimesheetItems,ItemID,804,*,copy of ItemID=609,,double entry of ItemID 609
+D0034,DUPLICATE_TRANSACTION,TimesheetItems,ItemID,805,*,copy of ItemID=122,,double entry of ItemID 122
+D0035,DUPLICATE_JOB,Req,ReqID,321,*,copy of ReqID=236,CreatedAt=2024-11-04 10:00:00; UpdatedAt=2024-11-04 10:00:00,job 236 raised a second time
+D0036,DUPLICATE_JOB,Req,ReqID,322,*,copy of ReqID=127,CreatedAt=2024-11-04 10:00:00; UpdatedAt=2024-11-04 10:00:00,job 127 raised a second time
+D0037,DUPLICATE_JOB,Req,ReqID,323,*,copy of ReqID=88,CreatedAt=2024-11-04 10:00:00; UpdatedAt=2024-11-04 10:00:00,job 88 raised a second time
+D0038,ORPHAN_CANDIDATE,Person,Person_ID,10101,*,copy of Person_ID=504,First_Name=Evelyn; Middle_name=None; Last_Name=Marchetti; DOB=1991-02-03; GDPRConsent_ID=None; Associate=0; Emp=0; CreatedAt=2024-10-01 09:00:00,"candidate registered with no profile, CV or activity"
+D0039,ORPHAN_CANDIDATE,Person,Person_ID,10102,*,copy of Person_ID=381,First_Name=Rufus; Middle_name=None; Last_Name=Okonjo; DOB=1987-07-21; GDPRConsent_ID=None; Associate=0; Emp=0; CreatedAt=2024-10-01 09:00:00,"candidate registered with no profile, CV or activity"
+D0040,ORPHAN_CANDIDATE,Person,Person_ID,10103,*,copy of Person_ID=474,First_Name=Imogen; Middle_name=None; Last_Name=Fairweather; DOB=1995-11-30; GDPRConsent_ID=None; Associate=0; Emp=0; CreatedAt=2024-10-01 09:00:00,"candidate registered with no profile, CV or activity"
+D0041,ORPHAN_CONTACT,Associates,AssociateID,302,*,copy of AssociateID=235,Person_ID=10201; AssociateTitle=Ms; Active=1; CreatedAt=2024-09-01 09:05:00,Harriet Lindqvist: contact linked to no company
+D0042,ORPHAN_CONTACT,Associates,AssociateID,303,*,copy of AssociateID=136,Person_ID=10202; AssociateTitle=Mr; Active=1; CreatedAt=2024-09-01 09:05:00,Graham Achterberg: contact linked to no company
+D0043,ORPHAN_CONTACT,Associates,AssociateID,304,*,copy of AssociateID=103,Person_ID=10203; AssociateTitle=Ms; Active=1; CreatedAt=2024-09-01 09:05:00,Mhairi Vasudevan: contact linked to no company
+D0044,ORPHAN_CONTACT,Associates,AssociateID,305,*,copy of AssociateID=281,Person_ID=10204; AssociateTitle=Mr; Active=1; CreatedAt=2024-09-01 09:05:00,Fraser Rennie: contact linked to no company
+D0045,ORPHAN_NOTE,Notes,Note_ID,35,ObjectId,80,NULL,Person note lost its record id
+D0046,ORPHAN_NOTE,Notes,Note_ID,327,ObjectId,90,NULL,Account note lost its record id
+D0047,ORPHAN_NOTE,Notes,Note_ID,270,ObjectId,121,NULL,Account note lost its record id
+D0048,ORPHAN_NOTE,Notes,Note_ID,317,ObjectId,37,NULL,Account note lost its record id
+D0049,ORPHAN_NOTE,Notes,Note_ID,298,ObjectId,6,96676,Person note points at a record that does not exist
+D0050,ORPHAN_NOTE,Notes,Note_ID,23,ObjectId,24,90882,Req note points at a record that does not exist
+D0051,ORPHAN_NOTE,Notes,Note_ID,38,ObjectId,103,90281,Associate note points at a record that does not exist
+D0052,ORPHAN_DOCUMENT,Documents,Doc_ID,450,Doc_AssocID,171,NULL,Associate document lost its owner
+D0053,ORPHAN_DOCUMENT,Documents,Doc_ID,362,Doc_AssocID,245,NULL,Req document lost its owner
+D0054,ORPHAN_DOCUMENT,Documents,Doc_ID,429,Doc_AssocID,272,NULL,Req document lost its owner
+D0055,SOFT_DELETE_CONFLICT,Accounts,Account_ID,19,Deleted,0,1,account deleted but has open jobs
+D0056,SOFT_DELETE_CONFLICT,Accounts,Account_ID,38,Deleted,0,1,account deleted but has open jobs
+D0057,SOFT_DELETE_CONFLICT,Accounts,Account_ID,30,Deleted,0,1,account deleted but has open jobs

@@ -1,7 +1,7 @@
 "use client";
 
 // Screen 2: Set up migration. Sketch: docs/sketches/2-setup.jpeg
-// Source: system + format (CSV, backup, JSON, API) + upload
+// Source: system + format (CSV, backup, JSON, API); files are uploaded on /upload
 // Target: system + database (MySQL, PostgreSQL, T-SQL) + output (CSV, SQL inserts, API)
 // Actions: Inspect · Run canonical layer · Run target · Get data
 // Side panel: runs & versions, request a change (plain English)
@@ -9,14 +9,13 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
-import { BulkUpload } from "../../components/BulkUpload";
 import { Check, Select, Shell, Spinner, SystemTile, Toast } from "../../components/ui";
 import { ENTITIES, OUTPUTS, SOURCE_FORMATS, SOURCE_SYSTEMS, SOURCE_TABLES, TARGET_DATABASES, TARGET_SYSTEMS } from "../../lib/mock";
 import { useStore, type StepState } from "../../lib/store";
 
 export default function WorkspacePage() {
   const router = useRouter();
-  const { setup, updateSetup, steps, runStep, uploads } = useStore();
+  const { setup, updateSetup, steps, runStep, uploads, quality } = useStore();
   const [toast, setToast] = useState<string | null>(null);
   const uploaded = uploads.filter((u) => u.status === "uploaded");
   const uploading = uploads.some((u) => ["checking", "queued", "uploading"].includes(u.status));
@@ -35,7 +34,7 @@ export default function WorkspacePage() {
               <Panel title="Source" tag="From" system={setup.sourceSystem} status={uploaded.length ? `${uploaded.length} files connected` : "No files yet"}>
                 <Select label="Source system" value={setup.sourceSystem} options={SOURCE_SYSTEMS} onChange={(v) => updateSetup({ sourceSystem: v })} />
                 <Select label="Source format" value={setup.sourceFormat} options={SOURCE_FORMATS} onChange={(v) => updateSetup({ sourceFormat: v })}
-                  hint={setup.sourceFormat === "CSV files" ? `${uploaded.length} file${uploaded.length === 1 ? "" : "s"} uploaded. Add more below.` : undefined} />
+                  hint={setup.sourceFormat === "CSV files" ? `${uploaded.length} file${uploaded.length === 1 ? "" : "s"} uploaded (step 1 below)` : undefined} />
               </Panel>
 
               <Panel title="Destination" tag="To" system={setup.targetSystem} status={setup.output === "SQL inserts" ? `${setup.targetDatabase} inserts` : setup.output}>
@@ -48,63 +47,31 @@ export default function WorkspacePage() {
             </div>
           </div>
 
-          {setup.sourceFormat === "CSV files" ? (
-            <BulkUpload onNotice={flash} />
-          ) : (
-            <div className="card p-5 text-[13px]">
-              <h2 className="font-semibold">Source files</h2>
-              <p className="text-muted mt-1">
-                {setup.sourceFormat === "API connection"
-                  ? "Connecting to a source system’s API is coming next. For now, export to CSV and upload the files."
-                  : `${setup.sourceFormat} upload is coming next. For now, export to CSV (a zip of CSVs works too).`}
-              </p>
-              <button className="btn-secondary h-8 text-[12px] mt-3" onClick={() => updateSetup({ sourceFormat: "CSV files" })}>Switch to CSV files</button>
-            </div>
-          )}
-
-          {/* The four actions from the sketch, in order */}
+          {/* Pipeline: upload source -> data quality -> canonical -> target -> get data */}
           <div className="card p-5">
             <div className="flex flex-wrap items-baseline justify-between gap-2 mb-4">
               <h2 className="section-title">Pipeline</h2>
             </div>
-            <ol className="grid sm:grid-cols-2 xl:grid-cols-4 gap-3">
-              <Step n={1} title="Inspect" desc="Read every table, count rows, spot keys and patterns." state={steps.inspect}
-                action={<button className="btn-secondary w-full" disabled={steps.inspect === "running" || !uploaded.length || uploading} onClick={async () => { await runStep("inspect"); flash("Inspection finished"); }}>{steps.inspect === "done" ? "Inspect again" : "Inspect"}</button>} />
-              <Step n={2} title="Run canonical layer" desc="Map the source into the 10 standard entities." state={steps.canonical}
-                action={<button className="btn-secondary w-full" disabled={steps.inspect !== "done" || steps.canonical === "running"} onClick={async () => { await runStep("canonical"); flash("Canonical layer ready to review"); }}>{steps.canonical === "done" ? "Run again" : "Run canonical layer"}</button>}
+            <ol className="space-y-2">
+              <Step n={1} title="Upload source" desc="Upload the source tables as CSV files, folders or a zip." state={uploaded.length ? "done" : uploading ? "running" : "idle"}
+                action={<Link href="/" className="btn-secondary w-full">{uploaded.length ? "Manage files" : "Upload files"}</Link>}
+                extra={<p className="text-[12px] text-muted">{uploaded.length ? `${uploaded.length} file${uploaded.length === 1 ? "" : "s"} uploaded` : "Upload files to unlock data quality."}</p>} />
+              <Step n={2} title="Run data quality" desc="Check for duplicates, orphans and deleted records still in use." state={steps.quality}
+                action={<button className="btn-secondary w-full" disabled={steps.quality === "running" || uploading || !uploaded.length} onClick={async () => { await runStep("quality"); flash("Data quality checked"); }}>{steps.quality === "done" ? "Run again" : "Run data quality"}</button>}
+                extra={quality && (quality.error
+                  ? <p className="text-[12px] text-bad">Couldn’t run the checks: {quality.error}</p>
+                  : <Link href="/quality" className="text-[12px] text-accent font-medium hover:underline">{quality.passed} of {quality.total} checks pass{quality.toReview ? ` · ${quality.toReview} duplicates to review` : ""} →</Link>)} />
+              <Step n={3} title="Run canonical layer" desc="Map the source into the 10 standard entities." state={steps.canonical}
+                action={<button className="btn-secondary w-full" disabled={steps.quality !== "done" || steps.canonical === "running"} onClick={async () => { await runStep("canonical"); flash("Canonical layer ready to review"); }}>{steps.canonical === "done" ? "Run again" : "Run canonical layer"}</button>}
                 extra={steps.canonical === "done" && <Link href="/canonical" className="text-[12px] text-accent font-medium hover:underline">Review fields{review ? ` · ${review} need a look` : ""} →</Link>} />
-              <Step n={3} title="Run target" desc={`Turn the canonical data into ${setup.targetSystem} format and check it.`} state={steps.target}
+              <Step n={4} title="Run target" desc={`Turn the canonical data into ${setup.targetSystem} format and check it.`} state={steps.target}
                 action={<button className="btn-secondary w-full" disabled={steps.canonical !== "done" || steps.target === "running"} onClick={async () => { await runStep("target"); flash("Target values ready"); }}>{steps.target === "done" ? "Run again" : "Run target"}</button>}
                 extra={steps.target === "done" && <Link href="/target" className="text-[12px] text-accent font-medium hover:underline">See target values →</Link>} />
-              <Step n={4} title="Get data" desc={`Download as ${setup.output === "SQL inserts" ? `${setup.targetDatabase} inserts` : setup.output.toLowerCase()}.`} state="idle"
+              <Step n={5} title="Get data" desc={`Download as ${setup.output === "SQL inserts" ? `${setup.targetDatabase} inserts` : setup.output.toLowerCase()}.`} state="idle"
                 action={<button className="btn-primary w-full" disabled={steps.target !== "done"} onClick={() => router.push("/target?get=1")}>Get data</button>} />
             </ol>
           </div>
 
-          {steps.inspect === "done" && (
-            <div className="card overflow-hidden">
-              <div className="flex flex-wrap items-baseline justify-between gap-2 px-5 pt-4 pb-3">
-                <h2 className="font-semibold">Audit Trail - Source</h2>
-                <span className="text-[12px] text-muted">{SOURCE_TABLES.length} tables · {SOURCE_TABLES.reduce((n, t) => n + t.rows, 0).toLocaleString()} rows</span>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-[13px]">
-                  <thead><tr><th className="th pl-5">Source table</th><th className="th text-right">Rows</th><th className="th text-right">Columns</th><th className="th">Key</th><th className="th pr-5">Looks like</th></tr></thead>
-                  <tbody>
-                    {SOURCE_TABLES.map((t) => (
-                      <tr key={t.name} className="hover:bg-[#F5F8FF]">
-                        <td className="td pl-5 font-mono text-[12px]">{t.name}</td>
-                        <td className="td text-right tabular-nums">{t.rows.toLocaleString()}</td>
-                        <td className="td text-right tabular-nums">{t.columns}</td>
-                        <td className="td font-mono text-[12px] text-muted">{t.key ?? "—"}</td>
-                        <td className="td pr-5">{t.entity === "ignore" ? <span className="text-faint">Skip (one-off import)</span> : <span className="capitalize">{t.entity}</span>}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
         </div>
 
         <aside className="space-y-5 lg:sticky lg:top-[120px]">
@@ -143,17 +110,18 @@ function Panel({ title, tag, system, status, children }: { title: string; tag: s
 }
 
 function Step({ n, title, desc, state, action, extra }: { n: number; title: string; desc: string; state: StepState; action: ReactNode; extra?: ReactNode }) {
+  // one row per step: status, what it does (and its result), the action on the right
   return (
-    <li className="rounded-md border border-line bg-[#F5F8FF] p-4 flex flex-col gap-3">
-      <div className="flex items-center gap-2">
-        <span className={`grid place-items-center w-6 h-6 rounded-full text-[12px] font-semibold ${state === "done" ? "bg-ok text-white" : state === "running" ? "bg-accent text-white" : "bg-surface border border-line text-muted"}`}>
-          {state === "done" ? <Check /> : state === "running" ? <Spinner className="w-3 h-3" /> : n}
-        </span>
-        <h3 className="font-medium text-[13px]">{title}</h3>
+    <li className={`border border-line p-4 flex flex-wrap sm:flex-nowrap items-center gap-4 ${state === "done" ? "bg-surface" : "bg-[#F5F8FF]"}`}>
+      <span className={`grid place-items-center w-7 h-7 rounded-full text-[12px] font-semibold shrink-0 ${state === "done" ? "bg-ok text-white" : state === "running" ? "bg-accent text-white" : "bg-surface border border-line text-muted"}`}>
+        {state === "done" ? <Check /> : state === "running" ? <Spinner className="w-3 h-3" /> : n}
+      </span>
+      <div className="min-w-0 flex-1">
+        <h3 className="font-semibold text-[14px]">{title}</h3>
+        <p className="text-[12.5px] text-muted mt-0.5">{state === "running" ? "Working on it…" : desc}</p>
+        {extra && <div className="mt-1">{extra}</div>}
       </div>
-      <p className="text-[12px] text-muted flex-1">{state === "running" ? "Working on it…" : desc}</p>
-      {action}
-      {extra}
+      <div className="w-full sm:w-44 shrink-0">{action}</div>
     </li>
   );
 }

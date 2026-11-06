@@ -1,0 +1,249 @@
+{
+  "_meta": {
+    "source_system": "Legacy Recruitment CRM",
+    "target_system": "Modern Recruitment Platform",
+    "generated_by": "AI Schema Mapper",
+    "version": "1.0",
+    "notes": "Confidence scores: 1.0 = exact match, 0.9+ = high confidence, 0.7-0.9 = review recommended, <0.7 = manual verification required"
+  },
+  "tables": {
+    "Accounts": {
+      "target_table": "Company",
+      "domain": "Clients",
+      "description": "Client organisations",
+      "columns": [
+        { "source": "Account_ID",    "target": "ID",           "transform": "cast_to_nvarchar",  "confidence": 0.95, "notes": "Type change INT to NVARCHAR" },
+        { "source": "Account_name",  "target": "CompanyName",  "transform": "direct",            "confidence": 0.97, "notes": "" },
+        { "source": "Industry",      "target": "Industry",     "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "Website",       "target": "Website",      "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "About",         "target": "Background",   "transform": "direct",            "confidence": 0.92, "notes": "Column renamed" },
+        { "source": "AddressID",     "target": "LocationID",   "transform": "cast_to_nvarchar",  "confidence": 0.88, "notes": "FK target table differs — map via Addresses" },
+        { "source": "CreatedAt",     "target": "AddedDate",    "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "UpdatedAt",     "target": "UpdatedDate",  "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "Deleted",       "target": "Isdeleted",    "transform": "direct",            "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "Associates": {
+      "target_table": "Contact",
+      "domain": "Contacts",
+      "description": "Associates map to Contact. Where Associate is also a candidate, a parallel Applicant record is created via Person.",
+      "columns": [
+        { "source": "AssociateID",             "target": "ID",              "transform": "direct",           "confidence": 0.90, "notes": "" },
+        { "source": "AssociateTitle",          "target": "PositionTitle",   "transform": "direct",           "confidence": 0.88, "notes": "" },
+        { "source": "Associate_StatusID",      "target": "IsDeleted",       "transform": "status_to_bool",   "confidence": 0.75, "notes": "Status lookup required" },
+        { "source": "Associate_AddressID",     "target": "LocationID",      "transform": "cast_to_nvarchar", "confidence": 0.88, "notes": "" },
+        { "source": "DivisionID",              "target": "DepartmentID",    "transform": "cast_to_nvarchar", "confidence": 0.82, "notes": "Division maps to Department" },
+        { "source": "Active",                  "target": "IsDeleted",       "transform": "invert_bool",      "confidence": 0.85, "notes": "Active=false becomes IsDeleted=true" },
+        { "source": "CreatedAt",               "target": "AddedAt",         "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "UpdatedAt",               "target": "ModifiedAt",      "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "CreatedBy",               "target": "AddedBy",         "transform": "cast_to_nvarchar", "confidence": 1.0,  "notes": "" },
+        { "source": "UpdatedBy",               "target": "ModifiedBy",      "transform": "cast_to_nvarchar", "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "Person": {
+      "target_table": "Applicant",
+      "domain": "Candidates",
+      "description": "Person records flagged as candidates (Emp=0) map to Applicant",
+      "columns": [
+        { "source": "Person_ID",    "target": "ApplicantID",  "transform": "cast_to_nvarchar",  "confidence": 0.95, "notes": "Type change INT to NVARCHAR" },
+        { "source": "First_Name",   "target": "FirstName",    "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "Middle_name",  "target": "MiddleName",   "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "Last_Name",    "target": "LastName",     "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "DOB",          "target": "DateOfBirth",  "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "Deleted",      "target": "Deleted",      "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "IsArchived",   "target": "Deleted",      "transform": "coalesce_or",       "confidence": 0.80, "notes": "Coalesce with Deleted — either flag marks record as inactive" },
+        { "source": "CreatedAt",    "target": "AddedAt",      "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "UpdatedAt",    "target": "UpdatedAt",    "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "CreatedBy",    "target": "AddedBy",      "transform": "cast_to_nvarchar",  "confidence": 1.0,  "notes": "" },
+        { "source": "UpdatedBy",    "target": "UpdatedBy",    "transform": "cast_to_nvarchar",  "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "Recruiter": {
+      "target_table": "User",
+      "domain": "Users",
+      "description": "System users — recruiters become Users in the target",
+      "columns": [
+        { "source": "RecruiterID",  "target": "UserID",     "transform": "cast_to_nvarchar",  "confidence": 0.95, "notes": "" },
+        { "source": "Username",     "target": "Loginname",  "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "Fullname",     "target": "FullName",   "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "email",        "target": "Email",      "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "ReportsTo",    "target": "ManagerId",  "transform": "cast_to_nvarchar",  "confidence": 0.95, "notes": "" },
+        { "source": "Role_ID",      "target": "Role",       "transform": "lookup_roles_table", "confidence": 0.88, "notes": "Join Roles table to get description" },
+        { "source": "CreatedAt",    "target": "EnteredDateTime", "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "source": "UpdatedAt",    "target": "UpdatedDateTime", "transform": "direct",       "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "Req": {
+      "target_table": "Position",
+      "domain": "Jobs",
+      "description": "Job requisitions split across Position and Position_Details in target",
+      "columns": [
+        { "source": "ReqID",             "target": "ID",              "transform": "direct",            "confidence": 0.95, "notes": "" },
+        { "source": "Req_Title",         "target": "PositionName",    "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "AccountID",         "target": "CompanyID",       "transform": "cast_to_nvarchar",  "confidence": 0.95, "notes": "" },
+        { "source": "AssociateID",       "target": "ContactID",       "transform": "direct",            "confidence": 0.90, "notes": "" },
+        { "source": "Req_Description",   "target": "PositionDesc",    "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "StartDate",         "target": "DateBegins",      "transform": "cast_to_date",      "confidence": 1.0,  "notes": "" },
+        { "source": "EndDate",           "target": "DateEnds",        "transform": "cast_to_date",      "confidence": 1.0,  "notes": "" },
+        { "source": "ExpiryDate",        "target": "DatePublished",   "transform": "direct",            "confidence": 0.80, "notes": "Closest semantic match — verify with business" },
+        { "source": "CurrencyCode",      "target": "Currency",        "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "Address_ID",        "target": "PositionLocationID", "transform": "cast_to_nvarchar","confidence": 0.88,"notes": "" },
+        { "source": "Deleted",           "target": "Deleted",         "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "CreatedBy",         "target": "Addedby",         "transform": "cast_to_nvarchar",  "confidence": 1.0,  "notes": "" },
+        { "source": "CreatedAt",         "target": "Addedat",         "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "UpdatedBy",         "target": "UpdatedBy",       "transform": "cast_to_nvarchar",  "confidence": 1.0,  "notes": "" },
+        { "source": "UpdatedAt",         "target": "UpdatedAt",       "transform": "direct",            "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "Req_Rates": {
+      "target_table": "Position",
+      "domain": "Jobs",
+      "description": "Rate data from Req_Rates is folded into the Position table",
+      "columns": [
+        { "source": "Payrate",   "target": "PositionPayRate",    "transform": "direct",           "confidence": 0.95, "notes": "" },
+        { "source": "BillRate",  "target": "PositionChargeRate", "transform": "direct",           "confidence": 0.95, "notes": "" },
+        { "source": "Salary",    "target": "Salary",             "transform": "cast_to_nvarchar", "confidence": 0.88, "notes": "DECIMAL to NVARCHAR" }
+      ]
+    },
+    "Req_Hired": {
+      "target_table": "Placements",
+      "domain": "Placements",
+      "description": "Hired records with Hired_Status=1 become confirmed Placements",
+      "columns": [
+        { "source": "Req_HiredID",    "target": "ID",             "transform": "direct",            "confidence": 0.95, "notes": "" },
+        { "source": "Associate_ID",   "target": "ApplicantID",    "transform": "cast_to_nvarchar",  "confidence": 0.95, "notes": "" },
+        { "source": "Req_ID",         "target": "PositionID",     "transform": "direct",            "confidence": 0.95, "notes": "" },
+        { "source": "Account_ID",     "target": "CompanyID",      "transform": "cast_to_nvarchar",  "confidence": 0.95, "notes": "" },
+        { "source": "StartDate",      "target": "StartDate",      "transform": "cast_to_date",      "confidence": 1.0,  "notes": "" },
+        { "source": "EndDate",        "target": "EndDate",        "transform": "cast_to_date",      "confidence": 1.0,  "notes": "" },
+        { "source": "FeeValue",       "target": "Fee",            "transform": "cast_to_float",     "confidence": 0.95, "notes": "" },
+        { "source": "CurrencyCode",   "target": "EmploymentType", "transform": "lookup",            "confidence": 0.65, "notes": "Low confidence — values may not align. Verify with business." },
+        { "source": "Hired_Status",   "target": "Status",         "transform": "bit_to_status_text","confidence": 0.85, "notes": "1=Placed, 0=Pipeline" },
+        { "source": "Owner_ID",       "target": "OwnerID",        "transform": "cast_to_nvarchar",  "confidence": 0.95, "notes": "" },
+        { "source": "CreatedBy",      "target": "AddedBy",        "transform": "cast_to_nvarchar",  "confidence": 1.0,  "notes": "" },
+        { "source": "CreatedAt",      "target": "AddedAt",        "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "UpdatedBy",      "target": "UpdatedBy",      "transform": "cast_to_nvarchar",  "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "GDPR_Consent": {
+      "target_table": "Marketing",
+      "domain": "Compliance",
+      "description": "GDPR consent flags map directly to Marketing preferences",
+      "columns": [
+        { "source": "Person_ID",  "target": "ApplicantID",      "transform": "cast_to_nvarchar", "confidence": 0.95, "notes": "" },
+        { "source": "Email",      "target": "MarketingEmail",   "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Phone",      "target": "MarketingPhone",   "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Text",       "target": "MarketingText",    "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Email",      "target": "GDPRConsent",      "transform": "coalesce_any_true","confidence": 0.88, "notes": "GDPRConsent=true if any channel is opted in" }
+      ]
+    },
+    "CV_Docs": {
+      "target_table": "Attachments",
+      "domain": "Documents",
+      "description": "CV_Docs and Documents both merge into unified Attachments table. Junction tables handle ownership.",
+      "columns": [
+        { "source": "Doc_ID",       "target": "AttachmentID",   "transform": "direct",           "confidence": 0.95, "notes": "" },
+        { "source": "Path",         "target": "FilePath",       "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Desc",         "target": "Description",    "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "CV_AssocID",   "target": "ApplicantID",    "transform": "cast_to_nvarchar", "confidence": 0.90, "notes": "Written to ApplicantAttachment junction table" },
+        { "source": "AgencyCV",     "target": "AttachmentType", "transform": "bit_to_type_text", "confidence": 0.85, "notes": "1=Agency CV, 0=Candidate CV" },
+        { "source": "Deleted",      "target": "IsDeleted",      "transform": "direct",           "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "EmpHist": {
+      "target_table": "Work_History",
+      "domain": "Candidates",
+      "description": "Employment history records",
+      "columns": [
+        { "source": "Hist_ID",      "target": "ID",             "transform": "direct",       "confidence": 0.95, "notes": "" },
+        { "source": "Emp_ID",       "target": "ApplicationID",  "transform": "cast_to_nvarchar","confidence": 0.85,"notes": "Links via Emp_Profile to Person" },
+        { "source": "PlaceofWork",  "target": "CompanyName",    "transform": "direct",       "confidence": 0.95, "notes": "" },
+        { "source": "Title",        "target": "PositionTitle",  "transform": "direct",       "confidence": 1.0,  "notes": "" },
+        { "source": "Started_At",   "target": "StartDate",      "transform": "cast_to_date", "confidence": 1.0,  "notes": "" },
+        { "source": "Ended_At",     "target": "EndDate",        "transform": "cast_to_date", "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "TimeSheets": {
+      "target_table": "Timesheets",
+      "domain": "Timesheets",
+      "description": "Direct structural equivalent",
+      "columns": [
+        { "source": "ID",        "target": "ID",          "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "source": "StartDate", "target": "StartDate",   "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "source": "Enddate",   "target": "EndDate",     "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "source": "Payrate",   "target": "Payrate",     "transform": "direct", "confidence": 1.0,  "notes": "" },
+        { "source": "Billrate",  "target": "ChargeRate",  "transform": "direct", "confidence": 1.0,  "notes": "Column renamed" },
+        { "source": "Status",    "target": "Status",      "transform": "direct", "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "TimesheetItems": {
+      "target_table": "TimesheetActivity",
+      "domain": "Timesheets",
+      "description": "Timesheet line items",
+      "columns": [
+        { "source": "ItemID",        "target": "ActivityID",   "transform": "direct",           "confidence": 0.90, "notes": "" },
+        { "source": "Timesheet_ID",  "target": "TimesheetID",  "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "TotalHours",    "target": "HoursWorked",  "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Person_ID",     "target": "AssocID",      "transform": "direct",           "confidence": 0.88, "notes": "" },
+        { "source": "CreatedBy",     "target": "AddedBy",      "transform": "cast_to_nvarchar", "confidence": 1.0,  "notes": "" },
+        { "source": "CreatedAt",     "target": "AddedAt",      "transform": "direct",           "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "PONo": {
+      "target_table": "PurchaseOrder",
+      "domain": "Finance",
+      "description": "Purchase orders map directly. Line items go to PurchaseOrderItems.",
+      "columns": [
+        { "source": "PONo",       "target": "PONo",        "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "VendorID",   "target": "CompanyID",   "transform": "cast_to_nvarchar",  "confidence": 0.95, "notes": "VendorID references Accounts/Client" },
+        { "source": "POStatus",   "target": "Status",      "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "Amount",     "target": "POAmount",    "transform": "cast_to_decimal",   "confidence": 0.95, "notes": "" },
+        { "source": "Issue_Date", "target": "PODate",      "transform": "cast_to_date",      "confidence": 1.0,  "notes": "" },
+        { "source": "CreatedAt",  "target": "AddedAt",     "transform": "direct",            "confidence": 1.0,  "notes": "" },
+        { "source": "CreatedBy",  "target": "AddedBy",     "transform": "cast_to_nvarchar",  "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "Invoice": {
+      "target_table": "Invoice",
+      "domain": "Finance",
+      "description": "Invoice records — largely direct equivalent",
+      "columns": [
+        { "source": "InvoiceID",    "target": "ID",           "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Invoice_No",   "target": "InvoiceNo",    "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Amount",       "target": "Amount",       "transform": "cast_to_decimal",  "confidence": 1.0,  "notes": "" },
+        { "source": "InvoiceDate",  "target": "InvoiceDate",  "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "DateDue",      "target": "DueDate",      "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Status",       "target": "Status",       "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Currency",     "target": "Currency",     "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "CreatedBy",    "target": "AddedBy",      "transform": "cast_to_nvarchar", "confidence": 1.0,  "notes": "" }
+      ]
+    },
+    "Referees": {
+      "target_table": "References",
+      "domain": "Candidates",
+      "description": "Referee records",
+      "columns": [
+        { "source": "Referee_ID",  "target": "ID",            "transform": "cast_to_nvarchar", "confidence": 0.95, "notes": "" },
+        { "source": "Fullname",    "target": "Fullname",      "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "email",       "target": "Email",         "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Telephone",   "target": "PhoneContact",  "transform": "direct",           "confidence": 0.95, "notes": "Column renamed" },
+        { "source": "Company",     "target": "CompanyName",   "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Job_Title",   "target": "PositionTitle", "transform": "direct",           "confidence": 0.95, "notes": "" }
+      ]
+    },
+    "Leads": {
+      "target_table": "Leads",
+      "domain": "Leads",
+      "description": "Lead records — mostly direct but status values may differ",
+      "columns": [
+        { "source": "Lead_ID",      "target": "ID",            "transform": "direct",           "confidence": 0.95, "notes": "" },
+        { "source": "Lead_Status",  "target": "PipelineStage", "transform": "lookup",           "confidence": 0.80, "notes": "Status values likely differ — mapping table required" },
+        { "source": "Lead_Source",  "target": "Source",        "transform": "direct",           "confidence": 0.92, "notes": "" },
+        { "source": "Email",        "target": "CommID",        "transform": "insert_to_comms",  "confidence": 0.88, "notes": "Target uses polymorphic Comms table — insert row, store ID" },
+        { "source": "Phone",        "target": "CommID",        "transform": "insert_to_comms",  "confidence": 0.88, "notes": "As above for phone" },
+        { "source": "Note",         "target": "Notes",         "transform": "direct",           "confidence": 1.0,  "notes": "" },
+        { "source": "Lead_Score",   "target": "PipelineStage", "transform": "score_to_stage",   "confidence": 0.72, "notes": "Score 1-5 mapped to pipeline stage text — verify mapping with business" }
+      ]
+    }
+  }
+}

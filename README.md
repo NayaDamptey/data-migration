@@ -26,6 +26,44 @@ Target schema (per target system)        ← SQLMesh models + SQLGlot dialects
 Deliver      → CSVs + data dictionary / SQL inserts / API push
 ```
 
+## Screens (in order)
+
+1. **Source upload** (`/`): the start page. Upload CSVs, folders or zips. Files are checked in the
+   browser, then stored by the API (local mode).
+2. **Data quality** (`/quality`): locked until source data is uploaded. Two tabs:
+   - **Checks:** the 7 standard checks: duplicate people; duplicate companies, jobs and transactions;
+     deleted records still active; orphaned contacts (no company), candidates (no job), documents and
+     notes (no record). Click a problem to see the offending records.
+   - **Duplicates:** each suspected pair side by side. Merge (keep one record, pick each value) or keep
+     both. Merges are applied by the migration; the source is never changed.
+3. **Workflow:** Setup (`/workspace`, pipeline: upload source → data quality → canonical → target →
+   get data), Schema mapping (`/canonical`), Destination data (`/target`), Version review (`/versions`).
+   Sign-in lives at `/signin`.
+
+## Run it locally
+
+```bash
+# API (needs fastapi, uvicorn, duckdb and python-multipart; pyodbc for the SQL Server source)
+cd backend && APP_ENV=development uvicorn app.main:app --port 8000   # the UI calls http://127.0.0.1:8000
+# Frontend
+cd frontend && npm install && npm run dev        # http://localhost:3000
+# Optional: build the legacy SQL Server source that the dashboard checks
+python engine/sample_data/build_source_db.py --load
+```
+
+## Migration engine (`engine/`)
+
+Merged from the *Data Migration* project. It is plain Python, used by the API through
+`backend/app/engine_bridge.py`.
+
+| Folder | What it does |
+|---|---|
+| `engine/sample_data/` | Builds the legacy recruitment CRM source in SQL Server (58 tables, 156 FKs, 244 planted defects) |
+| `engine/validation/` | The data quality rules (DuckDB) behind the dashboard; run `pytest engine/tests` |
+| `engine/mapping/` | Relational source → target mapping, validator flags and the T-SQL generator |
+| `engine/sql/` | Generated source, profiling, trace and target scripts |
+| `engine/docs/` | Source data model, planted defects and mapping reference |
+
 ## Folder layout
 
 | Folder | What lives there |

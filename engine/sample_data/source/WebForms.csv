@@ -1,0 +1,6 @@
+FormID,Form_Name,Desc,Deleted,CreatedAt,UpdatedAt
+1,Candidate Registration,New candidate self-registration form,0,2021-01-01 09:00:00,2021-01-01 09:00:00
+2,Job Application,Standard job application form,0,2021-01-01 09:00:00,2021-01-01 09:00:00
+3,Client Enquiry,Inbound client interest form,0,2021-01-01 09:00:00,2021-01-01 09:00:00
+4,Timesheet Submission,Contractor weekly timesheet form,0,2021-01-01 09:00:00,2021-01-01 09:00:00
+5,Reference Request,Automated reference collection form,0,2021-01-01 09:00:00,2021-01-01 09:00:00

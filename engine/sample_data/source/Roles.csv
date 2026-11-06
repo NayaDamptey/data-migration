@@ -1,0 +1,6 @@
+Role_ID,Description,RoleCode
+1,Admin,ADM
+2,Recruiter,REC
+3,Manager,MGR
+4,Director,DIR
+5,Consultant,CON

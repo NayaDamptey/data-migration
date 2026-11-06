@@ -1,0 +1,6 @@
+Timesheet_TypeID,Desc,Billable,Requires_Approval
+1,Regular,1,0
+2,Overtime,1,1
+3,Training,0,1
+4,Sick Leave,0,0
+5,Bank Holiday,0,0

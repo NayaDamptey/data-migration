@@ -1,0 +1,251 @@
+Edu_ID,Emp_ID,Institution,StartDate,EndDate,Grade,AwardTitle,EducationLevel,IsHighestLevel,CreatedAt,UpdatedAt
+1,52,King's College London,2008-09-01,2012-06-30,First,LLB Law,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+2,60,Leeds Beckett University,2008-09-01,2012-06-30,2:2,LLB Law,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+3,131,University of Edinburgh,2008-09-01,2012-06-30,Distinction,BSc Computer Science,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+4,69,Oxford Brookes University,2008-09-01,2012-06-30,2:2,MSc Data Science,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+5,82,University of Manchester,2008-09-01,2012-06-30,2:1,BSc Computer Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+6,83,Leeds Beckett University,2008-09-01,2012-06-30,2:2,LLB Law,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+7,111,University of Birmingham,2008-09-01,2012-06-30,2:2,LLB Law,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+8,78,King's College London,2008-09-01,2012-06-30,First,MBA,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+9,85,Oxford Brookes University,2008-09-01,2012-06-30,Distinction,BA Marketing,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+10,61,Coventry University,2008-09-01,2012-06-30,2:1,BEng Engineering,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+11,28,University of Birmingham,2008-09-01,2012-06-30,Distinction,MBA,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+12,49,Leeds Beckett University,2008-09-01,2012-06-30,Distinction,LLB Law,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+13,140,Newcastle University,2008-09-01,2012-06-30,2:2,MSc Data Science,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+14,137,University of Birmingham,2008-09-01,2012-06-30,First,BA Business,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+15,141,Coventry University,2008-09-01,2012-06-30,Merit,MSc Data Science,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+16,31,University of Edinburgh,2008-09-01,2012-06-30,First,LLB Law,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+17,43,Newcastle University,2008-09-01,2012-06-30,2:2,MBA,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+18,12,Newcastle University,2008-09-01,2012-06-30,First,BA Marketing,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+19,127,University of Bristol,2008-09-01,2012-06-30,Merit,BSc Computer Science,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+20,131,University of Edinburgh,2008-09-01,2012-06-30,Merit,BA Marketing,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+21,70,Leeds Beckett University,2008-09-01,2012-06-30,2:1,BSc Computer Science,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+22,3,University of Bristol,2008-09-01,2012-06-30,Pass,BEng Engineering,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+23,57,Coventry University,2008-09-01,2012-06-30,Distinction,MSc Data Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+24,58,University of Manchester,2008-09-01,2012-06-30,Merit,BA Business,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+25,38,Coventry University,2008-09-01,2012-06-30,2:1,MSc Data Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+26,54,University of Bristol,2008-09-01,2012-06-30,First,BSc Computer Science,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+27,84,King's College London,2008-09-01,2012-06-30,Distinction,BEng Engineering,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+28,105,Newcastle University,2008-09-01,2012-06-30,2:2,MSc Data Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+29,92,Leeds Beckett University,2008-09-01,2012-06-30,Distinction,MSc Data Science,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+30,5,University of Bristol,2008-09-01,2012-06-30,Distinction,BA Marketing,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+31,66,Newcastle University,2008-09-01,2012-06-30,Merit,BA Business,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+32,84,Coventry University,2008-09-01,2012-06-30,2:1,BEng Engineering,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+33,115,Leeds Beckett University,2008-09-01,2012-06-30,Distinction,MBA,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+34,38,Cardiff University,2008-09-01,2012-06-30,First,LLB Law,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+35,48,University of Birmingham,2008-09-01,2012-06-30,2:1,BEng Engineering,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+36,73,University of Manchester,2008-09-01,2012-06-30,2:2,BA Business,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+37,49,King's College London,2008-09-01,2012-06-30,2:1,BSc Computer Science,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+38,117,University of Edinburgh,2008-09-01,2012-06-30,First,MBA,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+39,26,University of Edinburgh,2008-09-01,2012-06-30,Pass,BSc Computer Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+40,12,University of Birmingham,2008-09-01,2012-06-30,2:1,BA Marketing,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+41,37,Newcastle University,2008-09-01,2012-06-30,First,BA Marketing,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+42,139,Oxford Brookes University,2008-09-01,2012-06-30,Distinction,BSc Computer Science,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+43,123,Newcastle University,2008-09-01,2012-06-30,Pass,BA Marketing,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+44,85,Cardiff University,2008-09-01,2012-06-30,2:1,BA Business,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+45,140,King's College London,2008-09-01,2012-06-30,First,BA Marketing,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+46,140,Coventry University,2008-09-01,2012-06-30,First,BEng Engineering,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+47,1,Leeds Beckett University,2008-09-01,2012-06-30,First,BA Business,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+48,38,Oxford Brookes University,2008-09-01,2012-06-30,Distinction,MSc Data Science,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+49,29,Cardiff University,2008-09-01,2012-06-30,2:1,BSc Computer Science,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+50,73,Oxford Brookes University,2008-09-01,2012-06-30,First,BEng Engineering,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+51,93,King's College London,2008-09-01,2012-06-30,First,BEng Engineering,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+52,110,University of Bristol,2008-09-01,2012-06-30,2:2,BEng Engineering,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+53,39,Coventry University,2008-09-01,2012-06-30,Merit,BA Marketing,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+54,27,Coventry University,2008-09-01,2012-06-30,Pass,MBA,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+55,20,University of Manchester,2008-09-01,2012-06-30,2:1,BA Marketing,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+56,38,University of Edinburgh,2008-09-01,2012-06-30,Pass,MBA,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+57,29,Newcastle University,2008-09-01,2012-06-30,Pass,MBA,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+58,24,Oxford Brookes University,2008-09-01,2012-06-30,2:1,BA Business,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+59,82,Cardiff University,2008-09-01,2012-06-30,Pass,LLB Law,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+60,36,Leeds Beckett University,2008-09-01,2012-06-30,Pass,LLB Law,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+61,137,University of Bristol,2008-09-01,2012-06-30,2:1,LLB Law,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+62,135,Newcastle University,2008-09-01,2012-06-30,Distinction,BA Marketing,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+63,61,Oxford Brookes University,2008-09-01,2012-06-30,First,BA Business,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+64,143,Cardiff University,2008-09-01,2012-06-30,2:1,BSc Computer Science,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+65,93,University of Birmingham,2008-09-01,2012-06-30,2:2,LLB Law,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+66,63,Leeds Beckett University,2008-09-01,2012-06-30,2:1,BSc Computer Science,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+67,37,University of Edinburgh,2008-09-01,2012-06-30,Distinction,BSc Computer Science,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+68,14,King's College London,2008-09-01,2012-06-30,Distinction,BEng Engineering,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+69,41,University of Manchester,2008-09-01,2012-06-30,2:1,MSc Data Science,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+70,63,King's College London,2008-09-01,2012-06-30,First,BEng Engineering,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+71,47,Cardiff University,2008-09-01,2012-06-30,Distinction,BA Business,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+72,106,Oxford Brookes University,2008-09-01,2012-06-30,Pass,BA Marketing,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+73,29,University of Birmingham,2008-09-01,2012-06-30,First,MBA,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+74,129,University of Birmingham,2008-09-01,2012-06-30,First,LLB Law,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+75,142,Coventry University,2008-09-01,2012-06-30,Merit,BEng Engineering,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+76,109,University of Birmingham,2008-09-01,2012-06-30,2:2,BSc Computer Science,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+77,55,University of Edinburgh,2008-09-01,2012-06-30,Merit,BSc Computer Science,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+78,48,University of Bristol,2008-09-01,2012-06-30,Merit,BA Marketing,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+79,123,Oxford Brookes University,2008-09-01,2012-06-30,Distinction,MBA,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+80,43,University of Manchester,2008-09-01,2012-06-30,2:2,MBA,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+81,70,King's College London,2008-09-01,2012-06-30,First,BSc Computer Science,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+82,8,Leeds Beckett University,2008-09-01,2012-06-30,2:2,BA Business,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+83,55,Newcastle University,2008-09-01,2012-06-30,First,BA Marketing,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+84,142,Leeds Beckett University,2008-09-01,2012-06-30,Distinction,BSc Computer Science,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+85,22,Newcastle University,2008-09-01,2012-06-30,Merit,BSc Computer Science,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+86,13,Oxford Brookes University,2008-09-01,2012-06-30,First,MSc Data Science,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+87,73,University of Edinburgh,2008-09-01,2012-06-30,Merit,BA Business,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+88,92,University of Birmingham,2008-09-01,2012-06-30,Distinction,MBA,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+89,105,University of Bristol,2008-09-01,2012-06-30,First,BEng Engineering,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+90,98,Cardiff University,2008-09-01,2012-06-30,Merit,BA Marketing,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+91,42,University of Birmingham,2008-09-01,2012-06-30,Distinction,LLB Law,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+92,60,Leeds Beckett University,2008-09-01,2012-06-30,Distinction,MBA,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+93,129,University of Bristol,2008-09-01,2012-06-30,Distinction,BEng Engineering,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+94,34,Oxford Brookes University,2008-09-01,2012-06-30,2:2,MSc Data Science,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+95,100,Leeds Beckett University,2008-09-01,2012-06-30,2:1,BEng Engineering,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+96,146,Cardiff University,2008-09-01,2012-06-30,First,BA Marketing,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+97,80,University of Bristol,2008-09-01,2012-06-30,First,LLB Law,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+98,81,University of Birmingham,2008-09-01,2012-06-30,2:2,BA Business,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+99,148,Oxford Brookes University,2008-09-01,2012-06-30,2:2,BSc Computer Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+100,118,Coventry University,2008-09-01,2012-06-30,Pass,MSc Data Science,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+101,32,Newcastle University,2008-09-01,2012-06-30,Pass,BSc Computer Science,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+102,103,University of Edinburgh,2008-09-01,2012-06-30,Merit,MBA,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+103,94,University of Bristol,2008-09-01,2012-06-30,Merit,MSc Data Science,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+104,106,University of Bristol,2008-09-01,2012-06-30,Pass,MSc Data Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+105,63,University of Bristol,2008-09-01,2012-06-30,First,BA Business,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+106,97,University of Birmingham,2008-09-01,2012-06-30,Merit,LLB Law,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+107,100,Cardiff University,2008-09-01,2012-06-30,Distinction,BSc Computer Science,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+108,120,University of Bristol,2008-09-01,2012-06-30,Pass,BSc Computer Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+109,28,University of Edinburgh,2008-09-01,2012-06-30,Pass,BA Business,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+110,17,Oxford Brookes University,2008-09-01,2012-06-30,2:2,BEng Engineering,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+111,122,King's College London,2008-09-01,2012-06-30,2:2,LLB Law,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+112,121,University of Birmingham,2008-09-01,2012-06-30,Distinction,BA Business,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+113,98,University of Manchester,2008-09-01,2012-06-30,2:2,BA Marketing,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+114,55,University of Manchester,2008-09-01,2012-06-30,2:1,BA Marketing,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+115,70,Coventry University,2008-09-01,2012-06-30,Distinction,BA Business,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+116,18,Coventry University,2008-09-01,2012-06-30,Pass,BSc Computer Science,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+117,108,University of Bristol,2008-09-01,2012-06-30,2:1,MBA,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+118,14,King's College London,2008-09-01,2012-06-30,Pass,MSc Data Science,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+119,51,Oxford Brookes University,2008-09-01,2012-06-30,Pass,LLB Law,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+120,112,Oxford Brookes University,2008-09-01,2012-06-30,Distinction,BEng Engineering,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+121,144,Newcastle University,2008-09-01,2012-06-30,2:1,BSc Computer Science,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+122,82,University of Manchester,2008-09-01,2012-06-30,2:1,LLB Law,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+123,82,King's College London,2008-09-01,2012-06-30,Distinction,LLB Law,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+124,116,University of Birmingham,2008-09-01,2012-06-30,Distinction,LLB Law,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+125,56,Leeds Beckett University,2008-09-01,2012-06-30,Pass,MBA,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+126,56,Oxford Brookes University,2008-09-01,2012-06-30,2:1,BA Business,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+127,94,University of Manchester,2008-09-01,2012-06-30,2:2,MSc Data Science,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+128,117,University of Edinburgh,2008-09-01,2012-06-30,Pass,MSc Data Science,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+129,134,Oxford Brookes University,2008-09-01,2012-06-30,First,BA Business,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+130,96,University of Birmingham,2008-09-01,2012-06-30,Merit,BEng Engineering,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+131,98,Coventry University,2008-09-01,2012-06-30,Distinction,MBA,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+132,26,King's College London,2008-09-01,2012-06-30,First,BSc Computer Science,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+133,27,Cardiff University,2008-09-01,2012-06-30,Distinction,BA Marketing,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+134,129,Newcastle University,2008-09-01,2012-06-30,First,MBA,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+135,55,Leeds Beckett University,2008-09-01,2012-06-30,Pass,BEng Engineering,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+136,51,Cardiff University,2008-09-01,2012-06-30,First,MSc Data Science,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+137,102,University of Manchester,2008-09-01,2012-06-30,2:2,BA Marketing,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+138,69,Coventry University,2008-09-01,2012-06-30,2:2,BA Marketing,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+139,2,University of Edinburgh,2008-09-01,2012-06-30,First,BSc Computer Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+140,96,University of Bristol,2008-09-01,2012-06-30,Distinction,BEng Engineering,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+141,44,Newcastle University,2008-09-01,2012-06-30,Pass,BA Business,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+142,101,University of Manchester,2008-09-01,2012-06-30,Merit,LLB Law,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+143,45,University of Edinburgh,2008-09-01,2012-06-30,2:2,BEng Engineering,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+144,60,King's College London,2008-09-01,2012-06-30,Distinction,BA Marketing,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+145,148,University of Edinburgh,2008-09-01,2012-06-30,Distinction,MSc Data Science,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+146,53,King's College London,2008-09-01,2012-06-30,First,BSc Computer Science,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+147,40,University of Manchester,2008-09-01,2012-06-30,Merit,MBA,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+148,7,University of Birmingham,2008-09-01,2012-06-30,Pass,MBA,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+149,62,Leeds Beckett University,2008-09-01,2012-06-30,2:2,BA Business,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+150,67,University of Manchester,2008-09-01,2012-06-30,2:2,BSc Computer Science,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+151,149,King's College London,2008-09-01,2012-06-30,First,LLB Law,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+152,37,Coventry University,2008-09-01,2012-06-30,2:2,BA Business,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+153,127,Oxford Brookes University,2008-09-01,2012-06-30,2:1,LLB Law,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+154,6,University of Edinburgh,2008-09-01,2012-06-30,First,LLB Law,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+155,108,University of Edinburgh,2008-09-01,2012-06-30,2:2,MBA,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+156,47,Coventry University,2008-09-01,2012-06-30,First,BA Business,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+157,88,Oxford Brookes University,2008-09-01,2012-06-30,Pass,BEng Engineering,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+158,134,Coventry University,2008-09-01,2012-06-30,First,BA Business,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+159,133,University of Bristol,2008-09-01,2012-06-30,2:1,BA Business,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+160,56,University of Manchester,2008-09-01,2012-06-30,2:2,BA Business,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+161,33,Coventry University,2008-09-01,2012-06-30,2:2,LLB Law,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+162,90,University of Bristol,2008-09-01,2012-06-30,Distinction,MSc Data Science,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+163,112,University of Bristol,2008-09-01,2012-06-30,Pass,BA Business,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+164,51,Coventry University,2008-09-01,2012-06-30,Pass,BSc Computer Science,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+165,53,Cardiff University,2008-09-01,2012-06-30,Pass,LLB Law,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+166,82,Newcastle University,2008-09-01,2012-06-30,First,BEng Engineering,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+167,52,Newcastle University,2008-09-01,2012-06-30,2:2,MSc Data Science,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+168,43,University of Manchester,2008-09-01,2012-06-30,Merit,MSc Data Science,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+169,136,Oxford Brookes University,2008-09-01,2012-06-30,Pass,BSc Computer Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+170,83,University of Edinburgh,2008-09-01,2012-06-30,2:1,MSc Data Science,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+171,56,Oxford Brookes University,2008-09-01,2012-06-30,2:2,BA Business,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+172,3,Oxford Brookes University,2008-09-01,2012-06-30,Distinction,BSc Computer Science,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+173,120,Newcastle University,2008-09-01,2012-06-30,2:2,BA Business,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+174,73,Newcastle University,2008-09-01,2012-06-30,2:1,BEng Engineering,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+175,144,Coventry University,2008-09-01,2012-06-30,Distinction,BEng Engineering,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+176,112,Oxford Brookes University,2008-09-01,2012-06-30,2:2,BA Business,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+177,127,Cardiff University,2008-09-01,2012-06-30,First,MSc Data Science,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+178,32,Cardiff University,2008-09-01,2012-06-30,2:1,BEng Engineering,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+179,61,Newcastle University,2008-09-01,2012-06-30,First,MSc Data Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+180,119,Coventry University,2008-09-01,2012-06-30,2:1,BA Marketing,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+181,137,University of Bristol,2008-09-01,2012-06-30,First,MSc Data Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+182,121,King's College London,2008-09-01,2012-06-30,Pass,MBA,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+183,82,Oxford Brookes University,2008-09-01,2012-06-30,Pass,BSc Computer Science,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+184,13,University of Edinburgh,2008-09-01,2012-06-30,2:2,MBA,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+185,32,Oxford Brookes University,2008-09-01,2012-06-30,Merit,BSc Computer Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+186,13,University of Manchester,2008-09-01,2012-06-30,2:1,BSc Computer Science,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+187,58,University of Birmingham,2008-09-01,2012-06-30,First,BA Business,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+188,14,Coventry University,2008-09-01,2012-06-30,First,BSc Computer Science,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+189,20,Coventry University,2008-09-01,2012-06-30,2:2,MBA,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+190,44,University of Birmingham,2008-09-01,2012-06-30,Merit,LLB Law,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+191,82,University of Birmingham,2008-09-01,2012-06-30,Merit,BA Marketing,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+192,32,University of Bristol,2008-09-01,2012-06-30,Merit,BA Business,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+193,72,Oxford Brookes University,2008-09-01,2012-06-30,Distinction,LLB Law,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+194,68,Coventry University,2008-09-01,2012-06-30,Distinction,BSc Computer Science,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+195,53,King's College London,2008-09-01,2012-06-30,First,LLB Law,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+196,4,Leeds Beckett University,2008-09-01,2012-06-30,Pass,BA Marketing,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+197,125,King's College London,2008-09-01,2012-06-30,2:2,BA Business,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+198,117,University of Birmingham,2008-09-01,2012-06-30,Merit,BSc Computer Science,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+199,94,University of Edinburgh,2008-09-01,2012-06-30,Pass,BA Marketing,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+200,49,King's College London,2008-09-01,2012-06-30,2:2,LLB Law,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+201,148,King's College London,2008-09-01,2012-06-30,2:1,LLB Law,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+202,62,University of Manchester,2008-09-01,2012-06-30,Pass,BA Business,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+203,122,University of Bristol,2008-09-01,2012-06-30,Pass,MSc Data Science,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+204,141,King's College London,2008-09-01,2012-06-30,2:2,LLB Law,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+205,102,University of Bristol,2008-09-01,2012-06-30,Pass,BEng Engineering,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+206,113,Coventry University,2008-09-01,2012-06-30,2:2,BSc Computer Science,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+207,109,Leeds Beckett University,2008-09-01,2012-06-30,2:2,BA Business,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+208,71,University of Bristol,2008-09-01,2012-06-30,Merit,LLB Law,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+209,13,Leeds Beckett University,2008-09-01,2012-06-30,First,BA Business,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+210,10,Newcastle University,2008-09-01,2012-06-30,2:2,BA Business,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+211,71,Leeds Beckett University,2008-09-01,2012-06-30,Merit,MBA,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+212,101,King's College London,2008-09-01,2012-06-30,2:1,MBA,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+213,53,University of Birmingham,2008-09-01,2012-06-30,2:1,MSc Data Science,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+214,1,King's College London,2008-09-01,2012-06-30,2:1,BEng Engineering,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+215,62,University of Birmingham,2008-09-01,2012-06-30,2:2,MBA,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+216,48,Oxford Brookes University,2008-09-01,2012-06-30,Pass,BA Business,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+217,110,Oxford Brookes University,2008-09-01,2012-06-30,First,BA Business,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+218,44,University of Manchester,2008-09-01,2012-06-30,Merit,MSc Data Science,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+219,126,Leeds Beckett University,2008-09-01,2012-06-30,Pass,BSc Computer Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+220,146,Coventry University,2008-09-01,2012-06-30,2:1,BEng Engineering,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+221,25,King's College London,2008-09-01,2012-06-30,2:2,BA Marketing,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+222,126,Oxford Brookes University,2008-09-01,2012-06-30,Merit,MSc Data Science,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+223,94,Cardiff University,2008-09-01,2012-06-30,First,BA Marketing,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+224,86,University of Bristol,2008-09-01,2012-06-30,Distinction,BA Marketing,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+225,70,University of Bristol,2008-09-01,2012-06-30,Distinction,MBA,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+226,106,Leeds Beckett University,2008-09-01,2012-06-30,Distinction,BA Business,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+227,8,Leeds Beckett University,2008-09-01,2012-06-30,Merit,MBA,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+228,53,King's College London,2008-09-01,2012-06-30,2:1,LLB Law,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+229,140,Cardiff University,2008-09-01,2012-06-30,Merit,BA Business,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+230,85,University of Edinburgh,2008-09-01,2012-06-30,Merit,LLB Law,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+231,49,University of Manchester,2008-09-01,2012-06-30,Merit,BEng Engineering,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+232,111,Cardiff University,2008-09-01,2012-06-30,Merit,BA Marketing,HND,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+233,29,University of Manchester,2008-09-01,2012-06-30,Pass,MBA,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+234,39,University of Bristol,2008-09-01,2012-06-30,2:2,BEng Engineering,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+235,125,Coventry University,2008-09-01,2012-06-30,First,BA Marketing,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+236,117,University of Manchester,2008-09-01,2012-06-30,2:1,MSc Data Science,Undergraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+237,126,Coventry University,2008-09-01,2012-06-30,First,LLB Law,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+238,13,Coventry University,2008-09-01,2012-06-30,2:1,MSc Data Science,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+239,23,Coventry University,2008-09-01,2012-06-30,2:1,MBA,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+240,150,King's College London,2008-09-01,2012-06-30,2:2,BA Business,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+241,91,Leeds Beckett University,2008-09-01,2012-06-30,Distinction,MBA,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+242,103,King's College London,2008-09-01,2012-06-30,2:2,MSc Data Science,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+243,145,University of Edinburgh,2008-09-01,2012-06-30,Distinction,MSc Data Science,Postgraduate,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+244,65,University of Birmingham,2008-09-01,2012-06-30,Pass,BEng Engineering,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+245,79,King's College London,2008-09-01,2012-06-30,2:2,BEng Engineering,A-Level,1,2021-09-01 09:00:00,2021-09-01 09:00:00
+246,97,University of Edinburgh,2008-09-01,2012-06-30,First,BA Business,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+247,129,Oxford Brookes University,2008-09-01,2012-06-30,Pass,MSc Data Science,A-Level,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+248,108,University of Edinburgh,2008-09-01,2012-06-30,Pass,BSc Computer Science,Undergraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+249,23,University of Birmingham,2008-09-01,2012-06-30,Merit,MSc Data Science,Postgraduate,0,2021-09-01 09:00:00,2021-09-01 09:00:00
+250,33,Newcastle University,2008-09-01,2012-06-30,Merit,BEng Engineering,HND,1,2021-09-01 09:00:00,2021-09-01 09:00:00

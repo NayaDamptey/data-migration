@@ -1,0 +1,13 @@
+ID,Tag_Name,CategoryID,CreatedBy,CreatedAt,Deleted
+1,Hot Candidate,1,1,2021-03-01 09:00:00,0
+2,Graduate,1,1,2021-03-01 09:00:00,0
+3,Senior Level,1,1,2021-03-01 09:00:00,0
+4,VIP Client,2,1,2021-03-01 09:00:00,0
+5,Key Account,2,1,2021-03-01 09:00:00,0
+6,Do Not Contact,3,1,2021-03-01 09:00:00,0
+7,Visa Sponsorship Req,3,1,2021-03-01 09:00:00,0
+8,Contract Only,4,1,2021-03-01 09:00:00,0
+9,Permanent Only,4,1,2021-03-01 09:00:00,0
+10,Willing to Relocate,4,1,2021-03-01 09:00:00,0
+11,Referred by Client,5,1,2021-03-01 09:00:00,0
+12,Ex-Placed Candidate,5,1,2021-03-01 09:00:00,0

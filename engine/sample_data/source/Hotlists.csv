@@ -1,0 +1,11 @@
+Hotlist_ID,Name,Desc,Hotlist_Type,CreatedBy,UpdatedBy
+1,Tech Contractors — Available Now,Active contractors available within 2 weeks,Candidate,1,1
+2,Finance Permanent — Senior,Senior finance candidates for permanent roles,Candidate,2,2
+3,VIP Clients — Q1 2023,Priority client accounts this quarter,Client,1,1
+4,Graduates 2023,Graduate intake candidates,Candidate,3,3
+5,Healthcare Contractors,Registered healthcare workers available,Candidate,2,2
+6,Engineering — Relocators,Candidates willing to relocate for eng roles,Candidate,1,1
+7,Legal Professionals,Qualified solicitors and paralegals,Candidate,4,4
+8,Prospect Clients — Midlands,Warm leads from Midlands region,Client,2,2
+9,Data Science Specialists,ML/AI and data science candidates,Candidate,1,3
+10,Executive Search Pipeline,C-suite and director level candidates,Candidate,4,4

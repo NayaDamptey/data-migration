@@ -1,0 +1,537 @@
+TableName,Column,DataType,Description,Keys
+Accounts,Account_ID,INT,Clients Information,Primary Key
+Accounts,Account_name,NVARCHAR(255),Client Name,
+Accounts,AccountTypeID,INT,,Foreign Key
+Accounts,AccountStatusTypeID,INT,,Foreign Key
+Accounts,DeptID,INT,,Foreign Key
+Accounts,AccountReferenceNo,INT,,
+Accounts,Terms,NVARCHAR(255),,
+Accounts,Website,NVARCHAR(255),,
+Accounts,AddressID,INT,,Foreign Key
+Accounts,Division_ID,INT,,Foreign Key
+Accounts,About,NVARCHAR(MAX),,
+Accounts,ParentAccountID,INT,,Foreign Key
+Accounts,InvoiceAddressID,INT,,Foreign Key
+Accounts,CreatedAt,DATETIME,,
+Accounts,UpdatedAt,DATETIME,,
+Accounts,Note,NVARCHAR(MAX),,
+Accounts,Industry,NVARCHAR(255),,
+Accounts,CreatedBy,INT,,
+Accounts,UpdatedBy,INT,,
+Accounts,NoticePeriod,INT,,
+Accounts,RateID,INT,,Foreign Key
+Accounts,Deleted,BIT,,
+AccountType,AccountTypeID,INT,,Primary Key
+AccountType,Description,NVARCHAR(255),,
+AccountType,CreatedAt,DATETIME,,
+AccountType,CreatedBy,INT,,
+AccountType,UpdatedBy,INT,,
+AccountType,Active,BIT,,
+AccountType,Deleted,BIT,,
+AccountStatus,Account_StatusID,INT,,Primary Key
+AccountStatus,Description,NVARCHAR(255),,
+AccountStatus,CreatedAt,DATETIME,,
+AccountStatus,CreatedBy,INT,,
+Addresses,AddressID,INT,Stores all addresses,Primary Key
+Addresses,Address_line1,NVARCHAR(50),,
+Addresses,Address_line2,NVARCHAR(50),,
+Addresses,City,NVARCHAR(50),,
+Addresses,ZipCode,NVARCHAR(50),,
+Addresses,Province,NVARCHAR(50),,
+Addresses,Country,NVARCHAR(50),,
+Addresses,Email,NVARCHAR(50),,
+Addresses,Phone,NVARCHAR(50),,
+Addresses,OtherPhone,NVARCHAR(50),,
+Addresses,WorkPhone,NVARCHAR(50),,
+Addresses,Longitude,DECIMAL(9,6),,
+Addresses,Latitude,DECIMAL(8,6),,
+Addresses,CreatedAt,DATETIME,,
+Addresses,CreatedBy,INT,,
+Associates,AssociateID,NVARCHAR(50),Contacts,Primary Key
+Associates,AssociateTitle,NVARCHAR(50),,
+Associates,Person_ID,INT,,Foreign Key
+Associates,Associate_StatusID,INT,,Foreign Key
+Associates,DeptID,INT,,Foreign Key
+Associates,AssociateTypeDescription,NVARCHAR(50),,
+Associates,Associate_AddressID,INT,,Foreign Key
+Associates,Associate_RoleID,INT,,Foreign Key
+Associates,Photo,NVARCHAR(MAX),,
+Associates,DivisionID,INT,,Foreign Key
+Associates,Active,BIT,,
+Associates,Associate_Tag,NVARCHAR(MAX),,
+Associates,CreatedAt,DATETIME,,
+Associates,UpdatedAt,DATETIME,,
+Associates,CreatedBy,INT,,
+Associates,UpdatedBy,INT,,
+AccountAssociates,AccountAssociateID,INT,,Primary Key
+AccountAssociates,AssociateID,INT,,Foreign Key
+AccountAssociates,AccountID,INT,,Foreign Key
+AssociateTypes,Associate_TypeID,INT,,Primary Key
+AssociateTypes,TypeName,NVARCHAR(50),,
+AssociateTypes,DivisionID,INT,,Foreign Key
+AssociateTypes,DepartmentID,INT,,Foreign Key
+AssociateTypeRelation,AssociateRelationID,INT,,Primary Key
+AssociateTypeRelation,AssociateID,INT,,
+AssociateTypeRelation,TypeID,INT,,
+Person,Person_ID,INT,Contacts and candidates,Primary Key
+Person,First_Name,NVARCHAR(50),,
+Person,Middle_name,NVARCHAR(50),,
+Person,Last_Name,NVARCHAR(50),,
+Person,DOB,DATE,,
+Person,Account_Number,INT,,
+Person,GDPRConsent_ID,INT,,Foreign Key
+Person,DeptID,INT,,Foreign Key
+Person,Role_ID,INT,,Foreign Key
+Person,CreatedAt,DATETIME,,
+Person,UpdatedAt,DATETIME,,
+Person,CreatedBy,INT,,
+Person,UpdatedBy,INT,,
+Person,Associate,BIT,,
+Person,Emp,BIT,,
+Person,Deleted,BIT,,
+Person,IsArchived,BIT,,
+Recruiter,RecruiterID,INT,,Primary Key
+Recruiter,Username,NVARCHAR(50),,
+Recruiter,Role_ID,INT,,Foreign Key
+Recruiter,Fullname,NVARCHAR(255),,
+Recruiter,email,NVARCHAR(255),,
+Recruiter,ReportsTo,INT,,Foreign Key
+Recruiter,CreatedAt,DATETIME,,
+Recruiter,UpdatedAt,DATETIME,,
+Recruiter,Password,NVARCHAR(255),,
+Roles,Role_ID,INT,,Primary Key
+Roles,Description,NVARCHAR(50),,
+Roles,RoleCode,NVARCHAR(50),,
+Emp_Profile,Emp_ProfileID,INT,,Primary Key
+Emp_Profile,Emp_No,INT,,
+Emp_Profile,Person_ID,INT,,Foreign Key
+Emp_Profile,Profile_Notes,NVARCHAR(MAX),,
+Emp_Profile,Emp_TypeID,INT,,Foreign Key
+Emp_Profile,Emp_TypeDescription,NVARCHAR(50),,
+Emp_Profile,NI_number,NVARCHAR(50),,
+Emp_Profile,BankDetails,NVARCHAR(50),,
+Emp_Profile,SortCode,NVARCHAR(50),,
+Emp_Profile,CreatedBy,INT,,
+Emp_Profile,CreatedAt,DATETIME,,
+Emp_Profile,UpdatedAt,DATETIME,,
+Req,ReqID,INT,Jobs,Primary Key
+Req,Req_Title,NVARCHAR(50),,
+Req,AssociateID,INT,,Foreign Key
+Req,AccountID,INT,,Foreign Key
+Req,ReqStat,NVARCHAR(50),,
+Req,Req_RateID,INT,,
+Req,Compensation_package,NVARCHAR(MAX),,
+Req,StatusID,INT,,
+Req,StatusText,NVARCHAR(50),,
+Req,StatusDate,DATE,,
+Req,CurrencyCode,NVARCHAR(50),,
+Req,WorktypeID,INT,,
+Req,Worktype,NVARCHAR(50),,
+Req,Vacancy,INT,,
+Req,WorkingHours,INT,,
+Req,Address_ID,INT,,Foreign Key
+Req,ReqSource,INT,,
+Req,StartDate,DATETIME,,
+Req,ExpiryDate,DATETIME,,
+Req,EndDate,DATETIME,,
+Req,Req_Description,NVARCHAR(MAX),,
+Req,PONumber,NVARCHAR(50),,Foreign Key
+Req,Deleted,BIT,,
+Req,CreatedBy,INT,,
+Req,UpdatedBy,INT,,
+Req,CreatedAt,DATETIME,,
+Req,UpdatedAt,DATETIME,,
+Req_Hired,Req_HiredID,INT,,Primary Key
+Req_Hired,Account_ID,INT,,Foreign Key
+Req_Hired,Associate_ID,INT,,Foreign Key
+Req_Hired,Req_ID,INT,Get all rates from job,Foreign Key
+Req_Hired,Worktype,NVARCHAR(50),,
+Req_Hired,StartDate,DATETIME,,
+Req_Hired,EndDate,DATETIME,,
+Req_Hired,Burden,FLOAT,,
+Req_Hired,Invoiced_PersonID,INT,,Foreign Key
+Req_Hired,Pipeline_Stage,NVARCHAR(50),,
+Req_Hired,RateID,INT,,Foreign Key
+Req_Hired,CurrencyCode,NVARCHAR(50),,
+Req_Hired,CurrencyID,INT,,
+Req_Hired,Source,NVARCHAR(50),,
+Req_Hired,FeeValue,INT,,
+Req_Hired,Owner_ID,INT,,Foreign Key
+Req_Hired,Second_OwnerID,INT,,Foreign Key
+Req_Hired,Reason_ID,INT,,Foreign Key
+Req_Hired,Hired_Status,BIT,To know those that are placements,
+Req_Hired,Deleted,BIT,,
+Req_Hired,CreatedBy,INT,,
+Req_Hired,UpdatedBy,INT,,
+Req_Hired,CreatedAt,DATETIME,,
+Req_Rates,Req_RateID,INT,,Primary Key
+Req_Rates,Req_ID,INT,,
+Req_Rates,Payrate,FLOAT,,
+Req_Rates,BillRate,FLOAT,,
+Req_Rates,Salary,"DECIMAL(10,2)",,
+Req_Rates,Notes,NVARCHAR(MAX),,
+Req_Rates,UpdatedAt,DATETIME,,
+Req_Rates,CreatedBy,INT,,
+Req_Rates,UpdatedBy,INT,,
+GDPR_Consent,GDPR_ConsentID,INT,,Primary Key
+GDPR_Consent,Person_ID,INT,,
+GDPR_Consent,Email,BIT,,
+GDPR_Consent,Text,BIT,,
+GDPR_Consent,Phone,BIT,,
+GDPR_Consent,CreatedBy,INT,,
+GDPR_Consent,CreatedAt,DATETIME,,
+GDPR_Consent,UpdatedBy,INT,,
+GDPR_Consent,UpdatedAt,DATETIME,,
+Notes,Note_ID,INT,,Primary Key
+Notes,ObjectId,INT,,
+Notes,ObjectType,NVARCHAR(50),,
+Notes,Notetext,NVARCHAR(MAX),,
+Notes,CreatedAt,DATETIME,,
+Notes,CreatedBy,INT,,
+Notes,UpdatedAt,DATETIME,,
+Notes,UpdatedBy,INT,,
+CV_Docs,Doc_ID,INT,,Primary Key
+CV_Docs,CV_ID,INT,,
+CV_Docs,Desc,NVARCHAR(255),,
+CV_Docs,Path,NVARCHAR(255),,
+CV_Docs,CV_AssocID,INT,Person it links to,Foreign Key
+CV_Docs,CreatedAt,DATETIME,,
+CV_Docs,Uploaded_Id,INT,,
+CV_Docs,Updated_Id,INT,,
+CV_Docs,UpdatedAt,DATETIME,,
+CV_Docs,AgencyCV,BIT,,
+CV_Docs,Deleted,BIT,,
+Documents,Doc_ID,INT,,Primary Key
+Documents,Desc,NVARCHAR(MAX),,
+Documents,Path,NVARCHAR(255),,
+Documents,Doc_AssocID,INT,,Foreign Key
+Documents,Typeid,INT,,Foreign Key
+Documents,CreatedAt,DATETIME,,
+Documents,Uploaded_Id,INT,,
+Documents,Updated_Id,INT,,
+Documents,UpdatedAt,DATETIME,,
+Documents,Personal_Doc,BIT,,
+Documents,Deleted,BIT,,
+Documents,Private,BIT,,
+Documents,ObjectType,NVARCHAR(255),,
+Documents,Filesize,NVARCHAR(255),,
+Leads,Lead_ID,INT,,Primary Key
+Leads,Name,NVARCHAR(255),,
+Leads,Lead_Status,NVARCHAR(255),,
+Leads,Lead_Source,NVARCHAR(255),,
+Leads,Lead_Name,NVARCHAR(255),,
+Leads,Associate_ID,INT,,
+Leads,Account_ID,INT,,
+Leads,Req_ID,INT,,
+Leads,Email,NVARCHAR(255),,
+Leads,Phone,NVARCHAR(255),,
+Leads,Note,NVARCHAR(MAX),,
+Leads,Consent_GDPR,BIT,,
+Leads,URL,NVARCHAR(255),,
+Leads,Address_Line1,NVARCHAR(255),,
+Leads,Address_Line2,NVARCHAR(255),,
+Leads,City,NVARCHAR(255),,
+Leads,Country,NVARCHAR(255),,
+Leads,Document_ID,INT,,
+Leads,Sourced_Date,DATETIME,,
+Leads,Assigned_To,INT,,
+Leads,CreatedBy,INT,,
+Leads,UpdatedBy,INT,,
+Leads,Lead_Score,INT,1-5 For how promising,
+Interview_Feedback,Interview_FeedbackID,INT,,Primary Key
+Interview_Feedback,Interviewer_ID,INT,,
+Interview_Feedback,Interviewee_ID,INT,,
+Interview_Feedback,Interview_Date,DATETIME,,
+Interview_Feedback,Second_InterviewerID,INT,,
+Interview_Feedback,Other_InterviewerID,INT,,
+Interview_Feedback,Notes,NVARCHAR(MAX),,
+Interview_Feedback,Callback,BIT,,
+Interview_Feedback,CreatedAt,DATETIME,,
+Interview_Feedback,UpdatedAt,DATETIME,,
+Schedule,Schedule_ID,INT,,Primary Key
+Schedule,AssignSchedule_ID,INT,,
+Schedule,ScheduleType,NVARCHAR(255),,
+Schedule,Account_ID,INT,,
+Schedule,Req_ID,INT,,
+Schedule,Person_ID,INT,,
+Schedule,Person_Type,NVARCHAR(255),,
+Schedule,StartDate,DATETIME,,
+Schedule,EndDate,DATETIME,,
+Schedule,Notes,NVARCHAR(MAX),,
+Schedule,CreatedAt,DATETIME,,
+Schedule,CreatedBy,INT,,
+Schedule,UpdatedAt,DATETIME,,
+Schedule,UpdatedBy,INT,,
+RecruiterDocuments,RecDocument_ID,INT,,Primary Key
+RecruiterDocuments,Recruiter_ID,INT,,
+RecruiterDocuments,Document_ID,INT,,
+RecruiterDocuments,Desc,NVARCHAR(255),,
+RecruiterDocuments,Deleted,BIT,,
+RecruiterDocuments,Private,BIT,,
+Req_Documents,ReqDocument_ID,INT,,Primary Key
+Req_Documents,Req_ID,INT,,
+Req_Documents,Document_ID,INT,,
+Req_Documents,Desc,NVARCHAR(255),,
+Req_Documents,Deleted,BIT,,
+Req_Documents,Private,BIT,,
+Emp_Documents,EmpDocument_ID,INT,,Primary Key
+Emp_Documents,Emp_ID,INT,,
+Emp_Documents,Document_ID,INT,,
+Emp_Documents,Person_ID,INT,,
+Emp_Documents,Desc,NVARCHAR(255),,
+Emp_Documents,Deleted,BIT,,
+Emp_Documents,Private,BIT,,
+BackgroundChecks,Check_ID,INT,,Primary Key
+BackgroundChecks,Person_ID,INT,,
+BackgroundChecks,Check_Type,NVARCHAR(255),,
+BackgroundChecks,Doc_ID,INT,,
+BackgroundChecks,Notes,NVARCHAR(MAX),,
+BackgroundChecks,CreatedAt,DATETIME,,
+BackgroundChecks,UpdatedAt,DATETIME,,
+BackgroundChecks,CreatedBy,INT,,
+BackgroundChecks,UpdatedBy,INT,,
+AccountRate,Rate_ID,INT,,Primary Key
+AccountRate,Account_ID,INT,,Foreign Key
+AccountRate,Chargerate,"DECIMAL(8,2)",,
+AccountRate,Payrate,"DECIMAL(8,2)",,
+AccountRate,CreatedAt,DATETIME,,
+AccountRate,UpdatedAt,DATETIME,,
+AccountRate,CreatedBy,INT,,
+AccountRate,UpdatedBy,INT,,
+Compliance,Compliance_ID,INT,,Primary Key
+Compliance,Notes,NVARCHAR(MAX),,
+Compliance,Deleted,BIT,,
+Compliance,CreatedBy,INT,,
+ComplianceTypes,Compliance_typeID,INT,,Primary Key
+ComplianceTypes,Name,NVARCHAR(255),,
+ComplianceDocuments,Comp_DocId,INT,,Primary Key
+ComplianceDocuments,Desc,NVARCHAR(255),,
+ComplianceItems,Compliance_ItemID,INT,,Primary Key
+ComplianceItems,Comp_ID,INT,,
+ComplianceItems,Comp_DocID,INT,,
+ComplianceItems,CompType_ID,INT,,
+ComplianceItems,Comp_AssocID,INT,,
+ComplianceItems,CreatedAt,DATETIME,,
+ComplianceItems,UpdatedAt,DATETIME,,
+ComplianceItems,CreatedBy,INT,,
+ComplianceItems,Deleted,BIT,,
+Skills,SkillID,INT,,Primary Key
+Skills,SkillName,NVARCHAR(255),,
+Skills,Skill_CategoryID,INT,,
+Skills,Deleted,BIT,,
+SkillCategory,CategoryID,INT,,Primary Key
+SkillCategory,Name,NVARCHAR(255),,
+SkillCategory,Deleted,BIT,,
+ObjectSKills,ID,INT,,Primary Key
+ObjectSKills,ObType,NVARCHAR(50),,
+ObjectSKills,SkillID,INT,,
+ObjectSKills,SkillName,NVARCHAR(255),,
+ObjectSKills,CreatedBy,INT,,
+ObjectSKills,UpdatedBy,INT,,
+ObjectSKills,CreatedAt,DATETIME,,
+ObjectSKills,UpdatedAt,DATETIME,,
+ObjectSKills,Deleted,BIT,,
+WebForms,FormID,INT,,Primary Key
+WebForms,Form_Name,NVARCHAR(50),,
+WebForms,Desc,NVARCHAR(255),,
+WebForms,Deleted,BIT,,
+WebForms,CreatedAt,DATETIME,,
+WebForms,UpdatedAt,DATETIME,,
+DocumentType,Doc_TypeID,INT,,Primary Key
+DocumentType,Desc,NVARCHAR(50),,
+Departments,DepartmentID,INT,,Primary Key
+Departments,Name,NVARCHAR(50),,
+Departments,CreatedAt,DATETIME,,
+Departments,UpdatedAt,DATETIME,,
+Departments,CreatedBy,INT,,
+Departments,Deleted,BIT,,
+Sectors,ID,INT,,Primary Key
+Sectors,Desc,NVARCHAR(50),,
+Sectors,ObjectID,INT,,
+Sectors,ObjectType,NVARCHAR(50),,
+Sectors,CreatedAt,DATETIME,,
+Sectors,UpdatedAt,DATETIME,,
+Sectors,CreatedBy,INT,,
+Sectors,UpdatedBy,INT,,
+Sectors,Deleted,BIT,,
+Languages,ID,INT,,Primary Key
+Languages,Language,NVARCHAR(50),,
+TimeSheets,ID,INT,,Primary Key
+TimeSheets,Timesheet_TypeID,INT,,Foreign Key
+TimeSheets,PONo,NVARCHAR(50),,Foreign Key
+TimeSheets,Payrate,"DECIMAL(8,2)",,
+TimeSheets,Billrate,"DECIMAL(8,2)",,
+TimeSheets,StartDate,DATE,,
+TimeSheets,Enddate,DATE,,
+TimeSheets,Status,NVARCHAR(50),,
+TimeSheets,Approved_Date,DATETIME,,
+TimeSheets,Approved_By,INT,,
+TimesheetType,Timesheet_TypeID,INT,,Primary Key
+TimesheetType,Desc,NVARCHAR(50),,
+TimesheetType,Billable,BIT,,
+TimesheetType,Requires_Approval,BIT,,
+TimesheetItems,ItemID,INT,,Primary Key
+TimesheetItems,Timesheet_ID,INT,,Foreign Key
+TimesheetItems,Timesheet_TypeID,INT,,Foreign Key
+TimesheetItems,StartTime,TIME,,
+TimesheetItems,EndTime,TIME,,
+TimesheetItems,Person_ID,INT,,Foreign Key
+TimesheetItems,TotalHours,FLOAT,,
+TimesheetItems,Req_ID,INT,,Foreign Key
+TimesheetItems,CreatedBy,INT,,
+TimesheetItems,UpdatedBy,INT,,
+TimesheetItems,CreatedAt,DATETIME,,
+TimesheetItems,UpdatedAt,DATETIME,,
+EmpHist,Hist_ID,INT,,Primary Key
+EmpHist,Emp_ID,INT,Links to Emp Number in emp profile table,Foreign Key
+EmpHist,PlaceofWork,NVARCHAR(50),,
+EmpHist,Started_At,DATETIME,,
+EmpHist,Ended_At,DATETIME,,
+EmpHist,Title,NVARCHAR(50),,
+EmpHist,CreatedBy,INT,,
+EmpHist,UpdatedBy,INT,,
+EmpHist,Deleted,BIT,,
+EmpEdu,Edu_ID,INT,,Primary Key
+EmpEdu,Emp_ID,INT,,Foreign Key
+EmpEdu,Institution,NVARCHAR(50),,
+EmpEdu,StartDate,DATE,,
+EmpEdu,EndDate,DATE,,
+EmpEdu,Grade,NVARCHAR(50),,
+EmpEdu,AwardTitle,NVARCHAR(50),,
+EmpEdu,EducationLevel,NVARCHAR(50),,
+EmpEdu,IsHighestLevel,BIT,,
+EmpEdu,CreatedAt,DATETIME,,
+EmpEdu,UpdatedAt,DATETIME,,
+PONo,PONo,NVARCHAR(50),,Primary Key
+PONo,VendorID,INT,References Client,Foreign Key
+PONo,ReqID,INT,References reqs/jobs,Foreign Key
+PONo,DepartmentID,INT,,
+PONo,CreatedBy,INT,,
+PONo,UpdatedBy,INT,,
+PONo,ApprovedBy,INT,,
+PONo,POStatus,NVARCHAR(50),,
+PONo,Issue_Date,DATE,,
+PONo,DateDue,DATE,,
+PONo,Currency,NVARCHAR(50),,
+PONo,Amount,FLOAT,,
+PONo,TaxAmount,FLOAT,,
+PONo,Payment_Terms,NVARCHAR(50),,
+PONo,Desc,NVARCHAR(255),,
+PONo,Notes,NVARCHAR(MAX),,
+PONo,CreatedAt,DATETIME,,
+PONo,UpdatedAt,DATETIME,,
+Hotlists,Hotlist_ID,INT,,Primary Key
+Hotlists,Name,NVARCHAR(50),,
+Hotlists,Desc,NVARCHAR(50),,
+Hotlists,Hotlist_Type,NVARCHAR(50),,
+Hotlists,CreatedBy,INT,,
+Hotlists,UpdatedBy,INT,,
+ObjectHotlist,ObjHotlistID,INT,,Primary Key
+ObjectHotlist,Hotlist_ID,INT,,Foreign Key
+ObjectHotlist,Person_ID,INT,,Foreign Key
+ObjectHotlist,CreatedBy,INT,,
+ObjectHotlist,UpdatedBy,INT,,
+ObjectHotlist,Deleted,BIT,,
+Invoice,InvoiceID,INT,,Primary Key
+Invoice,Invoice_No,NVARCHAR(50),,
+Invoice,PONo,NVARCHAR(50),,Foreign Key
+Invoice,Vendor_ID,INT,References Client,Foreign Key
+Invoice,DateDue,DATE,,
+Invoice,InvoiceDate,DATE,,
+Invoice,Currency,NVARCHAR(50),,
+Invoice,Status,NVARCHAR(50),,
+Invoice,Amount,FLOAT,,
+Invoice,VAT,NVARCHAR(50),,
+Invoice,NETAmount,FLOAT,,
+Invoice,Amount_Paid,FLOAT,,
+Invoice,Balance_Due,FLOAT,,
+Invoice,SubTotal_Amount,FLOAT,,
+Invoice,Payment_Terms,NVARCHAR(50),,
+Invoice,Desc,NVARCHAR(50),,
+Invoice,Document_ID,INT,,
+Invoice,Approved_By,INT,,
+Invoice,CreatedBy,INT,,
+Invoice,UpdatedBy,INT,,
+Invoice,InvoiceType_ID,INT,,
+InvoiceTypes,InvoiceType_ID,INT,,Primary Key
+InvoiceTypes,Type_Name,NVARCHAR(50),,
+InvoiceTypes,Desc,NVARCHAR(50),,
+InvoiceTypes,CreatedBy,INT,,
+InvoiceTypes,UpdatedBy,INT,,
+InvoiceTypes,Deleted,BIT,,
+InvoiceEntries,Invoice_EntryID,INT,,Primary Key
+InvoiceEntries,Invoice_ID,INT,,
+InvoiceEntries,Quantity,INT,,
+InvoiceEntries,Unit_Price,FLOAT,,
+InvoiceEntries,Amount,FLOAT,,
+InvoiceEntries,Desc,NVARCHAR(50),,
+InvoiceEntries,Plac_ID,INT,,
+InvoiceEntries,CreatedAt,DATETIME,,
+InvoiceEntries,UpdatedAt,DATETIME,,
+InvoiceEntries,CreatedBy,INT,,
+Tags,ID,INT,,Primary Key
+Tags,Tag_Name,NVARCHAR(50),,
+Tags,CategoryID,INT,,
+Tags,CreatedBy,INT,,
+Tags,CreatedAt,DATETIME,,
+Tags,Deleted,BIT,,
+TagEntity,TagEntity_ID,INT,,Primary Key
+TagEntity,TagID,INT,,
+TagEntity,EntityID,INT,,Foreign Key
+TagEntity,EntityType,NVARCHAR(50),,
+TagEntity,CreatedAt,DATETIME,,
+TagEntity,CreatedBy,INT,,
+Categories,Category_ID,INT,,Primary Key
+Categories,Cat_Name,NVARCHAR(50),,
+Categories,CreatedBy,INT,,
+Categories,CreatedAt,DATETIME,,
+Categories,Deleted,BIT,,
+Division,DivisionID,INT,,Primary Key
+Division,Division_Name,NVARCHAR(50),,
+Division,CreatedBy,INT,,
+Division,CreatedAt,DATETIME,,
+Division,Deleted,BIT,,
+APIsession,SessionID,INT,,Primary Key
+APIsession,User_ID,INT,,Foreign Key
+APIsession,UserType,NVARCHAR(50),,
+APIsession,API_Key,NVARCHAR(50),,
+APIsession,ip_Address,NVARCHAR(50),,
+APIsession,User_agent,NVARCHAR(255),"Information about the client making the API calls (browser, app, bot).",
+APIsession,CreatedAt,DATETIME,,
+APIsession,Expires_At,DATETIME,,
+APIsession,Last_activity_At,DATETIME,,
+APIsession,Status,NVARCHAR(50),,
+APIsession,refresh_Token,NVARCHAR(255),,
+APIsession,scopes,NVARCHAR(255),Permissions or access levels granted to this session,
+APIsession,request_count,INT,,
+APIsession,terminated_by,INT,,
+Log,LogID,INT,,Primary Key
+Log,Timestamp,DATETIME,,
+Log,Level,INT,,
+Log,User_ID,INT,,
+Log,Action,NVARCHAR(50),,
+Log,Entity_Type,NVARCHAR(50),,
+Log,Entity_ID,INT,,
+Log,message,NVARCHAR(255),,
+Log,ip_Address,NVARCHAR(50),,
+Log,User_Agent,NVARCHAR(255),,
+Log,request_Id,INT,,
+Log,Status_Code,NVARCHAR(50),,
+Log,CreatedAt,DATETIME,,
+Referees,Referee_ID,INT,,Primary Key
+Referees,Fullname,NVARCHAR(255),,
+Referees,email,NVARCHAR(255),,
+Referees,Telephone,NVARCHAR(255),,
+Referees,Company,NVARCHAR(255),,
+Referees,Job_Title,NVARCHAR(255),,
+Referees,Notes,NVARCHAR(255),,
+Referees,CreatedAt,DATETIME,,
+EmpRef,EmpRef_ID,INT,,Primary Key
+EmpRef,Ref_ID,INT,,Foreign Key
+EmpRef,EmpNo,NVARCHAR(255),,
+EmpRef,Status,NVARCHAR(255),,
+EmpRef,Relationship,NVARCHAR(255),,
+EmpRef,Reference,NVARCHAR(MAX),,
+EmpRef,Notes,NVARCHAR(255),,
+EmpRef,CreatedAt,DATETIME,,
+EmpRef,UpdatedAt,DATETIME,,

@@ -1,0 +1,2061 @@
+{
+  "_meta": {
+    "description": "Stage 2 \u2014 Canonical entities mapped to target tables. Target-specific transforms live here.",
+    "version": "1.0",
+    "note": "Confidence here is generally high as canonical is designed to align with the target. Low scores flag structural mismatches."
+  },
+  "mappings": {
+    "canonical_company": {
+      "target_table": "Company",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "name",
+          "target": "CompanyName",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "type",
+          "target": "CompanyType",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "industry",
+          "target": "Industry",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "website",
+          "target": "Website",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "background",
+          "target": "Background",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "phone",
+          "target": "Telephone",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "email",
+          "target": "Email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "fax",
+          "target": "Fax",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "location_id",
+          "target": "LocationID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "owner_id",
+          "target": "Company_OwnerID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "AddedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "is_deleted",
+          "target": "Isdeleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "is_archived",
+          "target": "IsArchive",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "canonical_address_to_company_location": {
+      "target_table": "CompanyLocation",
+      "source_canonical": "canonical_address",
+      "note": "Addresses linked to Accounts are written here",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "line1",
+          "target": "AddressLine1",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "line2",
+          "target": "AddressLine2",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "city",
+          "target": "City",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "county",
+          "target": "County",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "post_code",
+          "target": "PostCode",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "country",
+          "target": "Country",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "canonical_address_to_contact_location": {
+      "target_table": "ContactLocation",
+      "source_canonical": "canonical_address",
+      "note": "Addresses linked to Associates are written here",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "line1",
+          "target": "AddressLine1",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "line2",
+          "target": "AddressLine2",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "city",
+          "target": "City",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "county",
+          "target": "County",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "post_code",
+          "target": "PostCode",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "country",
+          "target": "Country",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "canonical_address_to_position_location": {
+      "target_table": "PositionLocation",
+      "source_canonical": "canonical_address",
+      "note": "Addresses linked to Req/Jobs are written here",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "line1",
+          "target": "AddressLine1",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "line2",
+          "target": "AddressLine2",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "city",
+          "target": "City",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "county",
+          "target": "County",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "post_code",
+          "target": "PostCode",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "country",
+          "target": "Country",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "canonical_contact": {
+      "target_table": "Contact",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "title",
+          "target": "PositionTitle",
+          "transform": "direct",
+          "confidence": 0.9,
+          "notes": "Title used as position title \u2014 verify intent",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "contact_type",
+          "target": "Contacttype",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "location_id",
+          "target": "LocationID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "department_id",
+          "target": "DepartmentID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "role",
+          "target": "Role",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "owner_id",
+          "target": "ContactOwnerID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "is_deleted",
+          "target": "IsDeleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "is_archived",
+          "target": "IsArchived",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "AddedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_by",
+          "target": "ModifiedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "ModifiedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "notes",
+          "target": "Notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "canonical_applicant": {
+      "target_table": "Applicant",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ApplicantID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "first_name",
+          "target": "FirstName",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "middle_name",
+          "target": "MiddleName",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "last_name",
+          "target": "LastName",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "dob",
+          "target": "DateOfBirth",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "location_id",
+          "target": "LocationID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "status",
+          "target": "Status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "job_title",
+          "target": "JobTitle",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "source",
+          "target": "Source",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "owner_id",
+          "target": "ApplicantOwner",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "AddedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_by",
+          "target": "UpdatedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "is_deleted",
+          "target": "Deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "employment_type",
+          "target": "EmploymentType",
+          "transform": "direct",
+          "confidence": 0.85,
+          "notes": "Employment type label may need normalisation",
+          "reviewed": true,
+          "decision": "approved"
+        },
+        {
+          "canonical": "ni_number",
+          "target": "SSN",
+          "transform": "direct",
+          "confidence": 0.8,
+          "notes": "NI number stored in SSN field \u2014 confirm with target team",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "canonical_user": {
+      "target_table": "User",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "UserID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "username",
+          "target": "Loginname",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "full_name",
+          "target": "FullName",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "email",
+          "target": "Email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "role",
+          "target": "Role",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "manager_id",
+          "target": "ManagerId",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "EnteredDateTime",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedDateTime",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "canonical_job": {
+      "target_table": "Position",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "title",
+          "target": "PositionName",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "description",
+          "target": "PositionDesc",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "company_id",
+          "target": "CompanyID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "contact_id",
+          "target": "ContactID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "status",
+          "target": "Status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "currency",
+          "target": "Currency",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "pay_rate",
+          "target": "PositionPayRate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "charge_rate",
+          "target": "PositionChargeRate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "salary",
+          "target": "Salary",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "po_number",
+          "target": "PurchaseOrderNo",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "location_id",
+          "target": "PositionLocationID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "start_date",
+          "target": "DateBegins",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "end_date",
+          "target": "DateEnds",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "Addedby",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "Addedat",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_by",
+          "target": "UpdatedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "is_deleted",
+          "target": "Deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "expiry_date",
+          "target": "DatePublished",
+          "transform": "direct",
+          "confidence": 0.8,
+          "notes": "Closest match \u2014 confirm with business",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "canonical_placement": {
+      "target_table": "Placements",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "applicant_id",
+          "target": "ApplicantID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "job_id",
+          "target": "PositionID",
+          "transform": "cast_to_int",
+          "confidence": 0.9,
+          "notes": "PositionID is INT in target",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "company_id",
+          "target": "CompanyID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "start_date",
+          "target": "StartDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "end_date",
+          "target": "EndDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "pay_rate",
+          "target": "PayRate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "charge_rate",
+          "target": "ChargeRate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "fee",
+          "target": "Fee",
+          "transform": "cast_to_float",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "status",
+          "target": "Status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "owner_id",
+          "target": "OwnerID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "AddedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_by",
+          "target": "UpdatedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "work_type",
+          "target": "EmploymentType",
+          "transform": "direct",
+          "confidence": 0.88,
+          "notes": "Work type label may need normalisation",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "canonical_consent": {
+      "target_table": "Marketing",
+      "columns": [
+        {
+          "canonical": "person_id",
+          "target": "ApplicantID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "email_consent",
+          "target": "Email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "phone_consent",
+          "target": "Phone",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "text_consent",
+          "target": "Text",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "gdpr_consent",
+          "target": "GDPRConsent",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "AddedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_by",
+          "target": "UpdatedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "canonical_document": {
+      "target_table": "Attachments",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "AttachmentID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "name",
+          "target": "AttachmentName",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "description",
+          "target": "Description",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "file_path",
+          "target": "FilePath",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "doc_type",
+          "target": "AttachmentType",
+          "transform": "direct",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "UploadedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "UploadedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "is_deleted",
+          "target": "IsDeleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "file_size",
+          "target": "FileType",
+          "transform": "direct",
+          "confidence": 0.72,
+          "notes": "Low confidence \u2014 FileType expects mime type, source has size string",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "canonical_timesheet": {
+      "target_table": "Timesheets",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "cast_to_int",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "type",
+          "target": "TimesheetType",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "pay_rate",
+          "target": "Payrate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "charge_rate",
+          "target": "ChargeRate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "currency",
+          "target": "Currency",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "start_date",
+          "target": "StartDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "end_date",
+          "target": "EndDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "status",
+          "target": "Status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "approved_by",
+          "target": "ApprovedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "total_hours",
+          "target": "TotalWeekHours",
+          "transform": "direct",
+          "confidence": 0.88,
+          "notes": "Source has item-level hours \u2014 may need summing",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "canonical_timesheet_item": {
+      "target_table": "TimesheetActivity",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ActivityID",
+          "transform": "cast_to_int",
+          "confidence": 0.9,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "timesheet_id",
+          "target": "TimesheetID",
+          "transform": "cast_to_int",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "total_hours",
+          "target": "HoursWorked",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "AddedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "person_id",
+          "target": "AssocID",
+          "transform": "cast_to_int",
+          "confidence": 0.88,
+          "notes": "Person maps to Associate in this context",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "canonical_invoice": {
+      "target_table": "Invoice",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "cast_to_int",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "type",
+          "target": "Type",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "invoice_no",
+          "target": "InvoiceNo",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "amount",
+          "target": "Amount",
+          "transform": "cast_to_decimal",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "tax_amount",
+          "target": "TaxAmount",
+          "transform": "cast_to_decimal",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "currency",
+          "target": "Currency",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "invoice_date",
+          "target": "InvoiceDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "due_date",
+          "target": "DueDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "status",
+          "target": "Status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "notes",
+          "target": "Notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "AddedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_by",
+          "target": "UpdatedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "canonical_purchase_order": {
+      "target_table": "PurchaseOrder",
+      "columns": [
+        {
+          "canonical": "po_number",
+          "target": "PONo",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "vendor_id",
+          "target": "CompanyID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "status",
+          "target": "Status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "amount",
+          "target": "POAmount",
+          "transform": "cast_to_decimal",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "issue_date",
+          "target": "PODate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "AddedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_by",
+          "target": "UpdatedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    },
+    "canonical_lead": {
+      "target_table": "Leads",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "cast_to_int",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "full_name",
+          "target": "Fullname",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "company_id",
+          "target": "CompanyID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "source",
+          "target": "Source",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "notes",
+          "target": "Notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "is_deleted",
+          "target": "Deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_by",
+          "target": "AddedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_by",
+          "target": "UpdatedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "status",
+          "target": "PipelineStage",
+          "transform": "direct",
+          "confidence": 0.8,
+          "notes": "Status values may differ \u2014 verify mapping with business",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "canonical_work_history": {
+      "target_table": "Work_History",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "cast_to_int",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "company_name",
+          "target": "CompanyName",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "position_title",
+          "target": "PositionTitle",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "start_date",
+          "target": "StartDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "end_date",
+          "target": "EndDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "reason_for_leaving",
+          "target": "ReasonForLeaving",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "application_id",
+          "target": "ApplicationID",
+          "transform": "direct",
+          "confidence": 0.85,
+          "notes": "Links via Emp_Profile to Applicant",
+          "reviewed": true,
+          "decision": "approved"
+        },
+        {
+          "canonical": "employment_type",
+          "target": "EmploymentType",
+          "transform": "direct",
+          "confidence": 0.88,
+          "notes": "",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "canonical_activity": {
+      "target_table": "Task",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "cast_to_int",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "notes",
+          "target": "Note",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "status",
+          "target": "Status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "owner_id",
+          "target": "OwnerUserID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "start_date",
+          "target": "StartDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "end_date",
+          "target": "Enddate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "completed",
+          "target": "Completed",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "type",
+          "target": "TaskType",
+          "transform": "direct",
+          "confidence": 0.88,
+          "notes": "ScheduleType values (Interview, Call, etc.) map to TaskType \u2014 verify labels match",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "canonical_activity_items": {
+      "target_table": "TaskItem",
+      "source_canonical": "canonical_activity",
+      "note": "One TaskItem row per entity linked to the activity (company, person, job)",
+      "columns": [
+        {
+          "canonical": "created_by",
+          "target": "AddedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_by",
+          "target": "UpdatedBy",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "company_id",
+          "target": "ObjectID",
+          "transform": "direct",
+          "confidence": 0.82,
+          "notes": "Written once per linked entity type",
+          "reviewed": true,
+          "decision": "approved"
+        },
+        {
+          "canonical": "job_id",
+          "target": "ObjectID",
+          "transform": "direct",
+          "confidence": 0.82,
+          "notes": "Written as separate row with ObjectType=Position",
+          "reviewed": true,
+          "decision": "approved"
+        },
+        {
+          "canonical": "person_id",
+          "target": "ObjectID",
+          "transform": "direct",
+          "confidence": 0.82,
+          "notes": "Written as separate row with ObjectType=person_type value",
+          "reviewed": true,
+          "decision": "approved"
+        },
+        {
+          "canonical": "person_type",
+          "target": "ObjectType",
+          "transform": "direct",
+          "confidence": 0.88,
+          "notes": "",
+          "reviewed": true,
+          "decision": "approved"
+        }
+      ]
+    },
+    "canonical_reference": {
+      "target_table": "References",
+      "columns": [
+        {
+          "canonical": "id",
+          "target": "ID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "applicant_id",
+          "target": "ApplicantID",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "full_name",
+          "target": "Fullname",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "position_title",
+          "target": "PositionTitle",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "company_name",
+          "target": "CompanyName",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "relationship",
+          "target": "Relationship",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "email",
+          "target": "Email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "phone",
+          "target": "PhoneContact",
+          "transform": "direct",
+          "confidence": 0.95,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "reference_type",
+          "target": "ReferenceType",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "notes",
+          "target": "Notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "created_at",
+          "target": "AddedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        },
+        {
+          "canonical": "updated_at",
+          "target": "UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "notes": "",
+          "reviewed": false,
+          "decision": "auto-approved"
+        }
+      ]
+    }
+  }
+}

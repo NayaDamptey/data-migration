@@ -2,8 +2,10 @@
 // browser, then upload in resumable parts straight to storage.
 // API side: backend/app/routers/uploads.py.
 //
-// NEXT_PUBLIC_UPLOAD_MODE=api  → real uploads through the FastAPI routes
-// anything else (default)      → demo mode: progress is simulated, nothing leaves the browser
+// NEXT_PUBLIC_UPLOAD_MODE=local (default) → files are posted to the API and stored on its disk
+//                                          (backend/app/routers/local_files.py); no cloud storage needed
+// NEXT_PUBLIC_UPLOAD_MODE=api              → resumable multipart uploads to object storage (S3)
+// NEXT_PUBLIC_UPLOAD_MODE=demo             → progress is simulated, nothing leaves the browser
 
 export type UploadStatus = "checking" | "ready" | "invalid" | "queued" | "uploading" | "uploaded" | "failed" | "cancelled";
 
@@ -30,8 +32,9 @@ export const MAX_FILES = 2000;
 const EXTENSIONS = ["csv", "tsv", "txt", "zip"];
 const IGNORED = /^(\.ds_store|thumbs\.db|desktop\.ini|\._.*)$/i;
 const SAMPLE_BYTES = 64 * 1024;
-const MODE = process.env.NEXT_PUBLIC_UPLOAD_MODE === "api" ? "api" : "demo";
-const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const MODE: "local" | "api" | "demo" =
+  process.env.NEXT_PUBLIC_UPLOAD_MODE === "api" ? "api" : process.env.NEXT_PUBLIC_UPLOAD_MODE === "demo" ? "demo" : "local";
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
 
 export const uploadMode = MODE;
 
@@ -186,7 +189,7 @@ export type StartedFile = { token: string; part_size: number; part_count: number
 /** Ask the API to start uploads for many files at once. Demo mode skips this. */
 export async function startUploads(projectId: string, items: UploadItem[]): Promise<Map<string, StartedFile | { error: string }>> {
   const result = new Map<string, StartedFile | { error: string }>();
-  if (MODE === "demo") return result;
+  if (MODE !== "api") return result;
   for (let i = 0; i < items.length; i += 1000) {
     const chunk = items.slice(i, i + 1000);
     const res = await fetch(`${API}/projects/${encodeURIComponent(projectId)}/uploads`, {
@@ -206,6 +209,7 @@ export async function startUploads(projectId: string, items: UploadItem[]): Prom
 export async function uploadOne(projectId: string, item: UploadItem, started: StartedFile | undefined, onProgress: Progress, signal: AbortSignal) {
   if (!item.file) throw new Error("File is no longer available. Add it again.");
   if (MODE === "demo") return simulate(item.size, onProgress, signal);
+  if (MODE === "local") return postLocal(projectId, item.file, onProgress, signal);
   if (!started) throw new Error("Upload was not started");
 
   const { token, part_size, part_count } = started;
@@ -243,6 +247,51 @@ export async function uploadOne(projectId: string, item: UploadItem, started: St
     if (signal.aborted) post("abort", { token }).catch(() => {});
     throw e;
   }
+}
+
+/** Local mode: one multipart POST per file, with upload progress. */
+function postLocal(projectId: string, file: File, onProgress: Progress, signal: AbortSignal) {
+  return new Promise<void>((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `${API}/projects/${encodeURIComponent(projectId)}/files`);
+    xhr.upload.onprogress = (e) => e.lengthComputable && onProgress(e.loaded / e.total);
+    xhr.onload = () => {
+      if (xhr.status < 200 || xhr.status >= 300) {
+        let detail = `Upload failed (${xhr.status})`;
+        try { detail = JSON.parse(xhr.responseText).detail ?? detail; } catch { /* keep default */ }
+        return reject(new Error(detail));
+      }
+      const body = JSON.parse(xhr.responseText || "{}");
+      if (body.rejected?.length && !body.saved?.length) return reject(new Error(body.rejected[0].reason));
+      onProgress(1);
+      resolve();
+    };
+    xhr.onerror = () => reject(new Error("Couldn’t reach the API. Is it running on " + API + "?"));
+    xhr.onabort = () => reject(new DOMException("Cancelled", "AbortError"));
+    signal.addEventListener("abort", () => xhr.abort(), { once: true });
+    const form = new FormData();
+    form.append("files", file, file.name);
+    xhr.send(form);
+  });
+}
+
+/** Files already stored for the project (local mode), shown as uploaded. */
+export type StoredFile = { name: string; size: number; rows: number; columns: string[]; delimiter: string; table: string };
+
+export async function listStored(projectId: string): Promise<UploadItem[]> {
+  if (MODE !== "local") return [];
+  const res = await fetch(`${API}/projects/${encodeURIComponent(projectId)}/files`);
+  if (!res.ok) throw new Error(`Couldn’t list files (${res.status})`);
+  const files: StoredFile[] = await res.json();
+  return files.map((f) => ({
+    id: `stored-${f.name}`, name: f.name, path: f.name, size: f.size, kind: "csv", status: "uploaded", progress: 1,
+    warnings: [], columns: f.columns, delimiter: f.delimiter, rows: f.rows, rowsExact: true,
+  }));
+}
+
+export async function deleteStored(projectId: string, name: string) {
+  if (MODE !== "local") return;
+  await fetch(`${API}/projects/${encodeURIComponent(projectId)}/files/${encodeURIComponent(name)}`, { method: "DELETE" });
 }
 
 function putPart(url: string, blob: Blob, onBytes: (n: number) => void, signal: AbortSignal) {

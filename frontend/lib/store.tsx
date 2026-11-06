@@ -2,13 +2,16 @@
 
 // Prototype state shared across screens. Lives in memory for the session;
 // swap for TanStack Query + the FastAPI routes when the backend is ready.
-import { createContext, useCallback, useContext, useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type Dispatch, type ReactNode, type SetStateAction } from "react";
 import { ENTITIES, ENTITY_JOINS, INITIAL_REQUESTS, INITIAL_RUNS, INITIAL_UPLOADS, type FieldStatus, type Join, type Run } from "./mock";
 import type { TransformConfig } from "./transforms";
-import type { UploadItem } from "./upload";
+import { api } from "./api";
+import { listStored, uploadMode, type UploadItem } from "./upload";
 import { EMPTY_OVERRIDES, computeChanges, type Change, type Overrides } from "./versions";
 
 export type StepState = "idle" | "running" | "done";
+
+export type QualityResult = { source: string; sourceLabel: string; passed: number; total: number; toReview: number; error?: string };
 
 export type Setup = {
   sourceSystem: string;
@@ -25,9 +28,13 @@ type Store = {
   setup: Setup;
   updateSetup: (patch: Partial<Setup>) => void;
   uploads: UploadItem[];
+  /** The list of already-stored files has loaded (so "nothing uploaded" is real, not "not loaded yet"). */
+  uploadsReady: boolean;
   setUploads: Dispatch<SetStateAction<UploadItem[]>>;
-  steps: { inspect: StepState; canonical: StepState; target: StepState };
-  runStep: (step: "inspect" | "canonical" | "target") => Promise<void>;
+  steps: { quality: StepState; canonical: StepState; target: StepState };
+  runStep: (step: "quality" | "canonical" | "target") => Promise<void>;
+  /** Result of the last data quality run (step 2 of the pipeline). */
+  quality: QualityResult | null;
   runs: Run[];
   requests: ChangeRequest[];
   addRequest: (text: string) => void;
@@ -68,6 +75,8 @@ const configKey = (entity: string, field: string) => {
 
 const Ctx = createContext<Store | null>(null);
 
+export const PROJECT_ID = "spencer-thomas-tracker-bullhorn";
+
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const original = (entity: string, field: string) => ENTITIES.find((e) => e.key === entity)?.fields.find((x) => x.name === field);
 
@@ -79,8 +88,21 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     targetDatabase: "PostgreSQL",
     output: "CSV files",
   });
-  const [uploads, setUploads] = useState<UploadItem[]>(INITIAL_UPLOADS);
-  const [steps, setSteps] = useState<Store["steps"]>({ inspect: "done", canonical: "done", target: "idle" });
+  // Local mode starts from the files already stored for the project; demo mode keeps the sample list
+  const [uploads, setUploads] = useState<UploadItem[]>(uploadMode === "demo" ? INITIAL_UPLOADS : []);
+  useEffect(() => { uploadsRef.current = uploads; }, [uploads]);
+  const [uploadsReady, setUploadsReady] = useState(uploadMode !== "local");
+  useEffect(() => {
+    if (uploadMode !== "local") return;
+    listStored(PROJECT_ID)
+      .then((stored) => setUploads((cur) => [...stored, ...cur.filter((u) => !stored.some((s) => s.name === u.name))]))
+      .catch(() => { /* API not running: the upload page shows the error when a file is added */ })
+      .finally(() => setUploadsReady(true));
+  }, []);
+  const [steps, setSteps] = useState<Store["steps"]>({ quality: "idle", canonical: "idle", target: "idle" });
+  const [quality, setQuality] = useState<QualityResult | null>(null);
+  // the data quality step checks the uploaded files; with nothing uploaded it checks the legacy database
+  const uploadsRef = useRef<UploadItem[]>([]);
   const [runs, setRuns] = useState<Run[]>(INITIAL_RUNS);
   const [requests, setRequests] = useState<ChangeRequest[]>(INITIAL_REQUESTS);
   const [statusOverrides, setStatusOverrides] = useState<Record<string, FieldStatus>>({});
@@ -92,15 +114,37 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   // The overrides as of the last saved version (v3 = the AI spec with no overrides)
   const [savedOverrides, setSavedOverrides] = useState<Overrides>(EMPTY_OVERRIDES);
 
-  const runStep = useCallback(async (step: "inspect" | "canonical" | "target") => {
+  const runStep = useCallback(async (step: "quality" | "canonical" | "target") => {
     setSteps((s) => ({ ...s, [step]: "running" }));
+    if (step === "quality") {
+      // data quality runs on the uploaded source (step 1 must be done first)
+      const source = `upload:${PROJECT_ID}`;
+      const sourceLabel = "your uploaded files";
+      if (!uploadsRef.current.some((u) => u.status === "uploaded")) {
+        setQuality({ source, sourceLabel, passed: 0, total: 0, toReview: 0, error: "Upload the source data first." });
+        setSteps((s) => ({ ...s, quality: "idle" }));
+        return;
+      }
+      try {
+        const r = await api<{ standard_checks: { status: string }[]; duplicate_review?: { to_review: number } }>(
+          `/dq/report?source=${encodeURIComponent(source)}&refresh=true`);
+        const run = r.standard_checks.filter((c) => c.status !== "not_run");
+        setQuality({ source, sourceLabel, passed: run.filter((c) => c.status === "pass").length, total: run.length,
+                     toReview: r.duplicate_review?.to_review ?? 0 });
+        setSteps((s) => ({ ...s, quality: "done", canonical: "idle", target: "idle" }));
+      } catch (e) {
+        setQuality({ source, sourceLabel, passed: 0, total: 0, toReview: 0, error: (e as Error).message });
+        setSteps((s) => ({ ...s, quality: "idle" }));
+      }
+      return;
+    }
     if (step === "canonical") {
       setRuns((r) => [
         { id: `r-${r.length + 1}`, version: r.length + 1, label: "Canonical layer re-run", when: "Just now", by: "You", status: "running" },
         ...r,
       ]);
     }
-    await wait(step === "inspect" ? 1400 : 2000);
+    await wait(2000);
     setSteps((s) => ({ ...s, [step]: "done" }));
     setRuns((r) => r.map((x) => (x.status === "running" ? { ...x, status: "complete" } : x)));
   }, []);
@@ -199,12 +243,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<Store>(
     () => ({
-      projectId: "spencer-thomas-tracker-bullhorn",
+      projectId: PROJECT_ID,
       setup,
       updateSetup: (patch) => setSetup((s) => ({ ...s, ...patch })),
       uploads,
+      uploadsReady,
       setUploads,
-      steps,
+      steps, quality,
       runStep,
       runs,
       requests,
@@ -231,7 +276,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       discardChanges,
       saveVersion,
     }),
-    [setup, uploads, steps, runStep, runs, requests, addRequest, setFieldStatus, fieldStatus, fieldSource, setFieldSource, resetField,
+    [setup, uploads, uploadsReady, steps, quality, runStep, runs, requests, addRequest, setFieldStatus, fieldStatus, fieldSource, setFieldSource, resetField,
       transformConfig, setTransformConfig, isChanged, joins, setJoins, resetJoins, joinsChanged, changedFields, canonicalApproved, approveCanonical,
       pendingChanges, savedOverrides, currentOverrides, revertChange, discardChanges, saveVersion],
   );

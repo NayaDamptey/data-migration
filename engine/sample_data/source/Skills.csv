@@ -1,0 +1,21 @@
+SkillID,SkillName,Skill_CategoryID,Deleted
+1,Python,1,0
+2,SQL,2,0
+3,Java,1,0
+4,C#,1,0
+5,Azure,1,0
+6,AWS,1,0
+7,Power BI,2,0
+8,Agile / Scrum,3,0
+9,Salesforce,4,0
+10,Recruitment,4,0
+11,Financial Modelling,5,0
+12,React,1,0
+13,Node.js,1,0
+14,Data Analysis,2,0
+15,Project Management,3,0
+16,Business Development,4,0
+17,Excel / VBA,5,0
+18,Tableau,2,0
+19,DevOps / CI-CD,1,0
+20,Communication,4,0

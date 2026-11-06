@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main, merge-data-migration]
+  pull_request:
+    branches: [main]
+
+jobs:
+  engine:
+    name: Engine (data quality rules, duplicates, mapping)
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: engine } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - run: pip install duckdb pytest
+      # the clean baseline must pass every rule; SQL Server tests skip themselves (no server on the runner)
+      - run: python -m pytest tests -q -rs
+      # rebuilding the baseline must not change it (deterministic generator + repairs)
+      - run: python sample_data/build_source_db.py && git diff --exit-code -- sample_data/source
+
+  api:
+    name: API
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: backend } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - run: pip install fastapi "uvicorn[standard]" pydantic python-multipart duckdb boto3 pytest moto requests httpx
+      - run: APP_ENV=development python -c "import app.main; print('API imports OK')"
+      - run: APP_ENV=development python -m pytest tests -q
+
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: frontend } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22", cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: npm ci
+      - run: npm run build

@@ -1,0 +1,1708 @@
+{
+  "_meta": {
+    "seeded_from": [
+      "approved_source_to_canonical.json",
+      "approved_canonical_to_target.json"
+    ],
+    "updated_at": "2026-11-06T14:40:15",
+    "updated_by": "seed",
+    "source_db": "RecruitCRM_Legacy",
+    "target_db": "RecruitPlatform_Target",
+    "format": 2
+  },
+  "tables": [
+    {
+      "id": "Person->Applicant",
+      "target_table": "Applicant",
+      "source_table": "Person",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_applicant",
+      "columns": [
+        {
+          "target": "ApplicantID",
+          "source": "s.Person_ID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "FirstName",
+          "source": "s.First_Name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "MiddleName",
+          "source": "s.Middle_name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "LastName",
+          "source": "s.Last_Name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "DateOfBirth",
+          "source": "s.DOB",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Deleted",
+          "source": "s.Deleted",
+          "transform": "coalesce_or",
+          "confidence": 0.92,
+          "status": "draft",
+          "notes": "OR with IsArchived"
+        },
+        {
+          "target": "AddedAt",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedAt",
+          "source": "s.UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedBy",
+          "source": "s.UpdatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "CV_Docs->Attachments",
+      "target_table": "Attachments",
+      "source_table": "CV_Docs",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_document",
+      "columns": [
+        {
+          "target": "AttachmentID",
+          "source": "s.Doc_ID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Description",
+          "source": "s.Desc",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "FilePath",
+          "source": "s.Path",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "IsDeleted",
+          "source": "s.Deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UploadedAt",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UploadedBy",
+          "source": "s.Uploaded_Id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "Documents->Attachments",
+      "target_table": "Attachments",
+      "source_table": "Documents",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_document",
+      "columns": [
+        {
+          "target": "AttachmentID",
+          "source": "s.Doc_ID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": "Offset applied to avoid ID collision with CV_Docs"
+        },
+        {
+          "target": "Description",
+          "source": "s.Desc",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "FilePath",
+          "source": "s.Path",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "FileType",
+          "source": "s.Filesize",
+          "transform": "direct",
+          "confidence": 0.72,
+          "status": "draft",
+          "notes": "Low confidence — FileType expects mime type, source has size string"
+        },
+        {
+          "target": "IsDeleted",
+          "source": "s.Deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UploadedAt",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UploadedBy",
+          "source": "s.Uploaded_Id",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AttachmentType",
+          "source": "s.Typeid",
+          "transform": "lookup",
+          "confidence": 0.85,
+          "status": "draft",
+          "notes": "Join DocumentType for description",
+          "params": {
+            "table": "DocumentType",
+            "key": "Doc_TypeID",
+            "value": "Desc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Accounts->Company",
+      "target_table": "Company",
+      "source_table": "Accounts",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_company",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.Account_ID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": "INT to NVARCHAR"
+        },
+        {
+          "target": "CompanyName",
+          "source": "s.Account_name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Industry",
+          "source": "s.Industry",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Website",
+          "source": "s.Website",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Background",
+          "source": "s.About",
+          "transform": "direct",
+          "confidence": 0.92,
+          "status": "draft",
+          "notes": "Renamed field"
+        },
+        {
+          "target": "AddedDate",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedDate",
+          "source": "s.UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Isdeleted",
+          "source": "s.Deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "CompanyType",
+          "source": "s.AccountTypeID",
+          "transform": "lookup",
+          "confidence": 0.85,
+          "status": "draft",
+          "notes": "Join AccountType table for description",
+          "params": {
+            "table": "AccountType",
+            "key": "AccountTypeID",
+            "value": "Description"
+          }
+        },
+        {
+          "target": "LocationID",
+          "source": "s.AddressID",
+          "transform": "fk_lookup",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": "FK — resolved via Addresses table"
+        }
+      ]
+    },
+    {
+      "id": "Addresses->CompanyLocation",
+      "target_table": "CompanyLocation",
+      "source_table": "Addresses",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_address",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.AddressID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddressLine1",
+          "source": "s.Address_line1",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddressLine2",
+          "source": "s.Address_line2",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "City",
+          "source": "s.City",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PostCode",
+          "source": "s.ZipCode",
+          "transform": "direct",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": "UK postcode stored as ZipCode"
+        },
+        {
+          "target": "County",
+          "source": "s.Province",
+          "transform": "direct",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": "Province maps to County in UK context"
+        },
+        {
+          "target": "Country",
+          "source": "s.Country",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "Associates->Contact",
+      "target_table": "Contact",
+      "source_table": "Associates",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_contact",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.AssociateID",
+          "transform": "key",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PositionTitle",
+          "source": "s.AssociateTitle",
+          "transform": "direct",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": "Title used as position title — verify intent"
+        },
+        {
+          "target": "DepartmentID",
+          "source": "s.DeptID",
+          "transform": "fk_lookup",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedAt",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "ModifiedAt",
+          "source": "s.UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "ModifiedBy",
+          "source": "s.UpdatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Contacttype",
+          "source": "s.AssociateTypeDescription",
+          "transform": "direct",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "LocationID",
+          "source": "s.Associate_AddressID",
+          "transform": "fk_lookup",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Role",
+          "source": "s.Associate_RoleID",
+          "transform": "lookup",
+          "confidence": 0.82,
+          "status": "draft",
+          "notes": "Join Roles table for description",
+          "params": {
+            "table": "Roles",
+            "key": "Role_ID",
+            "value": "Description"
+          }
+        },
+        {
+          "target": "IsDeleted",
+          "source": "s.Associate_StatusID",
+          "transform": "status_to_bool",
+          "confidence": 0.75,
+          "status": "draft",
+          "notes": "Status 3/4=closed, treat as deleted — verify with business"
+        }
+      ]
+    },
+    {
+      "id": "Addresses->ContactLocation",
+      "target_table": "ContactLocation",
+      "source_table": "Addresses",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_address",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.AddressID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddressLine1",
+          "source": "s.Address_line1",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddressLine2",
+          "source": "s.Address_line2",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "City",
+          "source": "s.City",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PostCode",
+          "source": "s.ZipCode",
+          "transform": "direct",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": "UK postcode stored as ZipCode"
+        },
+        {
+          "target": "County",
+          "source": "s.Province",
+          "transform": "direct",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": "Province maps to County in UK context"
+        },
+        {
+          "target": "Country",
+          "source": "s.Country",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "Invoice->Invoice",
+      "target_table": "Invoice",
+      "source_table": "Invoice",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_invoice",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.InvoiceID",
+          "transform": "key",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "InvoiceNo",
+          "source": "s.Invoice_No",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "InvoiceDate",
+          "source": "s.InvoiceDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "DueDate",
+          "source": "s.DateDue",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Currency",
+          "source": "s.Currency",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Status",
+          "source": "s.Status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Amount",
+          "source": "s.Amount",
+          "transform": "cast_to_decimal",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedBy",
+          "source": "s.UpdatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Type",
+          "source": "s.InvoiceType_ID",
+          "transform": "lookup",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": "Join InvoiceTypes for name",
+          "params": {
+            "table": "InvoiceTypes",
+            "key": "InvoiceType_ID",
+            "value": "Type_Name"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Leads->Leads",
+      "target_table": "Leads",
+      "source_table": "Leads",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_lead",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.Lead_ID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Fullname",
+          "source": "s.Lead_Name",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Source",
+          "source": "s.Lead_Source",
+          "transform": "direct",
+          "confidence": 0.92,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "CompanyID",
+          "source": "s.Account_ID",
+          "transform": "fk_lookup",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Notes",
+          "source": "s.Note",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedBy",
+          "source": "s.UpdatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PipelineStage",
+          "source": "s.Lead_Status",
+          "transform": "direct",
+          "confidence": 0.8,
+          "status": "approved",
+          "notes": "Status values may differ from target — review mapping | Status values may differ — verify mapping with business"
+        }
+      ]
+    },
+    {
+      "id": "GDPR_Consent->Marketing",
+      "target_table": "Marketing",
+      "source_table": "GDPR_Consent",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_consent",
+      "columns": [
+        {
+          "target": "ApplicantID",
+          "source": "s.Person_ID",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Email",
+          "source": "s.Email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Phone",
+          "source": "s.Phone",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Text",
+          "source": "s.Text",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedAt",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedAt",
+          "source": "s.UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedBy",
+          "source": "s.UpdatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "GDPRConsent",
+          "source": "s.Email",
+          "transform": "coalesce_any_true",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": "True if any channel opted in"
+        }
+      ]
+    },
+    {
+      "id": "Req_Hired->Placements",
+      "target_table": "Placements",
+      "source_table": "Req_Hired",
+      "joins": [],
+      "filter": "Hired_Status = 1",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_placement",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.Req_HiredID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "ApplicantID",
+          "source": "s.Associate_ID",
+          "transform": "fk_lookup",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PositionID",
+          "source": "s.Req_ID",
+          "transform": "fk_lookup",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": "PositionID is INT in target"
+        },
+        {
+          "target": "CompanyID",
+          "source": "s.Account_ID",
+          "transform": "fk_lookup",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "EmploymentType",
+          "source": "s.Worktype",
+          "transform": "direct",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": "Work type label may need normalisation"
+        },
+        {
+          "target": "StartDate",
+          "source": "s.StartDate",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "EndDate",
+          "source": "s.EndDate",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Fee",
+          "source": "s.FeeValue",
+          "transform": "cast_to_float",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "OwnerID",
+          "source": "s.Owner_ID",
+          "transform": "fk_lookup",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedAt",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedBy",
+          "source": "s.UpdatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Status",
+          "source": "s.Hired_Status",
+          "transform": "bit_to_status_text",
+          "confidence": 0.85,
+          "status": "draft",
+          "notes": "1=Placed, 0=Pipeline"
+        }
+      ]
+    },
+    {
+      "id": "Req->Position",
+      "target_table": "Position",
+      "source_table": "Req",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_job",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.ReqID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PositionName",
+          "source": "s.Req_Title",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PositionDesc",
+          "source": "s.Req_Description",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "CompanyID",
+          "source": "s.AccountID",
+          "transform": "fk_lookup",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "ContactID",
+          "source": "s.AssociateID",
+          "transform": "fk_lookup",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Status",
+          "source": "s.ReqStat",
+          "transform": "direct",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Currency",
+          "source": "s.CurrencyCode",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PurchaseOrderNo",
+          "source": "s.PONumber",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "DateBegins",
+          "source": "s.StartDate",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "DateEnds",
+          "source": "s.EndDate",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "DatePublished",
+          "source": "s.ExpiryDate",
+          "transform": "cast_to_date",
+          "confidence": 0.8,
+          "status": "draft",
+          "notes": "Closest match — confirm with business"
+        },
+        {
+          "target": "Deleted",
+          "source": "s.Deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Addedat",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedAt",
+          "source": "s.UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Addedby",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedBy",
+          "source": "s.UpdatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PositionLocationID",
+          "source": "s.Address_ID",
+          "transform": "fk_lookup",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "Req_Rates->Position",
+      "target_table": "Position",
+      "source_table": "Req_Rates",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_job",
+      "columns": [
+        {
+          "target": "PositionPayRate",
+          "source": "s.Payrate",
+          "transform": "direct",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": "Folded into canonical_job via Req_ID join"
+        },
+        {
+          "target": "PositionChargeRate",
+          "source": "s.BillRate",
+          "transform": "direct",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Salary",
+          "source": "s.Salary",
+          "transform": "cast_to_nvarchar",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": "DECIMAL to NVARCHAR for flexibility"
+        }
+      ]
+    },
+    {
+      "id": "Addresses->PositionLocation",
+      "target_table": "PositionLocation",
+      "source_table": "Addresses",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_address",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.AddressID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddressLine1",
+          "source": "s.Address_line1",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddressLine2",
+          "source": "s.Address_line2",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "City",
+          "source": "s.City",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PostCode",
+          "source": "s.ZipCode",
+          "transform": "direct",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": "UK postcode stored as ZipCode"
+        },
+        {
+          "target": "County",
+          "source": "s.Province",
+          "transform": "direct",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": "Province maps to County in UK context"
+        },
+        {
+          "target": "Country",
+          "source": "s.Country",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "PONo->PurchaseOrder",
+      "target_table": "PurchaseOrder",
+      "source_table": "PONo",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_purchase_order",
+      "columns": [
+        {
+          "target": "PONo",
+          "source": "s.PONo",
+          "transform": "key",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "CompanyID",
+          "source": "s.VendorID",
+          "transform": "fk_lookup",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Status",
+          "source": "s.POStatus",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "POAmount",
+          "source": "s.Amount",
+          "transform": "cast_to_decimal",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PODate",
+          "source": "s.Issue_Date",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedAt",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedAt",
+          "source": "s.UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedBy",
+          "source": "s.UpdatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "Referees->References",
+      "target_table": "References",
+      "source_table": "Referees",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_reference",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.Referee_ID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Fullname",
+          "source": "s.Fullname",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Email",
+          "source": "s.email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PhoneContact",
+          "source": "s.Telephone",
+          "transform": "direct",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "CompanyName",
+          "source": "s.Company",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PositionTitle",
+          "source": "s.Job_Title",
+          "transform": "direct",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Notes",
+          "source": "s.Notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedAt",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "Schedule->Task",
+      "target_table": "Task",
+      "source_table": "Schedule",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_activity",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.Schedule_ID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "TaskType",
+          "source": "s.ScheduleType",
+          "transform": "direct",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": "ScheduleType values (Interview, Call, etc.) map to TaskType — verify labels match"
+        },
+        {
+          "target": "StartDate",
+          "source": "s.StartDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Enddate",
+          "source": "s.EndDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Note",
+          "source": "s.Notes",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedAt",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedAt",
+          "source": "s.UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "TimesheetItems->TimesheetActivity",
+      "target_table": "TimesheetActivity",
+      "source_table": "TimesheetItems",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_timesheet_item",
+      "columns": [
+        {
+          "target": "ActivityID",
+          "source": "s.ItemID",
+          "transform": "key",
+          "confidence": 0.9,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "TimesheetID",
+          "source": "s.Timesheet_ID",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AssocID",
+          "source": "s.Person_ID",
+          "transform": "cast_to_int",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": "Person maps to Associate in this context"
+        },
+        {
+          "target": "HoursWorked",
+          "source": "s.TotalHours",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedAt",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedAt",
+          "source": "s.UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "TimeSheets->Timesheets",
+      "target_table": "Timesheets",
+      "source_table": "TimeSheets",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_timesheet",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.ID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Payrate",
+          "source": "s.Payrate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "ChargeRate",
+          "source": "s.Billrate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "StartDate",
+          "source": "s.StartDate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "EndDate",
+          "source": "s.Enddate",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Status",
+          "source": "s.Status",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "ApprovedBy",
+          "source": "s.Approved_By",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "TimesheetType",
+          "source": "s.Timesheet_TypeID",
+          "transform": "lookup",
+          "confidence": 0.85,
+          "status": "draft",
+          "notes": "Join TimesheetType for description",
+          "params": {
+            "table": "TimesheetType",
+            "key": "Timesheet_TypeID",
+            "value": "Desc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Recruiter->User",
+      "target_table": "User",
+      "source_table": "Recruiter",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_user",
+      "columns": [
+        {
+          "target": "UserID",
+          "source": "s.RecruiterID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Loginname",
+          "source": "s.Username",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "FullName",
+          "source": "s.Fullname",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Email",
+          "source": "s.email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "ManagerId",
+          "source": "s.ReportsTo",
+          "transform": "fk_lookup",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "EnteredDateTime",
+          "source": "s.CreatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedDateTime",
+          "source": "s.UpdatedAt",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Role",
+          "source": "s.Role_ID",
+          "transform": "lookup",
+          "confidence": 0.88,
+          "status": "draft",
+          "notes": "Join Roles table for description",
+          "params": {
+            "table": "Roles",
+            "key": "Role_ID",
+            "value": "Description"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EmpHist->Work_History",
+      "target_table": "Work_History",
+      "source_table": "EmpHist",
+      "joins": [],
+      "filter": "",
+      "status": "draft",
+      "notes": "Seeded from canonical entity canonical_work_history",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.Hist_ID",
+          "transform": "key",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "CompanyName",
+          "source": "s.PlaceofWork",
+          "transform": "direct",
+          "confidence": 0.95,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "PositionTitle",
+          "source": "s.Title",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "StartDate",
+          "source": "s.Started_At",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "EndDate",
+          "source": "s.Ended_At",
+          "transform": "cast_to_date",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    }
+  ]
+}

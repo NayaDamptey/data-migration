@@ -53,6 +53,8 @@ export function SystemTile({ name, size = 36 }: { name: string; size?: number })
 }
 
 const TABS = [
+  { href: "/", label: "Source upload" },
+  { href: "/quality", label: "Data quality" },
   { href: "/workspace", label: "Setup" },
   { href: "/canonical", label: "Schema mapping" },
   { href: "/target", label: "Destination data" },
@@ -60,6 +62,9 @@ const TABS = [
 ];
 
 const icons = {
+  dupes: <><rect x="2.5" y="3" width="8" height="9" fill="none" stroke="currentColor" strokeWidth="1.4" /><rect x="7.5" y="6" width="8" height="9" fill="none" stroke="currentColor" strokeWidth="1.4" /></>,
+  quality: <><path d="M3 14.5h12" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /><path d="M4.5 12V8.5M8 12V5M11.5 12V7M15 3.5l-2.2 2.2-1.6-1.2" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></>,
+  upload: <><path d="M9 11.5V3.5M5.8 6.7 9 3.5l3.2 3.2" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 11v2.5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V11" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></>,
   pipeline: <path d="M3 5h4v4H3zM11 11h4v4h-4zM7 7h2a2 2 0 0 1 2 2v2" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />,
   setup: <><circle cx="9" cy="9" r="2.2" fill="none" stroke="currentColor" strokeWidth="1.4" /><path d="M9 2.5v2M9 13.5v2M2.5 9h2M13.5 9h2M4.4 4.4l1.4 1.4M12.2 12.2l1.4 1.4M4.4 13.6l1.4-1.4M12.2 5.8l1.4-1.4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></>,
   schema: <path d="M3 4h5v3H3zM10 11h5v3h-5zM10 4h5v3h-5zM5.5 7v5.5H10M12.5 7v4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />,
@@ -70,12 +75,18 @@ const Icon = ({ name }: { name: keyof typeof icons }) => <svg width="18" height=
 
 export function Shell({ children }: { children: ReactNode }) {
   const path = usePathname();
-  const { setup, steps, runStep, fieldStatus, pendingChanges, runs } = useStore();
+  const { setup, steps, runStep, fieldStatus, pendingChanges, runs, uploads, uploadsReady } = useStore();
+  const uploadedCount = uploads.filter((u) => u.status === "uploaded").length;
+  // the pipeline order: upload source first, then data quality
+  const locked = (href: string) => href === "/quality" && uploadsReady && uploadedCount === 0;
+  const LOCK_HINT = "Upload the source data first";
   const review = ENTITIES.reduce((n, e) => n + e.fields.filter((f) => fieldStatus(e.key, f.name) === "review").length, 0);
   const running = Object.values(steps).includes("running");
   const pending = pendingChanges.length;
   const tabs = TABS;
   const nav = [
+    { href: "/", label: "Source upload", icon: "upload" as const, badge: uploadedCount || undefined },
+    { href: "/quality", label: "Data quality", icon: "quality" as const },
     { href: "/workspace", label: "Setup", icon: "setup" as const },
     { href: "/canonical", label: "Schema mapping", icon: "schema" as const, badge: review || undefined },
     { href: "/target", label: "Destination data", icon: "data" as const },
@@ -83,7 +94,7 @@ export function Shell({ children }: { children: ReactNode }) {
   ];
 
   const runAll = async () => {
-    await runStep("inspect");
+    await runStep("quality");
     await runStep("canonical");
     await runStep("target");
   };
@@ -93,7 +104,7 @@ export function Shell({ children }: { children: ReactNode }) {
       {/* Sidebar */}
       <aside className="hidden lg:flex fixed inset-y-0 left-0 w-[232px] flex-col bg-nav text-nav-text z-40">
         <div className="h-14 flex items-center px-4 border-b border-nav-line">
-          <Link href="/workspace"><Logo dark /></Link>
+          <Link href="/"><Logo dark /></Link>
         </div>
         <div className="px-3 pt-5">
           <p className="px-2 text-[12px] font-medium text-nav-text mb-2">Migration</p>
@@ -107,6 +118,14 @@ export function Shell({ children }: { children: ReactNode }) {
           <nav className="space-y-0.5" aria-label="Migration">
             {nav.map((n) => {
               const active = path === n.href;
+              if (locked(n.href)) return (
+                <span key={n.href} aria-disabled="true" title={LOCK_HINT}
+                  className="flex items-center gap-2.5 h-10 px-3 rounded-full text-[14px] font-medium opacity-40 cursor-not-allowed">
+                  <Icon name={n.icon} />
+                  <span className="flex-1">{n.label}</span>
+                  <LockGlyph />
+                </span>
+              );
               return (
                 <Link key={n.href} href={n.href} aria-current={active ? "page" : undefined}
                   className={`flex items-center gap-2.5 h-10 px-3 rounded-full text-[14px] font-medium transition-colors ${active ? "bg-white text-nav" : "hover:bg-nav-hover hover:text-white"}`}>
@@ -124,13 +143,13 @@ export function Shell({ children }: { children: ReactNode }) {
             <p className="text-[12.5px] text-white font-medium truncate">Naya Damptey</p>
             <p className="text-[11px] truncate">Spencer Thomas Recruitment</p>
           </div>
-          <Link href="/" className="text-[11px] hover:text-white" title="Sign out">Sign out</Link>
+          <Link href="/signin" className="text-[11px] hover:text-white" title="Sign out">Sign out</Link>
         </div>
       </aside>
 
       {/* Top bar */}
       <header className="sticky top-0 z-30 h-14 bg-nav text-white flex items-center gap-3 px-4 sm:px-6">
-        <Link href="/workspace" className="lg:hidden"><LogoMark dark /></Link>
+        <Link href="/" className="lg:hidden"><LogoMark dark /></Link>
         <span className="text-[14px] text-white font-medium truncate">{TABS.find((t) => t.href === path)?.label}</span>
         <div className="ml-auto flex items-center gap-3">
           {pending > 0 && path !== "/versions" && (
@@ -161,13 +180,19 @@ export function Shell({ children }: { children: ReactNode }) {
                 </p>
               </div>
             </div>
-            <button className="btn-primary" onClick={runAll} disabled={running}>
+            <button className="btn-primary" onClick={runAll} disabled={running || uploadedCount === 0} title={uploadedCount === 0 ? LOCK_HINT : undefined}>
               {running ? <><Spinner /> Running</> : <><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden><path d="M3 2v8l7-4z" fill="currentColor" /></svg> Run migration</>}
             </button>
           </div>
           <nav className="flex gap-7 mt-6 -mb-px overflow-x-auto" aria-label="Sections">
             {tabs.map((t) => {
               const active = path === t.href;
+              if (locked(t.href)) return (
+                <span key={t.href} aria-disabled="true" title={LOCK_HINT}
+                  className="pb-3 text-[15px] border-b-[3px] border-transparent whitespace-nowrap text-faint cursor-not-allowed inline-flex items-center gap-1.5">
+                  {t.label} <LockGlyph />
+                </span>
+              );
               return (
                 <Link key={t.href} href={t.href} aria-current={active ? "page" : undefined}
                   className={`pb-3 text-[15px] border-b-[3px] whitespace-nowrap transition-colors ${active ? "border-ink text-ink font-medium" : "border-transparent text-muted hover:text-ink"}`}>
@@ -183,6 +208,15 @@ export function Shell({ children }: { children: ReactNode }) {
 
       <main className="max-w-[1360px] mx-auto px-4 sm:px-8 py-8">{children}</main>
     </div>
+  );
+}
+
+function LockGlyph() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden className="shrink-0">
+      <rect x="2.5" y="5.5" width="7" height="5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+    </svg>
   );
 }
 
@@ -248,12 +282,12 @@ export function Check({ className = "" }: { className?: string }) {
   );
 }
 
-export function Modal({ open, onClose, title, children, footer }: { open: boolean; onClose: () => void; title: string; children: ReactNode; footer?: ReactNode }) {
+export function Modal({ open, onClose, title, children, footer, wide = false }: { open: boolean; onClose: () => void; title: string; children: ReactNode; footer?: ReactNode; wide?: boolean }) {
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 grid place-items-center p-4">
       <div className="absolute inset-0 bg-ink/30" onClick={onClose} />
-      <div role="dialog" aria-modal="true" aria-label={title} className="relative w-full max-w-[560px] card shadow-pop">
+      <div role="dialog" aria-modal="true" aria-label={title} className={`relative w-full ${wide ? "max-w-[1180px]" : "max-w-[560px]"} card shadow-pop`}>
         <div className="flex items-center justify-between px-5 py-4 border-b border-line">
           <h2 className="font-semibold text-[16px]">{title}</h2>
           <button onClick={onClose} className="btn-ghost h-8 w-8 px-0" aria-label="Close">✕</button>

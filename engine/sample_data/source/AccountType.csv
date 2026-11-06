@@ -1,0 +1,5 @@
+AccountTypeID,Description,CreatedAt,CreatedBy,UpdatedBy,Active,Deleted
+1,Client,2020-01-01 09:00:00,1,1,1,0
+2,Prospect,2020-01-01 09:00:00,1,1,1,0
+3,Partner,2020-01-01 09:00:00,1,1,1,0
+4,Agency,2020-01-01 09:00:00,1,1,1,0

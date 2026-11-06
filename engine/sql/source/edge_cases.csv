@@ -1,0 +1,6 @@
+person_id,associate_id,emp_profile_id,case,why_it_is_valid
+38,38,38,DUAL_ROLE_CONTACT_AND_CANDIDATE,"A client contact who is also on the books as a candidate; common in recruitment, must be kept"
+45,45,45,DUAL_ROLE_CONTACT_AND_CANDIDATE,"A client contact who is also on the books as a candidate; common in recruitment, must be kept"
+101,101,101,DUAL_ROLE_CONTACT_AND_CANDIDATE,"A client contact who is also on the books as a candidate; common in recruitment, must be kept"
+117,117,117,DUAL_ROLE_CONTACT_AND_CANDIDATE,"A client contact who is also on the books as a candidate; common in recruitment, must be kept"
+118,118,118,DUAL_ROLE_CONTACT_AND_CANDIDATE,"A client contact who is also on the books as a candidate; common in recruitment, must be kept"

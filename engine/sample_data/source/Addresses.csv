@@ -1,0 +1,251 @@
+AddressID,Address_line1,Address_line2,City,ZipCode,Province,Country,Email,Phone,OtherPhone,WorkPhone,Longitude,Latitude,CreatedAt,CreatedBy
+1,12 Bishopsgate,,London,EC2N 4AJ,Greater London,United Kingdom,info@apexsystems.co.uk,,,+44 20 7283 4501,-0.0822,51.5155,2020-01-15 09:00:00,1
+2,1 Canada Square,Canary Wharf,London,E14 5AB,Greater London,United Kingdom,london@hargreavescapital.com,+44 20 7919 5000,,+44 20 7919 5001,-0.0195,51.5047,2020-02-20 10:30:00,1
+3,Spinningfields,"Suite 301, Spun Silk Building",Manchester,M1 1AE,Greater Manchester,United Kingdom,manchester@medcoresolutions.co.uk,+44 161 227 3000,,+44 161 227 3001,-2.2412,53.4831,2020-03-10 11:00:00,1
+4,Colmore Row,"Floor 4, Brindleyplace Business Centre",Birmingham,B3 2EQ,West Midlands,United Kingdom,,+44 121 200 1000,,+44 121 200 1001,-1.8947,52.5095,2020-04-05 14:15:00,1
+5,2 Wellington Place,Leeds City Centre,Leeds,LS1 4AP,West Yorkshire,United Kingdom,leeds@sterlingfg.com,+44 113 203 4000,,+44 113 203 4001,-1.5433,53.8008,2020-05-12 09:45:00,1
+6,Temple Quarter,"Innovation Hub, Level 3",Bristol,BS1 6AA,Bristol,United Kingdom,bristol@nexushealthsystems.co.uk,,,+44 117 933 3001,-2.5873,51.4545,2020-06-18 13:20:00,1
+7,47 Princes Street,New Town,Edinburgh,EH2 2QQ,Lothian,United Kingdom,edinburgh@vertexcloud.com,+44 131 556 7000,,+44 131 556 7001,-3.1959,55.9533,2020-07-22 10:00:00,1
+8,St Vincent Place,City Centre Tower,Glasgow,G1 2DH,Strathclyde,United Kingdom,glasgow@ashfieldlaw.co.uk,+44 141 305 4000,,+44 141 305 4001,-4.2608,55.8642,2020-08-30 15:30:00,1
+9,Bridge House,Reading Business Park,Reading,RG2 0QS,Berkshire,United Kingdom,reading@pinnacleam.co.uk,+44 118 925 8000,,+44 118 925 8001,-0.9734,51.4545,2020-09-14 08:45:00,1
+10,15 Grange Road,Cambridge Science Park,Cambridge,CB3 6AP,Cambridgeshire,United Kingdom,cambridge@vitalcaregroup.co.uk,+44 1223 424 000,,+44 1223 424 001,0.1218,52.2043,2020-10-25 11:20:00,1
+11,78 Gracechurch Street,Floor 7,London,EC2 9FZ,Greater London,United Kingdom,info@copperfordsoftware.co.uk,+44 20 7283 5655,,+44 20 7283 3371,-0.082293,51.519031,2020-01-15 09:00:00,1
+12,One Canada Square,Canary Wharf,London,E14 5AB,Greater London,United Kingdom,london@millstonecapital.co.uk,+44 20 7991 8888,,+44 20 7991 8889,-0.0175,51.5033,2020-02-20 10:30:00,1
+13,55 Whitehall,,London,WC2N 5DU,Greater London,United Kingdom,recruitment@stoneridgecare.co.uk,+44 20 7654 2000,,+44 20 7654 2100,-0.1276,51.5038,2020-03-10 14:15:00,1
+14,12 Lever Street,,Manchester,M15 7WF,Greater Manchester,United Kingdom,manchester@kingsforddata.co.uk,+44 161 833 4767,,+44 161 833 2394,-2.242355,53.488323,2020-04-05 11:45:00,2
+15,MediaCityUK,Dock 10,Manchester,M50 2ST,Greater Manchester,United Kingdom,hr@barclays.co.uk,+44 161 885 0000,,+44 161 885 0001,-2.2844,53.4711,2020-05-12 09:20:00,2
+16,Brindleyplace,"Block B, 2nd Floor",Birmingham,B1 2EL,West Midlands,United Kingdom,recruiter@bellmerehealth.co.uk,+44 121 633 6000,,+44 121 633 6001,-1.9045,52.5091,2020-06-18 13:30:00,3
+17,Colmore Row,"Central House, 45 Colmore Row",Birmingham,B3 2EA,West Midlands,United Kingdom,,+44 121 200 1000,,+44 121 200 1001,-1.8981,52.5084,2020-07-22 10:00:00,3
+18,27 Shoreditch High Street,Level 4,London,E1 6PG,Greater London,United Kingdom,,+44 20 3876 5000,,+44 20 3876 5001,-0.0753,51.5222,2020-08-09 15:45:00,1
+19,Reading Bridge House,George Street,Reading,RG1 2JF,Berkshire,United Kingdom,hr@bridgepartners.network,+44 118 957 5000,,+44 118 957 5001,-0.9754,51.4545,2020-09-14 12:00:00,2
+20,The Fitzwilliam Museum,Trumpington Street,Cambridge,CB2 1RB,Cambridgeshire,United Kingdom,recruitment@birchleydigital.co.uk,+44 1223 765432,,+44 1223 765433,0.1197,52.1426,2020-10-20 14:30:00,1
+21,12 Bishopsgate,Floor 22,London,E14 4BE,Greater London,United Kingdom,info@glenvaledata.co.uk,+44 20 7283 4500,+44 7911 234567,+44 20 7283 4501,-0.0822,51.5155,2019-03-12 10:30:00,1
+22,8 Moorgate,,London,EC3 6ER,Greater London,United Kingdom,,+44 20 7325 5006,+44 7923 445678,+44 20 7325 9016,-0.017480,51.506844,2019-06-20 14:15:00,2
+23,201 Bishopsgate,Ground Floor,London,EC1M 3AE,Greater London,United Kingdom,london@larkwoodhealth.co.uk,+44 20 3868 5500,+44 7834 556789,+44 20 3868 5501,-0.0876,51.5193,2020-01-10 09:00:00,1
+24,111 Deansgate,Level 3,Manchester,M3 2BQ,Greater Manchester,United Kingdom,hr@kingsgatetechnologies.co.uk,+44 161 333 4400,+44 7712 667890,+44 161 333 4401,-2.2449,53.4808,2019-05-22 11:45:00,3
+25,The Spindle,1-7 Spinningfields Lane,Manchester,M1 1DZ,Greater Manchester,United Kingdom,recruitment@bellwickcapital.co.uk,+44 161 228 1234,+44 7845 778901,+44 161 228 1235,-2.2289,53.4858,2020-02-14 13:20:00,2
+26,103 Colmore Row,Floor 5,Birmingham,B3 3AG,West Midlands,United Kingdom,hiring@westworthsoftware.co.uk,+44 121 322 5500,+44 7956 889012,+44 121 322 5501,-1.8935,52.5089,2019-09-18 10:00:00,1
+27,Brindleyplace,"Unit 4, 1 Sherborne Street",Birmingham,B1 2HS,West Midlands,United Kingdom,,+44 121 626 7777,+44 7867 990123,+44 121 626 7778,-1.9089,52.5031,2020-04-08 15:30:00,3
+28,Paternoster House,65 St Paul's Churchyard,London,EC4M 8AB,Greater London,United Kingdom,jobs@crownsolicitors.co.uk,+44 20 7885 8888,+44 7678 112345,+44 20 7885 8889,-0.0976,51.5144,2019-11-25 08:45:00,2
+29,6 Beehive Lane,Apartment 12,London,N1 9GU,Greater London,United Kingdom,james.carroll@tamarenergy.co.uk,+44 20 7739 2200,+44 7934 223456,,-0.1072,51.5289,2021-07-13 09:30:00,1
+30,MediaCityUK,"Tower 1, 40 Deansgate",Manchester,M5 6LU,Greater Manchester,United Kingdom,talent@ironleywealth.co.uk,+44 161 335 3333,+44 7745 334567,+44 161 335 3334,-2.2741,53.4747,2020-08-19 12:00:00,3
+31,68 Cheapside,,London,SE1 2WX,Greater London,United Kingdom,,+44 20 7283 2219,,+44 20 7283 5350,-0.082618,51.519432,2019-03-12 10:30:00,1
+32,25 Canada Square,Canary Wharf,London,E14 5LQ,Greater London,United Kingdom,london@ashstoneinsurance.co.uk,+44 20 7991 8888,,+44 20 7991 8889,-0.0198,51.5045,2019-06-20 14:15:00,1
+33,86-90 Paul Street,Suite 300,London,EC2A 4NE,Greater London,United Kingdom,hello@ironburydigital.co.uk,+44 20 3693 3000,,+44 20 3693 3001,-0.0854,51.5222,2020-01-08 09:45:00,1
+34,2 Spinningfields,Ground Floor,Manchester,M1 1DZ,Greater Manchester,United Kingdom,manchester@lockharthealthcare.co.uk,+44 161 236 5000,,+44 161 236 5001,-2.2426,53.4809,2020-02-14 11:20:00,2
+35,"The Blue Building, MediaCityUK",Salford Quays,Manchester,M50 2ST,Greater Manchester,United Kingdom,info@northstonesecurities.co.uk,+44 161 885 4000,,+44 161 885 4001,-2.2909,53.4736,2020-05-22 13:50:00,2
+36,111 Colmore Row,Floor 5,Birmingham,B3 2RL,West Midlands,United Kingdom,birmingham@napiersolicitors.co.uk,+44 121 236 7000,,+44 121 236 7001,-1.8903,52.5083,2020-07-10 10:15:00,3
+37,1 Brindleyplace,Suite 200,Birmingham,B1 2EA,West Midlands,United Kingdom,info@elmridgeanalytics.co.uk,+44 121 633 4000,,+44 121 633 4001,-1.9026,52.5087,2019-11-05 15:30:00,3
+38,100 Cheapside,Apartment 4B,London,EC2V 6AA,Greater London,United Kingdom,candidate@silverridgewealth.co.uk,+44 7911 123456,,,-0.0909,51.5139,2020-08-18 08:00:00,1
+39,42 Deansgate,Flat 7,Manchester,M3 2EE,Greater Manchester,United Kingdom,candidate.manchester@silvercrofthealthcare.co.uk,+44 7823 456789,,,-2.2467,53.4808,2020-09-22 09:30:00,2
+40,38 Newhall Street,House,Birmingham,B1 3RB,West Midlands,United Kingdom,candidate.bham@meridian-tech.co.uk,,,,-1.8945,52.509,2020-10-11 14:20:00,3
+41,61 Borough High Street,Floor 2,London,EC4 8UR,Greater London,United Kingdom,,+44 20 7283 4248,,+44 20 7283 2269,-0.080328,51.519772,2019-03-10 08:30:00,1
+42,154 Farringdon Road,,London,WC2 5NZ,Greater London,United Kingdom,,+44 20 7991 2630,,+44 20 7991 4566,-0.019927,51.504019,2019-05-22 10:15:00,2
+43,Peak House,5 Wilton Road,London,SW1V 1DE,Greater London,United Kingdom,,+44 20 3207 3000,,+44 20 3207 3001,-0.1423,51.4927,2019-07-08 14:45:00,1
+44,201 Bishopsgate,EC2M 3AE,London,EC2M 3AE,Greater London,United Kingdom,,+44 20 7452 8000,,+44 20 7452 8001,-0.0789,51.5198,2020-01-16 09:20:00,3
+45,Middlewood Drive,Spinningfields,Manchester,M1 1AE,Greater Manchester,United Kingdom,hr@thornburydigital.co.uk,+44 161 333 0000,,+44 161 333 0001,-2.2426,53.4808,2020-02-19 11:30:00,2
+46,173 Peter Street,,Manchester,M3 9NT,Greater Manchester,United Kingdom,recruitment@redbrooklife.co.uk,+44 161 885 6106,,+44 161 885 2406,-2.287415,53.483093,2020-04-07 15:00:00,1
+47,240 Edmund Street,Floor 9,Birmingham,B1 5TD,West Midlands,United Kingdom,info@wrenasset.co.uk,+44 121 643 4452,,+44 121 643 2222,-1.883735,52.506090,2020-06-11 13:45:00,3
+48,Colmore Row,Floor 10,Birmingham,B3 2BA,West Midlands,United Kingdom,hr@ironworth.co.uk,+44 121 236 5000,,+44 121 236 5001,-1.8959,52.5089,2020-08-05 10:20:00,2
+49,3 More London,Tooley Street,London,SE1 2AQ,Greater London,United Kingdom,recruitment@oakcroftpharma.co.uk,+44 20 7425 6000,,+44 20 7425 6001,-0.0855,51.5049,2020-09-18 12:00:00,1
+50,3 Sheldon Square,,London,W2 6PS,Greater London,United Kingdom,jobs@ashfieldengineering.co.uk,+44 20 7885 8888,,+44 20 7885 8889,-0.1867,51.5209,2020-10-22 14:30:00,3
+51,149 Fenchurch Street,Floor 3,London,EC3 9LQ,Greater London,United Kingdom,,+44 20 7283 4790,+44 7700 123456,+44 20 7283 9157,-0.078947,51.521690,2020-01-15 09:00:00,1
+52,230 Theobalds Road,Suite 797,London,W1 1GA,Greater London,United Kingdom,recruitment@rowanasset.co.uk,+44 20 3207 7818,+44 7701 234567,+44 20 3207 6635,-0.016065,51.503887,2020-02-10 10:30:00,2
+53,55 Gracechurch Street,Suite 5,London,EC3V 0AU,Greater London,United Kingdom,careers@harthavencare.co.uk,+44 20 7742 4000,+44 7702 345678,+44 20 7742 4001,-0.0851,51.5085,2020-03-05 14:15:00,3
+54,The Leadenhall Building,122 Leadenhall Street,London,EC3V 4AB,Greater London,United Kingdom,hr@ravenleyanalytics.co.uk,+44 20 7991 8888,+44 7703 456789,+44 20 7991 8889,-0.0761,51.507,2020-04-20 11:45:00,1
+55,97 Princess Street,,Manchester,M1 6AP,Greater Manchester,United Kingdom,recruitment@kingsbury.co.uk,+44 161 228 1192,+44 7704 567890,+44 161 228 5748,-2.231368,53.490138,2020-05-12 09:20:00,4
+56,MediaCityUK,"Dock 10, 80 Wood Street",Manchester,M15 4RP,Greater Manchester,United Kingdom,hr@oakworthtechnologies.co.uk,+44 161 447 5000,+44 7705 678901,+44 161 447 5001,-2.2765,53.474,2020-06-08 13:30:00,2
+57,Brindleyplace,,Birmingham,B1 2DJ,West Midlands,United Kingdom,careers@greshamsolicitors.co.uk,,+44 7706 789012,+44 121 631 2001,-1.9034,52.507,2020-07-22 10:15:00,3
+58,Colmore Row,"Level 12, 2 Colmore Row",Birmingham,B3 2GH,West Midlands,United Kingdom,,+44 121 236 5000,+44 7707 890123,+44 121 236 5001,-1.898,52.5098,2020-08-18 15:45:00,4
+59,Quartermile,"Platform 4, 15 Lauriston Place",Edinburgh,EH3 9DF,Midlothian,United Kingdom,hr@pinnacle-recruitment.com,+44 131 225 2600,+44 7708 901234,+44 131 225 2601,-3.189,55.9411,2020-09-14 12:00:00,1
+60,Reading Business Park,"Building 3, Forbury Road",Reading,RG2 0HS,Berkshire,United Kingdom,careers@innovatetech-eng.co.uk,+44 118 925 8000,+44 7709 012345,+44 118 925 8001,-0.9734,51.4547,2020-10-09 16:30:00,2
+61,65 Great Portland Street,Suite 469,London,EC2 7RY,Greater London,United Kingdom,london@stonebridgelabs.co.uk,+44 20 7283 5597,+44 20 7283 4501,+44 20 7283 2666,-0.076532,51.519591,2019-03-10 08:30:00,1
+62,14 Gray's Inn Road,Floor 7,London,N1 3JL,Greater London,United Kingdom,canarywharf@bellstonefinancial.co.uk,+44 20 7623 8008,,+44 20 7623 1475,-0.023526,51.499538,2018-06-22 10:15:00,2
+63,25 The North Colonnade,Canary Wharf,London,E14 5GF,Greater London,United Kingdom,,+44 20 7991 8888,,+44 20 7991 8889,-0.0198,51.5032,2019-11-05 14:45:00,1
+64,208 Livery Street,,Birmingham,B4 9XH,West Midlands,United Kingdom,birmingham@foxridgelife.co.uk,+44 121 262 3270,,+44 121 262 5689,-1.895926,52.515635,2020-02-18 09:20:00,3
+65,Spinningfields Office Campus,"Block 3, Floor 15",Manchester,M1 1AE,Greater Manchester,United Kingdom,manchester@saltire.co.uk,+44 161 234 5600,+44 161 234 5601,+44 161 234 5602,-2.2453,53.4816,2019-05-14 11:00:00,2
+66,125 King Street,Floor 7,Manchester,M15 3GU,Greater Manchester,United Kingdom,mediacity@ironcroftanalytics.co.uk,+44 161 345 5262,,+44 161 345 7655,-2.277075,53.470064,2020-08-30 13:30:00,4
+67,80 Charlotte Street,"Fitzrovia, London",London,W1T 4QE,Greater London,United Kingdom,charlotte@kingsleysolicitors.co.uk,+44 20 3254 5000,,+44 20 3254 5001,-0.1357,51.5208,2020-01-22 10:45:00,1
+68,2 King Edward Street,Smithfield,London,EC1A 1HQ,Greater London,United Kingdom,careers@nexusengineering.co.uk,+44 20 8092 5000,,+44 20 8092 5001,-0.1013,51.5181,2019-09-11 14:15:00,3
+69,Brindleyplace Tower,"Suite 400, Floor 4",Birmingham,B1 2JB,West Midlands,United Kingdom,recruitment@birchcroftwealth.co.uk,+44 121 643 2000,,+44 121 643 2001,-1.9034,52.5047,2020-04-03 08:00:00,2
+70,100 Aldersgate Street,Barbican,London,EC1A 4HX,Greater London,United Kingdom,london@ashfordmedical.co.uk,+44 20 7936 3000,,+44 20 7936 3001,-0.0945,51.5212,2018-11-27 12:30:00,1
+71,168 Gracechurch Street,,London,WC1 8XR,Greater London,United Kingdom,info@millworthcloud.co.uk,+44 20 7283 9144,+44 20 7283 4501,+44 20 7283 4604,-0.082190,51.508703,2019-03-10 08:30:00,1
+72,116 Southwark Street,,London,SE1 7FX,Greater London,United Kingdom,recruitment@hartwickwealth.co.uk,,,+44 20 7991 6231,-0.018906,51.499295,2019-05-22 10:15:00,1
+73,55 Colmore Row,Suite 3,Birmingham,B3 2AS,West Midlands,United Kingdom,,+44 121 234 5000,+44 121 234 5001,+44 121 234 5002,-1.8958,52.5095,2019-07-18 14:45:00,2
+74,Spinningfields,10-12 Whitworth Street West,Manchester,M1 5WW,Greater Manchester,United Kingdom,careers@nhsdigital.co.uk,+44 161 246 4000,+44 161 246 4001,+44 161 246 4002,-2.2313,53.4799,2019-09-05 11:20:00,2
+75,Quartermile,15 Lauriston Place,Edinburgh,EH3 9EP,Edinburgh,United Kingdom,recruitment@larkfordconsulting.co.uk,+44 131 225 7000,+44 131 225 7001,+44 131 225 7002,-3.1925,55.9429,2020-01-12 09:00:00,1
+76,30 Crown Place,,London,WC1 5WL,Greater London,United Kingdom,talent@carrickrail.co.uk,,+44 20 7626 1501,+44 20 7626 1502,-0.0704,51.5179,2020-02-28 13:30:00,3
+77,MediaCityUK,25 Whitworth Street,Manchester,M1 6LT,Greater Manchester,United Kingdom,recruitment@larkmerehealth.co.uk,+44 161 455 0000,+44 161 455 0001,+44 161 455 0002,-2.2456,53.4757,2020-04-16 10:45:00,3
+78,Brindleyplace,2 Hepworth Street,Birmingham,B1 2EA,West Midlands,United Kingdom,hr@underwoodsolicitors.co.uk,,+44 121 212 3001,+44 121 212 3002,-1.9019,52.5062,2020-06-10 14:20:00,4
+79,2 London Stone,EC3R 8FA,London,EC3R 8FA,Greater London,United Kingdom,recruitment@trinityeducation.org.uk,+44 20 7774 1000,+44 20 7774 1001,+44 20 7774 1002,-0.0873,51.5125,2020-08-22 11:00:00,1
+80,Royal Exchange,Corner of Threadneedle Street,London,EC3V 3LR,Greater London,United Kingdom,talent@logistixsolutions.co.uk,+44 20 7756 8000,+44 20 7756 8001,+44 20 7756 8002,-0.0881,51.5142,2020-10-05 15:30:00,2
+81,62 Great Portland Street,,London,WC1 4AS,Greater London,United Kingdom,info@foxwoodtechnologies.co.uk,+44 20 7283 2016,,+44 20 7283 9161,-0.084789,51.513530,2020-01-15 09:00:00,1
+82,72 Great Portland Street,,London,EC3 9WH,Greater London,United Kingdom,recruitment@hartstonesecurities.co.uk,+44 20 7991 8075,,+44 20 7991 6112,-0.016467,51.502653,2019-06-22 10:30:00,1
+83,100 Old Street,Suite 5,London,EC1V 9AQ,Greater London,United Kingdom,london@ashvalecare.co.uk,,,+44 20 3031 3001,-0.0888,51.5227,2021-03-10 14:15:00,2
+84,Spinningfields Market,2nd Floor,Manchester,M1 1AE,Greater Manchester,United Kingdom,hr@greenfordsoftware.co.uk,+44 161 236 5000,,+44 161 236 5001,-2.2348,53.4819,2020-08-05 11:45:00,2
+85,MediaCityUK,"Building 3, Office 401",Manchester,M50 2QH,Greater Manchester,United Kingdom,jobs@copperwoodcapital.co.uk,+44 161 838 7000,,+44 161 838 7001,-2.2927,53.4726,2021-09-12 09:20:00,3
+86,Brindleyplace,"Level 12, 103 Colmore Row",Birmingham,B1 1BB,West Midlands,United Kingdom,recruitment@kestrelconsulting.co.uk,+44 121 200 1000,,+44 121 200 1001,-1.8954,52.5081,2020-05-19 13:00:00,1
+87,City Centre House,Colmore Row,Birmingham,B3 2QA,West Midlands,United Kingdom,,+44 121 643 5000,,+44 121 643 5001,-1.8918,52.5089,2021-02-08 15:30:00,2
+88,43 King William Street,Flat 2,London,EC4R 9AS,Greater London,United Kingdom,john.richardson@larkhavenhealth.co.uk,,,,-0.0915,51.5107,2022-01-10 10:00:00,3
+89,Fountain Street,Apartment 6B,Manchester,M2 1AH,Greater Manchester,United Kingdom,sarah.williams@ogilviesolicitors.co.uk,+44 7711 234567,,,-2.2378,53.485,2021-07-22 14:20:00,1
+90,Hagley Road,Unit 15,Birmingham,B16 1PP,West Midlands,United Kingdom,,+44 7722 345678,,,-1.9245,52.5092,2021-11-30 11:45:00,2
+91,218 Cheapside,,London,EC3 1SU,Greater London,United Kingdom,info@larkbridge.co.uk,+44 20 7283 9648,+44 7700 900001,+44 20 7283 8670,-0.075316,51.508670,2019-03-10 08:30:00,1
+92,115 Gracechurch Street,,London,EC2 4FF,Greater London,United Kingdom,recruitment@albionasset.co.uk,+44 20 7991 8492,+44 7700 900002,+44 20 7991 2392,-0.016052,51.511564,2019-05-22 10:15:00,1
+93,Imperial House,"Spinningfields, Manchester",Manchester,M1 1AD,Greater Manchester,United Kingdom,careers@hartcroftlife.co.uk,+44 161 235 3000,+44 7700 900003,+44 161 235 3001,-2.2426,53.4808,2019-07-18 11:45:00,1
+94,The Cube,Brindleyplace,Birmingham,B1 2HS,West Midlands,United Kingdom,birmingham@brookwooddigital.co.uk,+44 121 695 5000,+44 7700 900004,+44 121 695 5001,-1.9026,52.5091,2019-09-12 09:20:00,2
+95,3 More London Riverside,"Tooley Street, SE1",London,SE1 2AQ,Greater London,United Kingdom,,+44 20 7212 1000,+44 7700 900005,+44 20 7212 1001,-0.0862,51.5052,2019-11-08 14:30:00,2
+96,4 Hardman Street,"MediaCityUK, Salford Quays",Manchester,M3 3HF,Greater Manchester,United Kingdom,hr@blackfordlife.co.uk,+44 161 832 7755,+44 7700 900006,+44 161 832 7756,-2.2804,53.4725,2020-01-20 10:00:00,3
+97,Colmore Row,"Suite 401, Birmingham Business Centre",Birmingham,B3 2BJ,West Midlands,United Kingdom,,+44 121 697 3000,+44 7700 900007,+44 121 697 3001,-1.8998,52.5088,2020-02-14 13:45:00,3
+98,142 Moorgate,Floor 1,London,EC1 3JY,Greater London,United Kingdom,,+44 20 3743 9654,+44 7700 900008,+44 20 3743 8166,-0.076476,51.528399,2020-04-03 15:20:00,4
+99,Quartermile,"15 Lauriston Place, Edinburgh",Edinburgh,EH3 9QH,Midlothian,United Kingdom,edinburgh@redhavenfinancial.co.uk,+44 131 225 5000,+44 7700 900009,+44 131 225 5001,-3.194,55.9411,2020-06-18 11:30:00,4
+100,51 New Street,Sheffield City Centre,Sheffield,S1 2GQ,South Yorkshire,United Kingdom,,+44 114 276 8000,+44 7700 900010,+44 114 276 8001,-1.4668,53.3811,2020-08-25 09:15:00,5
+101,179 Holborn,Suite 296,London,EC2 2NW,Greater London,United Kingdom,info@westleyanalytics.co.uk,+44 20 7283 1018,,+44 20 7283 1171,-0.077552,51.511674,2019-03-20 10:15:00,1
+102,One Canada Square,Canary Wharf,London,W1 4DH,Greater London,United Kingdom,hr@elmvalewealth.co.uk,+44 20 7991 8888,+44 20 7991 8889,+44 20 7991 8890,-0.0194,51.5035,2019-05-12 14:30:00,1
+103,25 Fenchurch Street,"The Walkie Talkie, Floor 14",London,EC3M 3AW,Greater London,United Kingdom,recruitment@redwoodcloud.co.uk,+44 20 7634 8000,,+44 20 7634 8001,-0.0785,51.5044,2020-01-08 11:45:00,1
+104,Spinningfields,50 Oldham Street,Manchester,M1 1JH,Greater Manchester,United Kingdom,hr@highwickpharma.co.uk,+44 161 455 1000,+44 161 455 1001,+44 161 455 1002,-2.2385,53.4832,2019-07-22 09:20:00,1
+105,Brindleyplace,"103 Broad Street, Tower 2",Birmingham,B1 2HF,West Midlands,United Kingdom,recruiter@bellwoodinvestments.co.uk,+44 121 265 5000,,+44 121 265 5001,-1.8974,52.5102,2020-02-14 13:00:00,1
+106,138 Hagley Road,,Birmingham,B4 5PJ,West Midlands,United Kingdom,hr@stoneleytechnologies.co.uk,,,+44 121 212 7747,-1.896032,52.509652,2020-06-10 10:30:00,1
+107,33 Whitehall,Suite 4B,London,SW1A 2WH,Greater London,United Kingdom,contact@silverworthinvestments.co.uk,+44 20 7270 3000,,+44 20 7270 3001,-0.1264,51.5033,2019-09-03 15:45:00,1
+108,Four Elms,Beaconsfield,Reading,RG41 2AJ,Berkshire,United Kingdom,jobs@hawworthaerospace.co.uk,+44 118 950 8000,,+44 118 950 8001,-0.7554,51.4159,2020-08-19 09:15:00,1
+109,The Round Church,Bridge Street,Cambridge,CB2 1UB,Cambridgeshire,United Kingdom,hr@halesolicitors.co.uk,+44 1223 303 000,,+44 1223 303 001,0.1158,52.2033,2021-01-27 11:30:00,1
+110,Quartermile,,Edinburgh,EH8 8DU,Lothian,United Kingdom,recruitment@blackburyhealthcare.co.uk,+44 131 523 5000,,+44 131 523 5001,-3.1928,55.9531,2020-11-05 14:20:00,1
+111,181 Gray's Inn Road,Suite 762,London,EC1 1HU,Greater London,United Kingdom,info@larkbury.co.uk,+44 20 7283 7952,,+44 20 7283 7065,-0.086555,51.508797,2019-03-12 10:30:00,1
+112,59 Theobalds Road,,London,EC1 6SQ,Greater London,United Kingdom,,+44 20 7991 9271,,+44 20 7991 2104,-0.021526,51.496508,2019-05-08 14:15:00,1
+113,2 Spinningfields,Suite 3,Manchester,M1 1AE,Greater Manchester,United Kingdom,hr@yarrowhealthcare.co.uk,,,+44 161 234 5679,-2.2426,53.4808,2019-07-20 11:45:00,1
+114,53 Edmund Street,Floor 8,Birmingham,B2 5HJ,West Midlands,United Kingdom,careers@birchbridgelabs.co.uk,,,+44 121 456 9122,-1.907081,52.513668,2019-09-15 09:20:00,1
+115,City House,126-130 Hills Road,Cambridge,CB2 1PQ,Cambridgeshire,United Kingdom,jobs@coppervaleinvestments.co.uk,+44 1223 567890,,+44 1223 567891,0.1188,52.1951,2020-01-22 13:30:00,1
+116,Quartermile,10 Infirmary Street,Edinburgh,EH8 8DX,Edinburgh,United Kingdom,recruitment@larkvaleconsulting.co.uk,+44 131 650 9000,,+44 131 650 9001,-3.1883,55.9533,2020-03-10 10:00:00,1
+117,Merchant House,23 Bothwell Street,Glasgow,G2 6NL,Glasgow,United Kingdom,jobs@hartridgeinsurance.co.uk,+44 141 248 5555,,+44 141 248 5556,-4.2604,55.8642,2020-05-18 15:45:00,1
+118,Apex Court,4-6 Forbury Road,Reading,RG1 3AH,Berkshire,United Kingdom,careers@brightwatercare.co.uk,,,+44 118 901 2346,-0.9736,51.4545,2020-06-25 12:20:00,1
+119,Temple Quarter,50 Temple Street,Bristol,BS1 6DB,Bristol,United Kingdom,hr@kendrick.co.uk,+44 117 929 4444,,+44 117 929 4445,-2.5894,51.4545,2020-08-12 08:30:00,1
+120,Leadenhall,175 Leadenhall Street,London,EC3V 4QY,Greater London,United Kingdom,info@greenburyrail.co.uk,+44 20 3207 0700,,+44 20 3207 0701,-0.0792,51.5052,2020-10-05 16:15:00,1
+121,157 Old Street,Suite 249,London,EC4 8SB,Greater London,United Kingdom,info@castlegatetechnologies.co.uk,+44 20 7283 3325,+44 20 7283 4501,+44 20 7283 7805,-0.089822,51.508370,2019-03-10 08:30:00,1
+122,14 Moorgate,,London,EC3 7TP,Greater London,United Kingdom,recruitment@foxworthasset.co.uk,+44 20 7991 4039,+44 20 7991 8889,+44 20 7991 9598,-0.022232,51.511306,2019-05-22 10:15:00,1
+123,Spinningfields,"Unit 4, Whitworth Street",Manchester,M1 5LH,Greater Manchester,United Kingdom,jobs@willowmedical.co.uk,+44 161 212 5000,+44 161 212 5001,+44 161 212 5002,-2.2426,53.4808,2020-01-14 09:45:00,2
+124,3 Brindleyplace,Floor 18,Birmingham,B1 2EA,West Midlands,United Kingdom,recruitment@westgatesoftware.co.uk,+44 121 234 5000,+44 121 234 5001,+44 121 234 5002,-1.8984,52.5086,2020-02-03 14:20:00,2
+125,25 Colmore Row,Birmingham City Centre,Birmingham,B3 2EH,West Midlands,United Kingdom,hr@wolfmere.co.uk,+44 121 695 5000,+44 121 695 5001,+44 121 695 5002,-1.8965,52.5097,2020-04-16 11:30:00,3
+126,70 Wilson Street,Level 8,Glasgow,G2 1EH,Glasgow,United Kingdom,recruitment@northcotelife.co.uk,+44 141 248 3000,+44 141 248 3001,+44 141 248 3002,-2.2414,55.8642,2020-06-08 09:00:00,3
+127,27 Queen Street,New Town,Edinburgh,EH2 1LA,Edinburgh,United Kingdom,jobs@elmfieldwealth.co.uk,+44 131 556 8888,+44 131 556 8889,+44 131 556 8890,-3.1963,55.9533,2020-07-21 13:45:00,4
+128,192 Rose Street,,Edinburgh,EH1 5RQ,Edinburgh,United Kingdom,recruitment@copperleafdigital.co.uk,+44 131 243 2323,+44 131 243 8001,+44 131 243 6758,-3.187548,55.938743,2020-08-10 10:20:00,4
+129,199 Bishopsgate,Shoreditch,London,EC2M 3TY,Greater London,United Kingdom,hr@grant.co.uk,+44 20 3514 8000,+44 20 3514 8001,+44 20 3514 8002,-0.0762,51.5208,2021-01-19 08:15:00,5
+130,3 Hardman Street,MediaCityUK,Manchester,M3 3HF,Greater Manchester,United Kingdom,,+44 161 335 3000,+44 161 335 3001,+44 161 335 3002,-2.2865,53.4758,2021-02-03 14:50:00,5
+131,108 Holborn,,London,E1 4RQ,Greater London,United Kingdom,info@birchwickcloud.co.uk,+44 20 7283 7106,,+44 20 7283 9872,-0.082625,51.508288,2020-01-15 09:00:00,1
+132,30 Canada Square,Canary Wharf,London,E14 5LQ,Greater London,United Kingdom,recruitment@hawgateinvestments.co.uk,+44 20 7991 8888,,+44 20 7991 8889,-0.0191,51.5044,2020-02-20 10:30:00,1
+133,Whitehall Place,6th Floor,London,SW1A 2HQ,Greater London,United Kingdom,hr@coppergatediagnostics.co.uk,+44 20 3254 8000,,+44 20 3254 8001,-0.1255,51.5034,2020-03-10 11:15:00,2
+134,236 Peter Street,Suite 746,Manchester,M2 6QU,Greater Manchester,United Kingdom,careers@wolfstone.co.uk,+44 161 333 7631,,+44 161 333 1666,-2.240593,53.476768,2020-04-05 14:45:00,3
+135,97 King Street,,Manchester,M4 2BL,Greater Manchester,United Kingdom,hr@northburysecurities.co.uk,+44 161 200 5461,,+44 161 200 6488,-2.290475,53.478877,2020-05-12 09:20:00,1
+136,158 Colmore Row,,Birmingham,B3 6LN,West Midlands,United Kingdom,talent@elginnetworks.co.uk,+44 121 333 8785,,+44 121 333 8630,-1.902358,52.497388,2020-06-18 10:00:00,2
+137,199 Great Charles Street,,Birmingham,B16 5SU,West Midlands,United Kingdom,,+44 121 644 5969,,+44 121 644 3479,-1.897303,52.501739,2020-07-22 13:30:00,3
+138,City Square Tower,9 Leeds City Square,Leeds,LS1 2RJ,West Yorkshire,United Kingdom,hr@whitehavenlabs.co.uk,+44 113 244 5000,,+44 113 244 5001,-1.5456,53.8008,2020-08-10 15:45:00,1
+139,Temple Quarter,"Unit 4, Enterprise House",Bristol,BS1 6QH,Bristol,United Kingdom,careers@larkfieldhealth.co.uk,+44 117 922 0000,,+44 117 922 0001,-2.5879,51.4534,2020-09-14 11:00:00,2
+140,Quartermile,"Block D, Level 8",Edinburgh,EH8 8DW,Edinburgh,United Kingdom,,+44 131 475 0000,,+44 131 475 0001,-3.1883,55.9242,2020-10-08 16:20:00,3
+141,156 Gracechurch Street,,London,WC2 6TQ,Greater London,United Kingdom,info@marlow.co.uk,+44 20 7283 7680,,+44 20 7283 2060,-0.087641,51.513767,2019-03-10 09:30:00,1
+142,167 Moorgate,,London,SE1 9XP,Greater London,United Kingdom,,+44 20 7991 2377,,+44 20 7991 4413,-0.022662,51.512305,2018-11-22 14:15:00,1
+143,25 Great Charles Street,Suite 526,Birmingham,B4 8GJ,West Midlands,United Kingdom,hr@greenstonenetworks.co.uk,+44 121 262 9823,,+44 121 262 2985,-1.892614,52.512625,2019-07-18 10:45:00,2
+144,Spinningfields,"Two Whitehall Quay, Floor 15",Manchester,M1 2BE,Greater Manchester,United Kingdom,careers@redleycare.co.uk,+44 161 455 4000,,+44 161 455 4001,-2.2426,53.4808,2020-02-09 11:20:00,1
+145,100 Pall Mall,Suite 5,London,SW1Y 5EA,Greater London,United Kingdom,,+44 20 7766 2000,,+44 20 7766 2010,-0.1334,51.5034,2019-09-05 08:30:00,3
+146,The Corn Exchange,68 Brindleyplace,Birmingham,B1 2HS,West Midlands,United Kingdom,recruitment@oakburyfinancial.co.uk,,,+44 121 212 3510,-1.905,52.5095,2020-05-12 13:00:00,2
+147,2 Whitehall Quay,"MediaCityUK, Floor 12",Manchester,M50 3SP,Greater Manchester,United Kingdom,hr@radcliffesolicitors.co.uk,+44 161 828 9000,,+44 161 828 9001,-2.2965,53.4732,2018-08-20 09:45:00,1
+148,Quartermile,15 Lauriston Place,Edinburgh,EH3 9EN,Midlothian,United Kingdom,edinburgh@hawmerehealthcare.co.uk,+44 131 556 8555,,+44 131 556 8556,-3.1899,55.9411,2019-12-03 10:15:00,4
+149,Great Pulteney Street,,Bristol,BS2 0AQ,Bristol,United Kingdom,recruitment@highburyfinancial.co.uk,+44 117 936 6000,,+44 117 936 6001,-2.3617,51.4545,2020-01-28 14:30:00,3
+150,The Old Library,"Bridge Street, Floor 3",Cambridge,CB2 3QZ,Cambridgeshire,United Kingdom,cambridge@talentbridgestaffing.co.uk,+44 1223 300 300,,+44 1223 300 301,0.1188,52.2015,2019-06-14 11:45:00,2
+151,200 Gray's Inn Road,Floor 6,London,WC1 5YL,Greater London,United Kingdom,info@wolfcroftcloud.co.uk,+44 20 7283 5019,,+44 20 7283 4858,-0.086241,51.510687,2019-03-12 10:30:00,1
+152,40 Gray's Inn Road,,London,E14 4PD,Greater London,United Kingdom,,+44 20 7742 2647,,+44 20 7742 8600,-0.023798,51.504617,2019-05-22 14:15:00,1
+153,100 Aldersgate Street,Floor 4,London,EC1A 4JQ,Greater London,United Kingdom,contact@brookridgedigital.co.uk,+44 20 7991 8888,,+44 20 7991 8889,-0.0989,51.5195,2018-09-17 11:45:00,1
+154,Spinningfields,"Golden Square, Floor 15",Manchester,M2 3BQ,Greater Manchester,United Kingdom,manchester@birchwoodmedical.co.uk,,,+44 161 455 2001,-2.2426,53.4842,2019-07-08 09:20:00,2
+155,10 Newhall Street,Floor 6,Birmingham,B1 8JT,West Midlands,United Kingdom,birmingham@bellvaleasset.co.uk,+44 121 332 4181,,+44 121 332 2230,-1.906094,52.504626,2020-02-14 13:30:00,3
+156,Leeds City Business Centre,"26 Queen Street, Floor 8",Leeds,LS1 2TW,West Yorkshire,United Kingdom,leeds@whitewoodlabs.co.uk,+44 113 242 5000,,+44 113 242 5001,-1.5437,53.8008,2020-06-03 10:15:00,2
+157,Temple Quarter,"88 Fairfax Street, Tower A",Bristol,BS1 3BB,Bristol,United Kingdom,bristol@prescottsolicitors.co.uk,+44 117 930 1000,,+44 117 930 1001,-2.5879,51.4545,2021-01-22 15:45:00,3
+158,47 Lothian Road,"New Town, Quartermile",Edinburgh,EH1 3AH,Midlothian,United Kingdom,edinburgh@hawwicktechnologies.co.uk,,,+44 131 240 5001,-3.1953,55.9533,2020-04-10 11:20:00,1
+159,George Square,"Floor 12, 201 West George Street",Glasgow,G2 1RN,Glasgow City,United Kingdom,glasgow@glenridgehealthcare.co.uk,+44 141 305 8000,,+44 141 305 8001,-4.2605,55.8642,2021-03-18 12:30:00,2
+160,Reading Bridge House,"Bridge Street, Floor 6",Reading,RG1 2TT,Berkshire,United Kingdom,reading@coppercroftasset.co.uk,+44 118 957 5000,,+44 118 957 5001,-0.9754,51.4545,2019-11-05 09:50:00,3
+161,96 Victoria Street,,London,EC3 8ZL,Greater London,United Kingdom,info@ironfordlabs.co.uk,+44 20 7283 6729,,+44 20 7283 4565,-0.078845,51.517699,2020-01-15 09:00:00,1
+162,10 Great Portland Street,,London,WC2 3BH,Greater London,United Kingdom,recruitment@oakleycapital.co.uk,+44 20 7991 7700,,+44 20 7991 7091,-0.014699,51.509736,2020-02-20 10:30:00,1
+163,125 Old Broad Street,Suite 5,London,EC2N 1AR,Greater London,United Kingdom,careers@coppermerediagnostics.co.uk,+44 20 7742 4000,,+44 20 7742 4001,-0.0856,51.5155,2020-03-10 14:15:00,2
+164,48 Piccadilly,Suite 661,Manchester,M3 2HB,Greater Manchester,United Kingdom,jobs@norburydigital.co.uk,+44 161 455 7476,,+44 161 455 3532,-2.248378,53.476212,2020-04-05 11:45:00,2
+165,164 Whitworth Street,Floor 7,Manchester,M1 3RL,Greater Manchester,United Kingdom,hr@whitemereasset.co.uk,+44 161 606 6852,,+44 161 606 7784,-2.290878,53.474186,2020-05-12 09:20:00,1
+166,Brindleyplace,55 Broad Street,Birmingham,B1 2HE,West Midlands,United Kingdom,recruitment@redfordsoftware.co.uk,,,+44 121 258 3001,-1.8978,52.5039,2020-06-18 13:30:00,3
+167,Colmore Row,42 Colmore Row,Birmingham,B3 2EH,West Midlands,United Kingdom,,+44 121 234 5678,,+44 121 234 5679,-1.9029,52.5094,2020-07-22 10:00:00,2
+168,Temple Quarter,1 Temple Way,Bristol,BS1 6GF,South Gloucestershire,United Kingdom,recruitment@copperhavencare.co.uk,+44 117 945 5000,,+44 117 945 5001,-2.5597,51.4503,2020-08-30 15:45:00,1
+169,New Town,38 Queen Street,Edinburgh,EH2 3RL,Edinburgh,United Kingdom,careers@kinrosswealth.co.uk,+44 131 556 8000,,+44 131 556 8001,-3.1958,55.9545,2020-09-14 12:15:00,3
+170,Reading Business Park,"Building 3, Basingstoke Road",Reading,RG2 0QS,Berkshire,United Kingdom,jobs@ainsleyblakemore.co.uk,+44 118 925 8000,,+44 118 925 8001,-0.9331,51.4342,2020-10-05 08:30:00,2
+171,107 Cheapside,Suite 106,London,WC2 4RR,Greater London,United Kingdom,info@millburydigital.co.uk,+44 20 7283 2482,,+44 20 7283 7655,-0.083420,51.521926,2020-01-15 09:00:00,1
+172,25 Bank Street,Canary Wharf,London,E14 5AB,Greater London,United Kingdom,,+44 20 7991 8888,,+44 20 7991 8889,-0.0188,51.5033,2019-06-22 10:30:00,1
+173,148 Princess Street,,Manchester,M4 3FA,Greater Manchester,United Kingdom,,+44 161 455 2458,,+44 161 455 7075,-2.236043,53.483051,2020-03-10 11:15:00,2
+174,189 Bull Street,,Birmingham,B2 3QN,West Midlands,United Kingdom,recruitment@glenleyanalytics.co.uk,+44 121 713 9036,,+44 121 713 4233,-1.914459,52.515408,2020-05-18 14:45:00,3
+175,107 Cheapside,,London,EC2V 6DN,Greater London,United Kingdom,hr@oakvaleinvestments.co.uk,+44 20 7626 1500,,+44 20 7626 1501,-0.0922,51.5138,2019-11-05 09:20:00,1
+176,MediaCityUK,"Building 100, Salford Quays",Manchester,M50 2AB,Greater Manchester,United Kingdom,jobs@ashhavenhealthcare.co.uk,+44 161 335 3000,,+44 161 335 3001,-2.2893,53.4734,2021-02-14 10:00:00,2
+177,78 Broad Street,Suite 722,Birmingham,B16 1UP,West Midlands,United Kingdom,recruitment@dalton.co.uk,+44 121 265 3625,,+44 121 265 4638,-1.894803,52.502881,2020-07-21 13:30:00,3
+178,88 Wood Street,Shoreditch,London,EC2V 7QQ,Greater London,United Kingdom,careers@brookcroftlabs.co.uk,+44 20 3743 8500,,+44 20 3743 8501,-0.0808,51.5185,2021-04-09 15:45:00,4
+179,West End,240 Regent Street,London,W1B 3BR,Greater London,United Kingdom,talent@northhavenwealth.co.uk,+44 20 7747 0000,,+44 20 7747 0001,-0.1397,51.5142,2019-09-12 08:15:00,1
+180,Three Snowhill,Birmingham City Centre,Birmingham,B4 6GH,West Midlands,United Kingdom,recruitment@elmburyhealth.co.uk,+44 121 234 5000,,+44 121 234 5001,-1.9012,52.5092,2020-08-27 11:50:00,3
+181,159 City Road,,London,E14 4UG,Greater London,United Kingdom,info@ravenscroftdata.co.uk,+44 20 7283 7284,+44 7700 123456,+44 20 7283 6885,-0.081914,51.513896,2020-01-15 09:00:00,1
+182,25 Churchill Place,Canary Wharf,London,E14 5HP,Greater London,United Kingdom,,+44 20 7991 8888,+44 7700 234567,+44 20 7991 8889,-0.0197,51.5045,2020-02-20 10:30:00,1
+183,2-8 Spinningfields,Unit 104,Manchester,M1 1AE,Greater Manchester,United Kingdom,recruitment@hartleycloud.co.uk,+44 161 222 3333,+44 7700 345678,+44 161 222 3334,-2.2428,53.4808,2020-03-10 14:15:00,2
+184,32 Broad Street,Floor 11,Birmingham,B2 4BX,West Midlands,United Kingdom,careers@newhavenclinical.co.uk,+44 121 333 6017,+44 7700 456789,+44 121 333 7882,-1.901208,52.503784,2020-04-05 11:45:00,2
+185,1 Finsbury Square,Floor 8,London,EC2A 1AE,Greater London,United Kingdom,,+44 20 7425 5500,+44 7700 567890,+44 20 7425 5501,-0.0878,51.5197,2020-05-22 09:20:00,1
+186,1 Colmore Row,Suite 300,Birmingham,B3 2BJ,West Midlands,United Kingdom,hr@bellbridgewealth.co.uk,+44 121 444 5555,+44 7700 678901,+44 121 444 5556,-1.8972,52.5086,2020-06-18 13:00:00,3
+187,47 Whitehall,Westminster,London,SW1A 2BX,Greater London,United Kingdom,,+44 20 7276 1000,+44 7700 789012,+44 20 7276 1001,-0.1276,51.5033,2020-07-30 15:45:00,1
+188,4 Millbank Tower,Millbank,London,SW1P 4QU,Greater London,United Kingdom,jobs@clearwaterengineering.co.uk,+44 20 7325 5000,+44 7700 890123,+44 20 7325 5001,-0.1207,51.4924,2020-08-14 10:30:00,2
+189,79 Piccadilly,Suite 615,Manchester,M2 7RQ,Greater Manchester,United Kingdom,recruitment@northcroftsecurities.co.uk,+44 161 200 9019,+44 7700 901234,+44 161 200 8623,-2.301544,53.471760,2020-09-25 12:15:00,3
+190,61 Aldersgate Street,,London,E14 8GU,Greater London,United Kingdom,careers@chalmers.co.uk,,+44 7700 012345,+44 20 3370 2502,-0.077610,51.515755,2020-10-12 08:45:00,1
+191,206 Aldersgate Street,,London,E1 9BB,Greater London,United Kingdom,info@greenworthsoftware.co.uk,+44 20 7283 9380,,+44 20 7283 2310,-0.085180,51.522254,2020-01-15 09:00:00,1
+192,14 Victoria Street,,London,W1 3AD,Greater London,United Kingdom,recruitment@blackhaven.co.uk,+44 20 7991 9058,,+44 20 7991 5716,-0.011092,51.498399,2020-02-10 10:30:00,1
+193,208 Broad Street,Floor 10,Birmingham,B15 4DQ,West Midlands,United Kingdom,jobs@blackfieldpharma.co.uk,+44 121 457 5505,,+44 121 457 8477,-1.888255,52.504040,2020-03-05 14:15:00,2
+194,Spinningfields,Worship Street,Manchester,M1 1AF,Greater Manchester,United Kingdom,manchester@kingsmereanalytics.co.uk,+44 161 242 1000,,+44 161 242 1001,-2.2428,53.4818,2020-04-20 11:45:00,1
+195,One Kingsway,WC2B 6AN,London,WC2B 6AN,Greater London,United Kingdom,,+44 20 7684 3000,,+44 20 7684 3100,-0.1189,51.5149,2020-05-12 09:20:00,2
+196,111 Buckingham Palace Road,Victoria,London,SW1W 0SJ,Greater London,United Kingdom,careers@copperstonetechnologies.co.uk,+44 20 7303 4000,,+44 20 7303 4500,-0.1389,51.4945,2020-06-08 13:30:00,1
+197,37 Quay Street,,Manchester,M15 8HY,Greater Manchester,United Kingdom,recruitment@osborne.co.uk,+44 161 625 3983,,+44 161 625 7610,-2.295011,53.469705,2020-07-22 10:00:00,3
+198,5 Brindleyplace,Floor 10,Birmingham,B1 2EA,West Midlands,United Kingdom,jobs@birchvalehealth.co.uk,+44 121 234 5678,,+44 121 234 5679,-1.905,52.5042,2020-08-14 15:45:00,2
+199,201 Bishopsgate,Level 5,London,EC2M 3UB,Greater London,United Kingdom,careers@foxstonedata.co.uk,+44 20 7960 8000,,+44 20 7960 8200,-0.0815,51.5194,2020-09-03 08:30:00,1
+200,St James Tower,22 The Minories,London,EC3N 1BJ,Greater London,United Kingdom,london@nexgenengineering.co.uk,+44 20 7212 1000,,+44 20 7212 1500,-0.0753,51.5087,2020-10-19 12:15:00,3
+201,42 Queen Victoria Street,,London,N1 6RG,Greater London,United Kingdom,info@barclays.co.uk,+44 20 7283 8422,,+44 20 7283 9543,-0.084444,51.517681,2020-01-15 09:00:00,1
+202,40 Bank Street,Canary Wharf,London,E14 5AB,Greater London,United Kingdom,recruitment@hsbc.co.uk,+44 20 7991 8888,,+44 20 7992 1000,-0.0194,51.5044,2020-02-20 10:30:00,1
+203,149 Holborn,Floor 5,London,WC1 9RQ,Greater London,United Kingdom,careers@lloyds.co.uk,,,+44 20 7626 2333,-0.145536,51.493138,2020-03-10 11:15:00,1
+204,114 Oxford Road,Floor 5,Manchester,M2 1NW,Greater Manchester,United Kingdom,manchester@accenture.co.uk,+44 161 228 4631,,+44 161 228 3447,-2.239846,53.486829,2020-04-05 09:45:00,1
+205,75 Piccadilly,,Manchester,M50 7SW,Greater Manchester,United Kingdom,hr@mediacity.co.uk,+44 161 885 1746,,+44 161 885 1365,-2.289700,53.473814,2020-05-12 14:20:00,1
+206,53 Colmore Row,Level 5,Birmingham,B3 2AS,West Midlands,United Kingdom,recruitment@bae-systems.co.uk,+44 121 234 4000,,+44 121 234 4001,-1.895,52.5095,2020-06-18 10:00:00,1
+207,1 Brindleyplace,The Cube,Birmingham,B1 2JB,West Midlands,United Kingdom,careers@deutschebank.co.uk,+44 121 505 5000,,+44 121 505 5001,-1.9087,52.5014,2020-07-22 13:30:00,1
+208,14 George Street,,Edinburgh,EH12 6NE,City of Edinburgh,United Kingdom,recruitment@skycisco.co.uk,+44 131 506 3190,,+44 131 506 4345,-3.188682,55.939612,2020-08-09 15:45:00,1
+209,25 Thomson Street,,Glasgow,G2 3BA,City of Glasgow,United Kingdom,,+44 141 221 5000,,+44 141 221 5001,-2.2451,55.8607,2020-09-14 11:20:00,1
+210,94 Oxford Road,,Reading,RG2 3FA,Berkshire,United Kingdom,careers@oracle.co.uk,+44 118 925 3370,,+44 118 925 5419,-0.982281,51.453414,2020-10-08 09:30:00,1
+211,12 Bishopsgate,,London,SE1 5QS,Greater London,United Kingdom,london@barclays.com,,+44 20 7283 4501,+44 20 7283 4502,-0.0822,51.5155,2019-03-20 10:30:00,1
+212,103 Queen Victoria Street,Suite 761,London,EC1 1XQ,Greater London,United Kingdom,recruitment@hsbc.co.uk,,+44 20 7991 8889,,-0.019219,51.505430,2019-06-12 14:15:00,1
+213,127 Oxford Road,Suite 125,Manchester,M2 1BB,Greater Manchester,United Kingdom,,+44 161 233 2718,+44 161 233 5001,+44 161 233 1202,-2.250853,53.477871,2020-01-08 09:45:00,2
+214,Colmore Row,"The Cube, Floor 8",Birmingham,B1 1BB,West Midlands,United Kingdom,jobs@deloitte-birmingham.com,+44 121 695 4000,+44 121 695 4001,,-1.8954,52.5099,2020-05-22 11:20:00,2
+215,33 King Street,Apartment 5B,London,WC2N 5DU,Greater London,United Kingdom,,+44 7911 234567,,,-0.1236,51.5064,2021-02-10 08:30:00,3
+216,157 Whitworth Street,Suite 630,Manchester,M50 4FS,Greater Manchester,United Kingdom,recruitment@ibm-manchester.com,+44 161 496 6068,+44 161 496 6001,+44 161 496 2044,-2.300606,53.477914,2020-08-15 13:45:00,1
+217,Brindleyplace,"The Water Tower, Floor 6",Birmingham,B1 2JB,West Midlands,United Kingdom,careers@accenture-birmingham.com,+44 121 236 3000,+44 121 236 3001,,-1.9054,52.5054,2021-03-28 10:15:00,3
+218,125 Old Street,"Shoreditch, Floor 4",London,EC1V 9BX,Greater London,United Kingdom,hello@techstartup.io,+44 20 7253 8000,+44 7723 445566,+44 20 7253 8001,-0.0891,51.5271,2021-07-19 15:30:00,4
+219,Quartermile,,Edinburgh,EH3 9GL,Edinburgh,United Kingdom,recruitment@rbs.co.uk,,+44 131 556 8556,+44 131 556 8557,-3.2149,55.8775,2020-11-02 09:00:00,1
+220,Reading Bridge House,"Bridge Street, Floor 5",Reading,RG1 2SG,Berkshire,United Kingdom,hr@oracle-reading.com,,+44 118 958 0001,+44 118 958 0002,-0.9754,51.4545,2020-09-14 12:30:00,2
+221,77 Moorgate,Suite 547,London,SW1 8XA,Greater London,United Kingdom,hr@barclays.co.uk,+44 20 7283 3873,+44 20 7283 4501,+44 20 7283 4701,-0.079711,51.508788,2019-03-10 08:30:00,1
+222,27 Queen Victoria Street,Floor 12,London,EC4 1EP,Greater London,United Kingdom,,+44 20 7991 8144,+44 20 7991 8889,+44 20 7991 9572,-0.021944,51.508187,2019-05-22 10:15:00,1
+223,80 Deansgate,,Manchester,M3 2ER,Greater Manchester,United Kingdom,jobs@manchestertech.co.uk,+44 161 833 3000,+44 161 833 3001,+44 161 833 3002,-2.2426,53.4808,2019-07-08 14:45:00,2
+224,68 Hagley Road,Floor 1,Birmingham,B15 4DW,West Midlands,United Kingdom,,,+44 121 333 6001,+44 121 333 4322,-1.888932,52.515375,2019-09-14 11:20:00,2
+225,12 Holbein Place,Chelsea,London,SW1W 8NL,Greater London,United Kingdom,contact@nhs-digital.co.uk,+44 20 3682 0000,+44 20 3682 0001,+44 20 3682 0002,-0.158,51.4927,2020-01-20 09:00:00,3
+226,100 Liverpool Street,Floor 35,London,EC2M 2AT,Greater London,United Kingdom,,+44 20 7626 1500,+44 20 7626 1501,+44 20 7626 1502,-0.0809,51.5178,2020-02-03 13:30:00,1
+227,41 Lever Street,Suite 344,Manchester,M3 4RP,Greater Manchester,United Kingdom,careers@mediacity.co.uk,+44 161 885 9787,+44 161 885 8001,+44 161 885 8692,-2.288509,53.484421,2020-04-18 10:45:00,2
+228,121 Bull Street,Floor 12,Birmingham,B15 1AS,West Midlands,United Kingdom,recruitment@engineering-co.co.uk,,+44 121 246 5001,+44 121 246 2274,-1.904435,52.509627,2020-06-09 15:20:00,3
+229,Quartermile,,Edinburgh,EH8 8QG,Midlothian,United Kingdom,careers@fintech-scotland.co.uk,+44 131 558 3456,+44 131 558 3457,+44 131 558 3458,-3.1799,55.9428,2020-08-12 11:00:00,4
+230,145 Old Street,,London,EC3 1AE,Greater London,United Kingdom,hr@capital-markets.co.uk,+44 20 7519 1470,+44 20 7519 8001,+44 20 7519 1505,-0.083531,51.502718,2020-11-25 09:15:00,1
+231,11 Farringdon Road,Floor 2,London,SW1 1DB,Greater London,United Kingdom,info@barclays.co.uk,,,+44 20 7283 9747,-0.074927,51.510689,2019-03-10 08:30:00,1
+232,229 Fenchurch Street,,London,SW1 7EJ,Greater London,United Kingdom,,+44 20 7991 2433,,+44 20 7991 5708,-0.012612,51.497242,2019-06-22 10:15:00,1
+233,123 Mosley Street,Suite 444,Manchester,M2 2HN,Greater Manchester,United Kingdom,recruitment@accenture.co.uk,,,+44 161 234 5630,-2.246086,53.476979,2019-08-14 09:45:00,1
+234,Colmore Row,Level 5,Birmingham,B1 3BB,West Midlands,United Kingdom,careers@lloydsbanking.co.uk,,,+44 121 366 5001,-1.8966,52.5091,2020-01-20 11:00:00,1
+235,Quartermile,"Building 4, Office 210",Edinburgh,EH8 8DH,Edinburgh,United Kingdom,talent@scotbank.co.uk,+44 131 556 8555,,+44 131 556 8556,-3.1734,55.9533,2020-05-08 14:20:00,1
+236,13 Waterloo Street,,Birmingham,B3 9UN,West Midlands,United Kingdom,,+44 121 234 9497,,+44 121 234 2610,-1.923100,52.508425,2019-11-05 13:30:00,1
+237,MediaCityUK,Pier 9,Manchester,M50 3SP,Greater Manchester,United Kingdom,recruitment@bbc.co.uk,+44 161 885 3000,,+44 161 885 3001,-2.2906,53.4732,2020-02-18 15:45:00,1
+238,89 Theobalds Road,,London,SW1 1XY,Greater London,United Kingdom,careers@nhs-digital.co.uk,+44 20 3254 8144,,+44 20 3254 1021,-0.095906,51.505493,2020-04-12 10:00:00,1
+239,135 Queen Square,Suite 197,Bristol,BS2 1AQ,Bristol,United Kingdom,talent@capgemini-bristol.co.uk,+44 117 914 9103,,+44 117 914 6688,-2.583295,51.457623,2020-06-30 16:20:00,1
+240,Shoreditch House,,London,EC2A 3PE,Greater London,United Kingdom,hr@fintech-startup.co.uk,+44 20 7684 8000,,+44 20 7684 8001,-0.0806,51.5236,2021-01-14 09:30:00,1
+241,213 Victoria Street,Suite 337,London,WC1 3NH,Greater London,United Kingdom,info@barclays.co.uk,+44 20 7283 2325,+44 7700 123456,+44 20 7283 9032,-0.075181,51.510153,2019-03-22 10:30:00,1
+242,202 Marsh Wall,,London,EC2 6QE,Greater London,United Kingdom,,+44 20 7991 7094,+44 7701 456789,+44 20 7991 4377,-0.016066,51.503254,2019-06-14 14:15:00,2
+243,Spinning House,123 Golden Square,London,W1F 6EA,Greater London,United Kingdom,talent@bae.co.uk,+44 20 7389 8000,+44 7702 789012,+44 20 7389 8001,-0.1404,51.5161,2018-11-08 11:45:00,1
+244,51 Moorgate,City of London,London,EC2R 6AH,Greater London,United Kingdom,hr@lloydsbanking.co.uk,,+44 7703 234567,+44 20 7626 1501,-0.0922,51.5206,2019-01-30 09:20:00,2
+245,78 Quay Street,,Manchester,M4 9WG,Greater Manchester,United Kingdom,,+44 161 885 1555,+44 7704 567890,+44 161 885 6709,-2.283670,53.481803,2020-02-17 13:50:00,3
+246,Spinningfields,82 King Street,Manchester,M2 4NH,Greater Manchester,United Kingdom,recruitment@spintech.co.uk,+44 161 236 4500,+44 7705 891234,+44 161 236 4501,-2.2436,53.4835,2019-07-22 10:15:00,1
+247,Brindleyplace,19 Broad Street,Birmingham,B1 2HT,West Midlands,United Kingdom,,+44 121 225 3000,+44 7706 123456,+44 121 225 3001,-1.895,52.5059,2020-05-11 15:30:00,2
+248,Colmore Row,9 Colmore Business Park,Birmingham,B4 6AE,West Midlands,United Kingdom,hr@colmoretech.co.uk,+44 121 633 2000,+44 7707 456789,+44 121 633 2001,-1.8955,52.5089,2018-09-03 12:10:00,1
+249,Temple Back,"Futures House, 17-27 Bathurst Street",Bristol,BS1 6NZ,Bristol,United Kingdom,careers@bristoltech.co.uk,+44 117 929 1234,+44 7708 789012,+44 117 929 1235,-2.5981,51.457,2020-08-19 11:00:00,3
+250,149 Forbury Road,,Reading,RG30 3TX,Berkshire,United Kingdom,talent@readingtech.co.uk,,+44 7709 234567,+44 118 957 5214,-0.967975,51.453911,2019-04-10 14:45:00,2
