@@ -14,7 +14,7 @@ SELECT s.[AddressID] AS [__src_key],
        s.[Province] AS [County],
        s.[Country] AS [Country]
 INTO #stage
-FROM [RecruitCRM_Legacy].dbo.[Addresses] s
+FROM [Cobaltdesk_Legacy].dbo.[Addresses] s
 JOIN mig.KeyMap k ON k.target_table = N'CompanyLocation' AND k.source_table = N'Addresses' AND k.source_key = CAST(s.[AddressID] AS NVARCHAR(200))
 WHERE 1 = 1;
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (@mid, N'staged', @@ROWCOUNT);

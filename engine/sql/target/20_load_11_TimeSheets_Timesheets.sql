@@ -14,9 +14,9 @@ SELECT s.[ID] AS [__src_key],
        s.[Status] AS [Status],
        CAST(s.[Approved_By] AS NVARCHAR(200)) AS [__raw_ApprovedBy],
        fk6.target_id AS [ApprovedBy],
-       (SELECT TOP 1 lk.[Desc] FROM [RecruitCRM_Legacy].dbo.[TimesheetType] lk WHERE lk.[Timesheet_TypeID] = s.[Timesheet_TypeID]) AS [TimesheetType]
+       (SELECT TOP 1 lk.[Desc] FROM [Cobaltdesk_Legacy].dbo.[TimesheetType] lk WHERE lk.[Timesheet_TypeID] = s.[Timesheet_TypeID]) AS [TimesheetType]
 INTO #stage
-FROM [RecruitCRM_Legacy].dbo.[TimeSheets] s
+FROM [Cobaltdesk_Legacy].dbo.[TimeSheets] s
 JOIN mig.KeyMap k ON k.target_table = N'Timesheets' AND k.source_table = N'TimeSheets' AND k.source_key = CAST(s.[ID] AS NVARCHAR(200))
 LEFT JOIN mig.KeyMap fk6 ON fk6.target_table = N'User' AND fk6.source_table = N'Recruiter' AND fk6.source_key = CAST(s.[Approved_By] AS NVARCHAR(200))
 WHERE 1 = 1;

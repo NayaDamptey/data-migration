@@ -1,6 +1,6 @@
 """Who is calling, and may they touch this project?
 
-Real authentication (Clerk/Auth0) isn't wired up yet. Until it is, routes that
+Real authentication isn't wired up yet. Until it is, routes that
 handle agency data only work when APP_ENV=development, and refuse everything
 otherwise, so a deployed copy can't accidentally run with no login.
 """

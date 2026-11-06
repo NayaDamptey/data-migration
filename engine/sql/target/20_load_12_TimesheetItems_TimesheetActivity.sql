@@ -17,7 +17,7 @@ SELECT s.[ItemID] AS [__src_key],
        CAST(s.[CreatedBy] AS NVARCHAR(200)) AS [__raw_AddedBy],
        fk6.target_id AS [AddedBy]
 INTO #stage
-FROM [RecruitCRM_Legacy].dbo.[TimesheetItems] s
+FROM [Cobaltdesk_Legacy].dbo.[TimesheetItems] s
 JOIN mig.KeyMap k ON k.target_table = N'TimesheetActivity' AND k.source_table = N'TimesheetItems' AND k.source_key = CAST(s.[ItemID] AS NVARCHAR(200))
 LEFT JOIN mig.KeyMap fk1 ON fk1.target_table = N'Timesheets' AND fk1.source_table = N'TimeSheets' AND fk1.source_key = CAST(s.[Timesheet_ID] AS NVARCHAR(200))
 LEFT JOIN mig.KeyMap fk6 ON fk6.target_table = N'User' AND fk6.source_table = N'Recruiter' AND fk6.source_key = CAST(s.[CreatedBy] AS NVARCHAR(200))

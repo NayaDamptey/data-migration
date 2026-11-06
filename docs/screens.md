@@ -1,6 +1,5 @@
 # Screens
 
-Clickable prototype (design canvas): https://claude.ai/artifact/LDAeUiTQ8Wo8FjVrWYCz8A
 Original sketches: `docs/sketches/`.
 
 | # | Screen | Sketch | Route (frontend) |

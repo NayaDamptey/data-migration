@@ -3,7 +3,7 @@ import type { Config } from "tailwindcss";
 // One colour: white plus shades of blue. Navy for text, a strong blue for actions,
 // deep blue for the frame, pale blues for fills and lines. Status uses blue shades
 // together with its label (strong = done, mid = needs review, deep navy = failed).
-// The only other colours are the systems' own logos.
+// The only other colours are the (fictional) system logos.
 export default {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {

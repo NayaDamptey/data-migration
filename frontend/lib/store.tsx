@@ -6,6 +6,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { ENTITIES, ENTITY_JOINS, INITIAL_REQUESTS, INITIAL_RUNS, INITIAL_UPLOADS, type FieldStatus, type Join, type Run } from "./mock";
 import type { TransformConfig } from "./transforms";
 import { api } from "./api";
+import { demoUploads, isDemo } from "./demo";
 import { listStored, uploadMode, type UploadItem } from "./upload";
 import { EMPTY_OVERRIDES, computeChanges, type Change, type Overrides } from "./versions";
 
@@ -75,24 +76,35 @@ const configKey = (entity: string, field: string) => {
 
 const Ctx = createContext<Store | null>(null);
 
-export const PROJECT_ID = "spencer-thomas-tracker-bullhorn";
+export const PROJECT_ID = "harrow-finch-cobaltdesk-beaconfield";
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const original = (entity: string, field: string) => ENTITIES.find((e) => e.key === entity)?.fields.find((x) => x.name === field);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [setup, setSetup] = useState<Setup>({
-    sourceSystem: "Tracker",
+    sourceSystem: "Cobaltdesk",
     sourceFormat: "CSV files",
-    targetSystem: "Bullhorn",
+    targetSystem: "Beaconfield",
     targetDatabase: "PostgreSQL",
     output: "CSV files",
   });
   // Local mode starts from the files already stored for the project; demo mode keeps the sample list
-  const [uploads, setUploads] = useState<UploadItem[]>(uploadMode === "demo" ? INITIAL_UPLOADS : []);
+  const [uploads, setUploads] = useState<UploadItem[]>(uploadMode === "demo" && !isDemo ? INITIAL_UPLOADS : []);
   useEffect(() => { uploadsRef.current = uploads; }, [uploads]);
-  const [uploadsReady, setUploadsReady] = useState(uploadMode !== "local");
+  const [uploadsReady, setUploadsReady] = useState(uploadMode !== "local" && !isDemo);
   useEffect(() => {
+    if (isDemo) {
+      // portfolio demo: the sample source tables are already "uploaded"
+      demoUploads()
+        .then((files) => setUploads(files.map((f) => ({
+          id: `demo-${f.name}`, name: f.name, path: f.name, size: f.size, kind: "csv" as const, status: "uploaded" as const,
+          progress: 1, warnings: [], columns: Array.from({ length: f.columns }, (_, i) => `column_${i + 1}`), delimiter: ",",
+          rows: f.rows, rowsExact: true }))))
+        .catch(() => {})
+        .finally(() => setUploadsReady(true));
+      return;
+    }
     if (uploadMode !== "local") return;
     listStored(PROJECT_ID)
       .then((stored) => setUploads((cur) => [...stored, ...cur.filter((u) => !stored.some((s) => s.name === u.name))]))

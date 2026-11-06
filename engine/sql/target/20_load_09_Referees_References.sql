@@ -15,7 +15,7 @@ SELECT s.[Referee_ID] AS [__src_key],
        s.[Notes] AS [Notes],
        s.[CreatedAt] AS [AddedAt]
 INTO #stage
-FROM [RecruitCRM_Legacy].dbo.[Referees] s
+FROM [Cobaltdesk_Legacy].dbo.[Referees] s
 JOIN mig.KeyMap k ON k.target_table = N'References' AND k.source_table = N'Referees' AND k.source_key = CAST(s.[Referee_ID] AS NVARCHAR(200))
 WHERE 1 = 1;
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (@mid, N'staged', @@ROWCOUNT);

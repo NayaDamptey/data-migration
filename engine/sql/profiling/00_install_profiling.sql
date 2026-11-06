@@ -1,6 +1,6 @@
 /* =============================================================================
    00_install_profiling.sql  —  generic profiling procedures (schema: dq)
-   Target: RecruitCRM_Legacy (SQL Server 2017+)
+   Target: Cobaltdesk_Legacy (SQL Server 2017+)
 
    Installs:
      dq.usp_ColumnProfile  @Table = NULL   -> completeness / cardinality / length / min-max per column
@@ -11,7 +11,7 @@
      sqlcmd -S "localhost\SQLEXPRESS" -E -i sql\profiling\00_install_profiling.sql
    or in DBeaver: open this file and Execute Script (Alt+X)  — each batch is separated by GO.
    ========================================================================== */
-USE RecruitCRM_Legacy;
+USE Cobaltdesk_Legacy;
 GO
 IF SCHEMA_ID(N'dq') IS NULL EXEC (N'CREATE SCHEMA dq AUTHORIZATION dbo');
 GO

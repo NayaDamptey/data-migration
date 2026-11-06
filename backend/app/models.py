@@ -1,4 +1,4 @@
-"""Request/response shapes. Database tables are listed in docs/architecture.md."""
+"""Request/response shapes. Request and response models for the API."""
 from datetime import datetime
 from enum import Enum
 

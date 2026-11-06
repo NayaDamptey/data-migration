@@ -6,7 +6,7 @@
     ],
     "updated_at": "2026-11-06T14:40:15",
     "updated_by": "seed",
-    "source_db": "RecruitCRM_Legacy",
+    "source_db": "Cobaltdesk_Legacy",
     "target_db": "RecruitPlatform_Target",
     "format": 2
   },

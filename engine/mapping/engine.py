@@ -55,7 +55,7 @@ from target_relationships import TARGET_AUDIT_COLUMNS, TARGET_FOREIGN_KEYS  # no
 
 MAPPING_FILE = ROOT / "mapping" / "migration_mapping.json"
 TARGET_SCHEMA_FILE = ROOT / "Target Schema.csv"
-SOURCE_DB = "RecruitCRM_Legacy"
+SOURCE_DB = "Cobaltdesk_Legacy"
 TARGET_DB = "RecruitPlatform_Target"
 DRIVING_ALIAS = "s"
 

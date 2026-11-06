@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { isDemo } from "../lib/demo";
 import { useStore } from "../lib/store";
 import { ENTITIES, type FieldStatus } from "../lib/mock";
 
@@ -25,13 +26,14 @@ export function Logo({ dark = false, height = 26 }: { dark?: boolean; height?: n
   );
 }
 
-// Each system's own icon, taken from its website (public/logos). Used only to identify the connector.
+// Fictional systems with made-up logos (public/logos): no real vendor names or marks are used.
 const SYSTEM_LOGOS: Record<string, string> = {
-  Tracker: "/logos/tracker.png",
-  JobAdder: "/logos/jobadder.svg",
-  Bullhorn: "/logos/bullhorn.svg",
-  Seven20: "/logos/seven20.png",
-  Vincere: "/logos/vincere.png",
+  Larkspur: "/logos/larkspur.svg",
+  Quillhire: "/logos/quillhire.svg",
+  Beaconfield: "/logos/beaconfield.svg",
+  Ninefold: "/logos/ninefold.svg",
+  Vantora: "/logos/vantora.svg",
+  Cobaltdesk: "/logos/cobaltdesk.svg",
 };
 
 export function SystemTile({ name, size = 36 }: { name: string; size?: number }) {
@@ -111,7 +113,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <div className="rounded-xl bg-nav-hover px-3 py-2.5 mb-3 flex items-center gap-2.5">
             <span className="grid place-items-center w-7 h-7 bg-white shrink-0"><SystemTile name={setup.sourceSystem} size={20} /></span>
             <div className="min-w-0">
-              <p className="text-[12.5px] text-white font-medium leading-snug">Spencer Thomas Recruitment</p>
+              <p className="text-[12.5px] text-white font-medium leading-snug">Harrow & Finch Recruitment</p>
               <p className="text-[11px] truncate">{setup.sourceSystem} → {setup.targetSystem}</p>
             </div>
           </div>
@@ -141,7 +143,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <span className="grid place-items-center w-8 h-8 rounded-full bg-white text-nav text-[12px] font-bold">ND</span>
           <div className="min-w-0 flex-1">
             <p className="text-[12.5px] text-white font-medium truncate">Naya Damptey</p>
-            <p className="text-[11px] truncate">Spencer Thomas Recruitment</p>
+            <p className="text-[11px] truncate">Harrow & Finch Recruitment</p>
           </div>
           <Link href="/signin" className="text-[11px] hover:text-white" title="Sign out">Sign out</Link>
         </div>
@@ -151,6 +153,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-30 h-14 bg-nav text-white flex items-center gap-3 px-4 sm:px-6">
         <Link href="/" className="lg:hidden"><LogoMark dark /></Link>
         <span className="text-[14px] text-white font-medium truncate">{TABS.find((t) => t.href === path)?.label}</span>
+        {isDemo && <span className="pill bg-white/15 text-white" title="A demo with generated sample data: nothing is sent anywhere">Demo · sample data</span>}
         <div className="ml-auto flex items-center gap-3">
           {pending > 0 && path !== "/versions" && (
             <Link href="/versions" className="hidden md:inline-flex pill bg-white text-nav hover:bg-sunken">{pending} unsaved change{pending > 1 ? "s" : ""} · Review</Link>

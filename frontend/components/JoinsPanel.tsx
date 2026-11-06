@@ -188,7 +188,7 @@ export function JoinsPanel({ entity }: { entity: Entity }) {
       <div className="mx-5 mb-4 bg-nav font-mono text-[12.5px] leading-[1.9]">
         <div className="flex items-center gap-2 px-4 h-9 border-b border-nav-line text-[11.5px] text-nav-text">
           <span className="text-white">{entity.key}.sql</span>
-          <span className="text-[#5E77A8]">· SQLMesh model · DuckDB</span>
+          <span className="text-[#5E77A8]">· generated T-SQL</span>
         </div>
         <div className="overflow-x-auto py-3">
           <table className="border-collapse">

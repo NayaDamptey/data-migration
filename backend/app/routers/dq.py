@@ -29,7 +29,7 @@ def _check_source(source: str) -> str:
 
 @router.get("/sources")
 async def sources(project_id: str | None = None) -> list[dict]:
-    out = [{"id": "legacy", "label": "Legacy database", "detail": "RecruitCRM_Legacy on SQL Server",
+    out = [{"id": "legacy", "label": "Legacy database", "detail": "Cobaltdesk_Legacy on SQL Server",
             "available": await run_in_threadpool(eb.legacy_available)},
            {"id": "baseline", "label": "Clean baseline", "detail": "Engine sample data with no planted problems", "available": True}]
     if project_id and PROJECT_ID_RE.fullmatch(project_id):

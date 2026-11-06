@@ -1,6 +1,6 @@
 /* =============================================================================
    02_entity_trace.sql  —  follow ONE placement through every linked table
-   Database: RecruitCRM_Legacy
+   Database: Cobaltdesk_Legacy
 
    Example: placement Req_HiredID = 98 (contract placement, no planted defects)
        client account 6 · client contact = associate 122 · job 168 · contractor = person 354

@@ -1,11 +1,11 @@
-// Prototype data. Field lists follow canonical/model.yaml; source columns and
-// samples follow mappings/tracker.example.yaml and samples/tracker/*.csv.
+// Prototype data. Field lists follow the canonical model; source columns and
+// samples are made-up data for the fictional systems below.
 // Replace with API calls (lib/api.ts) once the backend routes are filled in.
 import type { UploadItem } from "./upload";
 
-export const SOURCE_SYSTEMS = ["Tracker", "JobAdder", "Bullhorn", "Seven20", "Vincere", "RecruitCRM", "Other"];
+export const SOURCE_SYSTEMS = ["Larkspur", "Quillhire", "Beaconfield", "Ninefold", "Vantora", "Cobaltdesk", "Other"];
 export const SOURCE_FORMATS = ["CSV files", "Database backup", "JSON", "API connection"];
-export const TARGET_SYSTEMS = ["Bullhorn", "JobAdder", "Vincere", "Seven20", "Tracker", "Custom schema"];
+export const TARGET_SYSTEMS = ["Beaconfield", "Quillhire", "Vantora", "Ninefold", "Larkspur", "Custom schema"];
 export const TARGET_DATABASES = ["PostgreSQL", "MySQL", "SQL Server (T-SQL)"];
 export const OUTPUTS = ["CSV files", "SQL inserts", "API push"];
 
@@ -44,7 +44,7 @@ export const ENTITIES: Entity[] = [
       ["user_id", "id", "USER.UserID", "U-0012", 0.99, "mapped", { required: true }],
       ["first_name", "text", "USER.Forename", "Priya", 0.98, "mapped"],
       ["last_name", "text", "USER.Surname", "Shah", 0.98, "mapped"],
-      ["email", "email", "USER.EmailAddress", "p.shah@spencerthomas.example", 0.97, "mapped", { required: true }],
+      ["email", "email", "USER.EmailAddress", "p.shah@harrowfinch.example", 0.97, "mapped", { required: true }],
       ["role", "enum", "USER.Role", "Consultant → recruiter", 0.81, "review", { transform: "value_map", note: "“Consultant” mapped to recruiter. Check “Resourcer”." }],
       ["office", "text", "USER.Branch", "Leeds", 0.93, "mapped"],
       ["is_active", "boolean", "USER.Disabled", "0 → true", 0.88, "mapped", { transform: "invert_flag" }],
@@ -200,10 +200,10 @@ export type CanonicalRecord = Record<string, string | null>;
 
 export const CANONICAL_ROWS: Record<string, CanonicalRecord[]> = {
   users: [
-    { user_id: "U-0012", first_name: "Priya", last_name: "Shah", email: "p.shah@spencerthomas.example", role: "recruiter", office: "Leeds", is_active: "true" },
-    { user_id: "U-0014", first_name: "Tom", last_name: "Reid", email: "t.reid@spencerthomas.example", role: "recruiter", office: "Leeds", is_active: "true" },
-    { user_id: "U-0020", first_name: "Grace", last_name: "Boateng", email: "g.boateng@spencerthomas.example", role: "manager", office: "Bradford", is_active: "true" },
-    { user_id: "U-0031", first_name: "Liam", last_name: "Doyle", email: "l.doyle@spencerthomas.example", role: "other", office: "Leeds", is_active: "false" },
+    { user_id: "U-0012", first_name: "Priya", last_name: "Shah", email: "p.shah@harrowfinch.example", role: "recruiter", office: "Leeds", is_active: "true" },
+    { user_id: "U-0014", first_name: "Tom", last_name: "Reid", email: "t.reid@harrowfinch.example", role: "recruiter", office: "Leeds", is_active: "true" },
+    { user_id: "U-0020", first_name: "Grace", last_name: "Boateng", email: "g.boateng@harrowfinch.example", role: "manager", office: "Bradford", is_active: "true" },
+    { user_id: "U-0031", first_name: "Liam", last_name: "Doyle", email: "l.doyle@harrowfinch.example", role: "other", office: "Leeds", is_active: "false" },
   ],
   clients: [
     { client_id: "CL-2081", company_name: "Harlow Foods Ltd", industry: "Food manufacturing", website: "https://harlowfoods.example", phone: "+44 113 496 0123", address_line_1: null, address_line_2: null, city: "Leeds", postcode: "LS4 2AZ", country: "United Kingdom", status: null, owner_user_id: "U-0012", created_at: null },
@@ -245,8 +245,7 @@ export const CANONICAL_ROWS: Record<string, CanonicalRecord[]> = {
   documents: [],
 };
 
-// Every column in each source table, with one sample value (from samples/tracker/*.csv
-// where the file exists). Used for the mapping dropdowns in the developer view.
+// Every column in each source table, with one made-up sample value. Used for the mapping dropdowns in the developer view.
 export const SOURCE_COLUMNS: Record<string, { name: string; sample: string }[]> = {
   CANDIDATE: [
     { name: "CandidateID", sample: "C-104233" }, { name: "Forename", sample: "Amara" }, { name: "Surname", sample: "Okafor" },
@@ -277,7 +276,7 @@ export const SOURCE_COLUMNS: Record<string, { name: string; sample: string }[]> 
   ],
   USER: [
     { name: "UserID", sample: "U-0012" }, { name: "Forename", sample: "Priya" }, { name: "Surname", sample: "Shah" },
-    { name: "EmailAddress", sample: "p.shah@spencerthomas.example" }, { name: "Role", sample: "Consultant" }, { name: "Branch", sample: "Leeds" },
+    { name: "EmailAddress", sample: "p.shah@harrowfinch.example" }, { name: "Role", sample: "Consultant" }, { name: "Branch", sample: "Leeds" },
     { name: "Disabled", sample: "0" },
   ],
   NOTE: [
@@ -404,7 +403,7 @@ export const SOURCE_TABLES = [
   { name: "TMP_IMPORT_2019", rows: 2210, columns: 4, key: null, entity: "ignore" },
 ];
 
-// ---- Target (Bullhorn-style, see pipeline/sqlmesh/models/target/bullhorn) ----
+// ---- Target (Beaconfield-style) ----
 
 export type TargetEntity = {
   key: string;
@@ -481,9 +480,9 @@ export const TARGET: TargetEntity[] = [
     key: "users", label: "Users", file: "CorporateUser.csv", ready: 14, warnings: 0, rejected: 0,
     columns: ["external_id", "first_name", "last_name", "email", "user_type", "department", "enabled"],
     preview: [
-      ["U-0012", "Priya", "Shah", "p.shah@spencerthomas.example", "Recruiter", "Leeds", "true"],
-      ["U-0014", "Tom", "Reid", "t.reid@spencerthomas.example", "Recruiter", "Leeds", "true"],
-      ["U-0020", "Grace", "Boateng", "g.boateng@spencerthomas.example", "Manager", "Bradford", "true"],
+      ["U-0012", "Priya", "Shah", "p.shah@harrowfinch.example", "Recruiter", "Leeds", "true"],
+      ["U-0014", "Tom", "Reid", "t.reid@harrowfinch.example", "Recruiter", "Leeds", "true"],
+      ["U-0020", "Grace", "Boateng", "g.boateng@harrowfinch.example", "Manager", "Bradford", "true"],
     ],
     issues: [],
   },

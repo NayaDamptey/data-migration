@@ -1,6 +1,6 @@
 # Source data model and validation
 
-The legacy source (`RecruitCRM_Legacy`) is built in three layers:
+The legacy source (`Cobaltdesk_Legacy`) is built in three layers:
 
 | Layer | Where | Guarantee |
 |---|---|---|
@@ -34,7 +34,7 @@ The legacy schema stores everyone in `Person`. The baseline gives every person a
 ```bash
 python sample_data/build_source_db.py                         # rebuild baseline + SQL scripts
 python -m validation.validator                                # rules on the clean CSVs (must be 0)
-python sample_data/build_source_db.py --load                  # build RecruitCRM_Legacy in SQL Server
+python sample_data/build_source_db.py --load                  # build Cobaltdesk_Legacy in SQL Server
 python -m validation.validator --source sqlserver --score     # rules on the legacy DB vs the answer key
 pytest tests/ -v                                              # both of the above as tests
 ```
@@ -54,8 +54,8 @@ Violations on the legacy DB that are not in the answer key are **collateral**: t
 
 `sql/profiling/02_entity_trace.sql` follows one placement (default `Req_HiredID = 98`) through 30+ tables in 27 queries. Every link has a `chk_*` column showing ✔ or ✘ with a reason. To trace another placement, replace `Req_HiredID = 98` throughout the file.
 
-* On `RecruitCRM_Clean` (the baseline with no defects), all 310 placements pass all 14,007 checks.
-* On `RecruitCRM_Legacy`, the failures come only from planted defects. Placement 98 is untouched by defects and passes all 143 of its checks.
+* On `Cobaltdesk_Clean` (the baseline with no defects), all 310 placements pass all 14,007 checks.
+* On `Cobaltdesk_Legacy`, the failures come only from planted defects. Placement 98 is untouched by defects and passes all 143 of its checks.
 
 ## Known limits (not yet modelled)
 

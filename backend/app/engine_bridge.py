@@ -5,7 +5,7 @@ engine/ and is plain Python. This module puts it on the path and turns its
 results into JSON-friendly dicts for the routers.
 
 Data sources the dashboard can check
-  legacy           the legacy SQL Server DB (RecruitCRM_Legacy), with its real defects
+  legacy           the legacy SQL Server DB (Cobaltdesk_Legacy), with its real defects
   baseline         the clean baseline CSVs (engine/sample_data/source) — should score 100%
   upload:<project> the CSV files a project uploaded (storage/projects/<id>/source)
 """
@@ -89,7 +89,7 @@ def _engine():
 def _connect(source: str):
     V, *_ = _engine()
     if source == "legacy":
-        return V.load_sqlserver(), {"label": "Legacy database (RecruitCRM_Legacy on SQL Server)", "kind": "legacy"}
+        return V.load_sqlserver(), {"label": "Legacy database (Cobaltdesk_Legacy on SQL Server)", "kind": "legacy"}
     if source == "baseline":
         return V.load_csv_baseline(), {"label": "Clean baseline (engine sample data)", "kind": "baseline"}
     if source.startswith("upload:"):

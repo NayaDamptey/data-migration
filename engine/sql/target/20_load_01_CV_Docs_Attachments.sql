@@ -13,7 +13,7 @@ SELECT s.[Doc_ID] AS [__src_key],
        s.[CreatedAt] AS [UploadedAt],
        CAST(s.[Uploaded_Id] AS NVARCHAR(MAX)) AS [UploadedBy]
 INTO #stage
-FROM [RecruitCRM_Legacy].dbo.[CV_Docs] s
+FROM [Cobaltdesk_Legacy].dbo.[CV_Docs] s
 JOIN mig.KeyMap k ON k.target_table = N'Attachments' AND k.source_table = N'CV_Docs' AND k.source_key = CAST(s.[Doc_ID] AS NVARCHAR(200))
 WHERE 1 = 1;
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (@mid, N'staged', @@ROWCOUNT);

@@ -3,17 +3,17 @@
 SET NOCOUNT ON;
 USE master;
 GO
-IF DB_ID(N'RecruitCRM_Legacy') IS NOT NULL
+IF DB_ID(N'Cobaltdesk_Legacy') IS NOT NULL
 BEGIN
-    ALTER DATABASE [RecruitCRM_Legacy] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE [RecruitCRM_Legacy];
+    ALTER DATABASE [Cobaltdesk_Legacy] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE [Cobaltdesk_Legacy];
 END
 GO
-CREATE DATABASE [RecruitCRM_Legacy];
+CREATE DATABASE [Cobaltdesk_Legacy];
 GO
-ALTER DATABASE [RecruitCRM_Legacy] SET AUTO_CLOSE OFF;
+ALTER DATABASE [Cobaltdesk_Legacy] SET AUTO_CLOSE OFF;
 GO
-USE [RecruitCRM_Legacy];
+USE [Cobaltdesk_Legacy];
 GO
 
 CREATE TABLE dbo.[Accounts] (

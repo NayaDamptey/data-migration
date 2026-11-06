@@ -2,7 +2,7 @@
 -- Plants known data-quality defects in the legacy source DB.
 -- Answer key: sql/source/defect_manifest.csv
 SET NOCOUNT ON;
-USE [RecruitCRM_Legacy];
+USE [Cobaltdesk_Legacy];
 GO
 BEGIN TRANSACTION;
 -- 0. a past 'quick fix' import disabled these FKs; they are left disabled / not trusted

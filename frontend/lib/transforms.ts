@@ -1,6 +1,6 @@
 // Previews of the mapping transforms, so a reviewer can drill into a field and see
 // exactly what happens to real source values. The pipeline applies the same rules
-// when it builds the canonical layer (pipeline/mapping → SQLMesh models).
+// when it builds the canonical layer (engine/mapping → generated T-SQL).
 
 export type SplitRule = "last_comma" | "first_comma" | "none";
 export type DateFormat = "DMY" | "MDY";

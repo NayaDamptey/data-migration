@@ -14,7 +14,7 @@ SELECT s.[Schedule_ID] AS [__src_key],
        s.[CreatedAt] AS [AddedAt],
        s.[UpdatedAt] AS [UpdatedAt]
 INTO #stage
-FROM [RecruitCRM_Legacy].dbo.[Schedule] s
+FROM [Cobaltdesk_Legacy].dbo.[Schedule] s
 JOIN mig.KeyMap k ON k.target_table = N'Task' AND k.source_table = N'Schedule' AND k.source_key = CAST(s.[Schedule_ID] AS NVARCHAR(200))
 WHERE 1 = 1;
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (@mid, N'staged', @@ROWCOUNT);

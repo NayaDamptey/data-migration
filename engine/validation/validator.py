@@ -3,7 +3,7 @@ validation/validator.py
 
 Runs the data-quality rules in validation/baseline_rules.py against either
   * the clean baseline CSVs      (sample_data/source/*.csv)            -- must be 0 violations
-  * the legacy SQL Server DB     (RecruitCRM_Legacy, with planted defects)
+  * the legacy SQL Server DB     (Cobaltdesk_Legacy, with planted defects)
 
 Both sources are loaded into an in-memory DuckDB with the column types from
 `Source Schema.csv`, so exactly the same rules run against both.

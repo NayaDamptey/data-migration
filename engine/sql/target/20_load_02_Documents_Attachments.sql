@@ -13,9 +13,9 @@ SELECT s.[Doc_ID] AS [__src_key],
        s.[Deleted] AS [IsDeleted],
        s.[CreatedAt] AS [UploadedAt],
        CAST(s.[Uploaded_Id] AS NVARCHAR(MAX)) AS [UploadedBy],
-       (SELECT TOP 1 lk.[Desc] FROM [RecruitCRM_Legacy].dbo.[DocumentType] lk WHERE lk.[Doc_TypeID] = s.[Typeid]) AS [AttachmentType]
+       (SELECT TOP 1 lk.[Desc] FROM [Cobaltdesk_Legacy].dbo.[DocumentType] lk WHERE lk.[Doc_TypeID] = s.[Typeid]) AS [AttachmentType]
 INTO #stage
-FROM [RecruitCRM_Legacy].dbo.[Documents] s
+FROM [Cobaltdesk_Legacy].dbo.[Documents] s
 JOIN mig.KeyMap k ON k.target_table = N'Attachments' AND k.source_table = N'Documents' AND k.source_key = CAST(s.[Doc_ID] AS NVARCHAR(200))
 WHERE 1 = 1;
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (@mid, N'staged', @@ROWCOUNT);

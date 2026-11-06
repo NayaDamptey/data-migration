@@ -14,7 +14,7 @@ SELECT s.[Hist_ID] AS [__src_key],
        CAST(s.[Ended_At] AS NVARCHAR(200)) AS [__raw_EndDate],
        TRY_CAST(s.[Ended_At] AS DATE) AS [EndDate]
 INTO #stage
-FROM [RecruitCRM_Legacy].dbo.[EmpHist] s
+FROM [Cobaltdesk_Legacy].dbo.[EmpHist] s
 JOIN mig.KeyMap k ON k.target_table = N'Work_History' AND k.source_table = N'EmpHist' AND k.source_key = CAST(s.[Hist_ID] AS NVARCHAR(200))
 WHERE 1 = 1;
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (@mid, N'staged', @@ROWCOUNT);

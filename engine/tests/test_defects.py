@@ -2,7 +2,7 @@
 Every defect planted in the legacy SQL Server DB (sql/source/defect_manifest.csv)
 must be caught by at least one data-quality rule.
 
-Needs the RecruitCRM_Legacy database (python sample_data/build_source_db.py --load).
+Needs the Cobaltdesk_Legacy database (python sample_data/build_source_db.py --load).
 Skipped automatically when pyodbc or the server is unavailable (e.g. in CI).
 """
 

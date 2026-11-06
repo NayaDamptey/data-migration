@@ -1,26 +1,20 @@
-# Recruitment System Data Migration
+# Migration engine
 
-End-to-end data migration from a legacy recruitment CRM to a modern platform, built with DuckDB, Polars, Pydantic, and an LLM-powered schema mapping layer.
+Legacy recruitment CRM (the fictional *Cobaltdesk*) → target platform migration, in Python and T-SQL.
+The web UI (`../frontend`, `../backend`) uses it for data quality, duplicate review and SQL generation.
 
-See [PROJECT.md](PROJECT.md) for full architecture, design decisions, and phase breakdown.
-
-## Quick Start
+## Quick start
 
 ```bash
 pip install -r requirements.txt
-cp .env.example .env          # add your Anthropic API key
-python sample_data/generate.py
-python sample_data/build_source_db.py --load   # builds RecruitCRM_Legacy in localhost\SQLEXPRESS from Source Schema.csv
-python pipeline.py
-streamlit run dashboard/app.py
+python sample_data/build_source_db.py          # rebuild the source CSVs and SQL scripts
+python sample_data/build_source_db.py --load   # also load Cobaltdesk_Legacy into localhost\SQLEXPRESS (pyodbc)
+python -m pytest tests -q                      # SQL Server tests skip themselves when no server is found
+python mapping/generate_sql.py                 # T-SQL load scripts into sql/target/
 ```
 
-## Tech Stack
+## Tech stack
 
-- **DuckDB** — transformation engine
-- **Polars** — data extraction and manipulation
-- **Pydantic** — schema validation and data contracts
-- **Claude API** — AI schema mapping, quality analysis, migration summaries
-- **Streamlit** — migration dashboard
-- **Faker** — sample data generation
-- **pytest + GitHub Actions** — testing and CI
+- **Python** with **DuckDB** for the data quality rules
+- **T-SQL / SQL Server Express** for the source and target databases (via **pyodbc**)
+- **pytest** and GitHub Actions

@@ -1,6 +1,0 @@
-UserID,Forename,Surname,EmailAddress,Role,Branch,Disabled
-U-0012,Priya,Shah,p.shah@spencerthomas.example,Consultant,Leeds,0
-U-0014,Tom,Reid,t.reid@spencerthomas.example,Consultant,Leeds,0
-U-0020,Grace,Boateng,g.boateng@spencerthomas.example,Manager,Bradford,0
-U-0033,Sara,Iqbal,s.iqbal@spencerthomas.example,Admin,Leeds,0
-U-0031,Liam,Hughes,l.hughes@spencerthomas.example,Consultant,Sheffield,1

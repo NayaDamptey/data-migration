@@ -3,7 +3,7 @@
 -- if this script fails, the baseline data has a broken reference.
 SET NOCOUNT ON;
 SET XACT_ABORT ON;
-USE [RecruitCRM_Legacy];
+USE [Cobaltdesk_Legacy];
 GO
 BEGIN TRANSACTION;
 ALTER TABLE dbo.[Emp_Profile] ADD CONSTRAINT [UQ_Emp_Profile_Emp_No] UNIQUE ([Emp_No]);

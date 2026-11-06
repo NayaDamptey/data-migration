@@ -33,7 +33,8 @@ const EXTENSIONS = ["csv", "tsv", "txt", "zip"];
 const IGNORED = /^(\.ds_store|thumbs\.db|desktop\.ini|\._.*)$/i;
 const SAMPLE_BYTES = 64 * 1024;
 const MODE: "local" | "api" | "demo" =
-  process.env.NEXT_PUBLIC_UPLOAD_MODE === "api" ? "api" : process.env.NEXT_PUBLIC_UPLOAD_MODE === "demo" ? "demo" : "local";
+  process.env.NEXT_PUBLIC_DEMO === "1" || process.env.NEXT_PUBLIC_UPLOAD_MODE === "demo" ? "demo"
+    : process.env.NEXT_PUBLIC_UPLOAD_MODE === "api" ? "api" : "local";
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
 
 export const uploadMode = MODE;

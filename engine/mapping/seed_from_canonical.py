@@ -16,7 +16,7 @@ Rules
     validator flags them (the AI draft named transforms that were never defined)
 
 Run once:  python mapping/seed_from_canonical.py [--force]
-After that, edit in the UI:  streamlit run dashboard/app.py
+After that, edit the mapping in the web UI (frontend, Schema mapping).
 """
 
 from __future__ import annotations

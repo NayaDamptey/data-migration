@@ -2,7 +2,7 @@
 mapping/generate_sql.py
 
 Turns the saved mapping (mapping/migration_mapping.json, edited in the UI) into
-T-SQL that migrates RecruitCRM_Legacy -> RecruitPlatform_Target.
+T-SQL that migrates Cobaltdesk_Legacy -> RecruitPlatform_Target.
 
     sql/target/00_create_target_db.sql   target tables (from Target Schema.csv) + mig schema
     sql/target/10_keymap.sql             new IDs for every migrated row (mig.KeyMap crosswalk)

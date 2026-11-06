@@ -2,18 +2,18 @@
 SET NOCOUNT ON;
 USE [RecruitPlatform_Target];
 WITH src AS (
-  SELECT N'CV_Docs->Attachments' AS mapping_id, N'Attachments' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[CV_Docs] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Documents->Attachments' AS mapping_id, N'Attachments' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[Documents] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Addresses->CompanyLocation' AS mapping_id, N'CompanyLocation' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[Addresses] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Addresses->ContactLocation' AS mapping_id, N'ContactLocation' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[Addresses] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Invoice->Invoice' AS mapping_id, N'Invoice' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[Invoice] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Addresses->PositionLocation' AS mapping_id, N'PositionLocation' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[Addresses] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Referees->References' AS mapping_id, N'References' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[Referees] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Schedule->Task' AS mapping_id, N'Task' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[Schedule] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'TimesheetItems->TimesheetActivity' AS mapping_id, N'TimesheetActivity' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[TimesheetItems] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'TimeSheets->Timesheets' AS mapping_id, N'Timesheets' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[TimeSheets] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Recruiter->User' AS mapping_id, N'User' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[Recruiter] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'EmpHist->Work_History' AS mapping_id, N'Work_History' AS target_table, (SELECT COUNT(*) FROM [RecruitCRM_Legacy].dbo.[EmpHist] s WHERE 1 = 1) AS source_rows
+  SELECT N'CV_Docs->Attachments' AS mapping_id, N'Attachments' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[CV_Docs] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'Documents->Attachments' AS mapping_id, N'Attachments' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Documents] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'Addresses->CompanyLocation' AS mapping_id, N'CompanyLocation' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Addresses] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'Addresses->ContactLocation' AS mapping_id, N'ContactLocation' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Addresses] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'Invoice->Invoice' AS mapping_id, N'Invoice' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Invoice] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'Addresses->PositionLocation' AS mapping_id, N'PositionLocation' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Addresses] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'Referees->References' AS mapping_id, N'References' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Referees] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'Schedule->Task' AS mapping_id, N'Task' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Schedule] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'TimesheetItems->TimesheetActivity' AS mapping_id, N'TimesheetActivity' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[TimesheetItems] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'TimeSheets->Timesheets' AS mapping_id, N'Timesheets' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[TimeSheets] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'Recruiter->User' AS mapping_id, N'User' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Recruiter] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'EmpHist->Work_History' AS mapping_id, N'Work_History' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[EmpHist] s WHERE 1 = 1) AS source_rows
 )
 SELECT src.mapping_id, src.target_table, src.source_rows,
        ISNULL((SELECT SUM(row_count) FROM mig.LoadLog l WHERE l.mapping_id = src.mapping_id AND l.step = N'loaded'), 0) AS loaded,

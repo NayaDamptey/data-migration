@@ -5,7 +5,7 @@ GO
 -- CV_Docs->Attachments  (new int keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'Attachments', N'CV_Docs', CAST(s.[Doc_ID] AS NVARCHAR(200)), CAST((SELECT ISNULL(MAX(CAST(target_id AS INT)), 0) FROM mig.KeyMap WHERE target_table = N'Attachments') + ROW_NUMBER() OVER (ORDER BY s.[Doc_ID]) AS NVARCHAR(50)), N'CV_Docs->Attachments'
-FROM [RecruitCRM_Legacy].dbo.[CV_Docs] s
+FROM [Cobaltdesk_Legacy].dbo.[CV_Docs] s
 WHERE s.[Doc_ID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'Attachments' AND x.source_table = N'CV_Docs' AND x.source_key = CAST(s.[Doc_ID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'CV_Docs->Attachments', N'keys', @@ROWCOUNT);
@@ -13,7 +13,7 @@ GO
 -- Documents->Attachments  (new int keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'Attachments', N'Documents', CAST(s.[Doc_ID] AS NVARCHAR(200)), CAST((SELECT ISNULL(MAX(CAST(target_id AS INT)), 0) FROM mig.KeyMap WHERE target_table = N'Attachments') + ROW_NUMBER() OVER (ORDER BY s.[Doc_ID]) AS NVARCHAR(50)), N'Documents->Attachments'
-FROM [RecruitCRM_Legacy].dbo.[Documents] s
+FROM [Cobaltdesk_Legacy].dbo.[Documents] s
 WHERE s.[Doc_ID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'Attachments' AND x.source_table = N'Documents' AND x.source_key = CAST(s.[Doc_ID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Documents->Attachments', N'keys', @@ROWCOUNT);
@@ -21,7 +21,7 @@ GO
 -- Addresses->CompanyLocation  (new string keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'CompanyLocation', N'Addresses', CAST(s.[AddressID] AS NVARCHAR(200)), LOWER(CONVERT(NVARCHAR(50), NEWID())), N'Addresses->CompanyLocation'
-FROM [RecruitCRM_Legacy].dbo.[Addresses] s
+FROM [Cobaltdesk_Legacy].dbo.[Addresses] s
 WHERE s.[AddressID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'CompanyLocation' AND x.source_table = N'Addresses' AND x.source_key = CAST(s.[AddressID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Addresses->CompanyLocation', N'keys', @@ROWCOUNT);
@@ -29,7 +29,7 @@ GO
 -- Addresses->ContactLocation  (new string keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'ContactLocation', N'Addresses', CAST(s.[AddressID] AS NVARCHAR(200)), LOWER(CONVERT(NVARCHAR(50), NEWID())), N'Addresses->ContactLocation'
-FROM [RecruitCRM_Legacy].dbo.[Addresses] s
+FROM [Cobaltdesk_Legacy].dbo.[Addresses] s
 WHERE s.[AddressID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'ContactLocation' AND x.source_table = N'Addresses' AND x.source_key = CAST(s.[AddressID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Addresses->ContactLocation', N'keys', @@ROWCOUNT);
@@ -37,7 +37,7 @@ GO
 -- Invoice->Invoice  (new int keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'Invoice', N'Invoice', CAST(s.[InvoiceID] AS NVARCHAR(200)), CAST((SELECT ISNULL(MAX(CAST(target_id AS INT)), 0) FROM mig.KeyMap WHERE target_table = N'Invoice') + ROW_NUMBER() OVER (ORDER BY s.[InvoiceID]) AS NVARCHAR(50)), N'Invoice->Invoice'
-FROM [RecruitCRM_Legacy].dbo.[Invoice] s
+FROM [Cobaltdesk_Legacy].dbo.[Invoice] s
 WHERE s.[InvoiceID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'Invoice' AND x.source_table = N'Invoice' AND x.source_key = CAST(s.[InvoiceID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Invoice->Invoice', N'keys', @@ROWCOUNT);
@@ -45,7 +45,7 @@ GO
 -- Addresses->PositionLocation  (new string keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'PositionLocation', N'Addresses', CAST(s.[AddressID] AS NVARCHAR(200)), LOWER(CONVERT(NVARCHAR(50), NEWID())), N'Addresses->PositionLocation'
-FROM [RecruitCRM_Legacy].dbo.[Addresses] s
+FROM [Cobaltdesk_Legacy].dbo.[Addresses] s
 WHERE s.[AddressID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'PositionLocation' AND x.source_table = N'Addresses' AND x.source_key = CAST(s.[AddressID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Addresses->PositionLocation', N'keys', @@ROWCOUNT);
@@ -53,7 +53,7 @@ GO
 -- Referees->References  (new string keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'References', N'Referees', CAST(s.[Referee_ID] AS NVARCHAR(200)), LOWER(CONVERT(NVARCHAR(50), NEWID())), N'Referees->References'
-FROM [RecruitCRM_Legacy].dbo.[Referees] s
+FROM [Cobaltdesk_Legacy].dbo.[Referees] s
 WHERE s.[Referee_ID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'References' AND x.source_table = N'Referees' AND x.source_key = CAST(s.[Referee_ID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Referees->References', N'keys', @@ROWCOUNT);
@@ -61,7 +61,7 @@ GO
 -- Schedule->Task  (new int keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'Task', N'Schedule', CAST(s.[Schedule_ID] AS NVARCHAR(200)), CAST((SELECT ISNULL(MAX(CAST(target_id AS INT)), 0) FROM mig.KeyMap WHERE target_table = N'Task') + ROW_NUMBER() OVER (ORDER BY s.[Schedule_ID]) AS NVARCHAR(50)), N'Schedule->Task'
-FROM [RecruitCRM_Legacy].dbo.[Schedule] s
+FROM [Cobaltdesk_Legacy].dbo.[Schedule] s
 WHERE s.[Schedule_ID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'Task' AND x.source_table = N'Schedule' AND x.source_key = CAST(s.[Schedule_ID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Schedule->Task', N'keys', @@ROWCOUNT);
@@ -69,7 +69,7 @@ GO
 -- TimesheetItems->TimesheetActivity  (new int keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'TimesheetActivity', N'TimesheetItems', CAST(s.[ItemID] AS NVARCHAR(200)), CAST((SELECT ISNULL(MAX(CAST(target_id AS INT)), 0) FROM mig.KeyMap WHERE target_table = N'TimesheetActivity') + ROW_NUMBER() OVER (ORDER BY s.[ItemID]) AS NVARCHAR(50)), N'TimesheetItems->TimesheetActivity'
-FROM [RecruitCRM_Legacy].dbo.[TimesheetItems] s
+FROM [Cobaltdesk_Legacy].dbo.[TimesheetItems] s
 WHERE s.[ItemID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'TimesheetActivity' AND x.source_table = N'TimesheetItems' AND x.source_key = CAST(s.[ItemID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'TimesheetItems->TimesheetActivity', N'keys', @@ROWCOUNT);
@@ -77,7 +77,7 @@ GO
 -- TimeSheets->Timesheets  (new int keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'Timesheets', N'TimeSheets', CAST(s.[ID] AS NVARCHAR(200)), CAST((SELECT ISNULL(MAX(CAST(target_id AS INT)), 0) FROM mig.KeyMap WHERE target_table = N'Timesheets') + ROW_NUMBER() OVER (ORDER BY s.[ID]) AS NVARCHAR(50)), N'TimeSheets->Timesheets'
-FROM [RecruitCRM_Legacy].dbo.[TimeSheets] s
+FROM [Cobaltdesk_Legacy].dbo.[TimeSheets] s
 WHERE s.[ID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'Timesheets' AND x.source_table = N'TimeSheets' AND x.source_key = CAST(s.[ID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'TimeSheets->Timesheets', N'keys', @@ROWCOUNT);
@@ -85,7 +85,7 @@ GO
 -- Recruiter->User  (new string keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'User', N'Recruiter', CAST(s.[RecruiterID] AS NVARCHAR(200)), LOWER(CONVERT(NVARCHAR(50), NEWID())), N'Recruiter->User'
-FROM [RecruitCRM_Legacy].dbo.[Recruiter] s
+FROM [Cobaltdesk_Legacy].dbo.[Recruiter] s
 WHERE s.[RecruiterID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'User' AND x.source_table = N'Recruiter' AND x.source_key = CAST(s.[RecruiterID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Recruiter->User', N'keys', @@ROWCOUNT);
@@ -93,7 +93,7 @@ GO
 -- EmpHist->Work_History  (new int keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'Work_History', N'EmpHist', CAST(s.[Hist_ID] AS NVARCHAR(200)), CAST((SELECT ISNULL(MAX(CAST(target_id AS INT)), 0) FROM mig.KeyMap WHERE target_table = N'Work_History') + ROW_NUMBER() OVER (ORDER BY s.[Hist_ID]) AS NVARCHAR(50)), N'EmpHist->Work_History'
-FROM [RecruitCRM_Legacy].dbo.[EmpHist] s
+FROM [Cobaltdesk_Legacy].dbo.[EmpHist] s
 WHERE s.[Hist_ID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'Work_History' AND x.source_table = N'EmpHist' AND x.source_key = CAST(s.[Hist_ID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'EmpHist->Work_History', N'keys', @@ROWCOUNT);

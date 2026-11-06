@@ -258,7 +258,7 @@ def complete_upload(project_id: str, body: CompleteRequest, caller: Caller = Dep
         s3().delete_object(Bucket=bucket(), Key=t["key"])
         raise HTTPException(422, "Uploaded size doesn't match the declared size; file discarded")
 
-    # Next: record the file against the project and queue scanning + ingest (worker.ingest).
+    # Next: record the file against the project and queue scanning + ingest.
     return CompleteResponse(name=t["name"], size=stored, status="received")
 
 

@@ -1,9 +1,9 @@
 /* =============================================================================
    01_profiling_queries.sql  —  data discovery & profiling of the legacy source
-   Database: RecruitCRM_Legacy  (SQL Server 2017+)
+   Database: Cobaltdesk_Legacy  (SQL Server 2017+)
 
    HOW TO USE IN DBEAVER
-     * Connect to localhost\SQLEXPRESS, database RecruitCRM_Legacy.
+     * Connect to localhost\SQLEXPRESS, database Cobaltdesk_Legacy.
      * Put the cursor inside any query and press Ctrl+Enter to run just that one,
        or Alt+X to run the whole file (each result opens in its own tab).
      * Every check is ONE statement, so DBeaver's ';' splitting is safe.

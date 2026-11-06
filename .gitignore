@@ -23,3 +23,4 @@ storage/
 engine/**/__pycache__/
 engine/.pytest_cache/
 frontend/.env.local
+.next-demo/

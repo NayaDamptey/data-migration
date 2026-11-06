@@ -1,7 +1,7 @@
 """
 sample_data/dedupe_generated.py
 
-The AI generator (generate_ai.py) recycled its batches, so the "clean" CSVs
+The first data generator recycled its batches, so the "clean" CSVs
 contained unintended repeats, e.g. 20 x "Apex Systems Ltd", 35 x "Priya Sharma",
 23 x "12 Bishopsgate". Those muddy the entity-resolution exercise because they
 are not in the defect answer key.

@@ -7,7 +7,7 @@ and the CSVs in sample_data/source/.
 Steps
   0. dedupe    : dedupe_generated.py gives unintended repeats in the AI-generated
                  CSVs (same company / person / street) distinct identities.
-  1. fill-gaps : deterministically generates the tables generate_ai.py never
+  1. fill-gaps : deterministically generates the tables the first data generator never
                  produced (Req, Req_Rates, Referees, Leads) and backfills the
                  FK columns that were left blank because of it
                  (Req_Hired.Req_ID, PONo.ReqID, Schedule.Req_ID,
@@ -30,7 +30,7 @@ Steps
 Run
   python sample_data/build_source_db.py                       # steps 1-3
   python sample_data/build_source_db.py --load                # + load into localhost\\SQLEXPRESS
-  python sample_data/build_source_db.py --load --server .\\SQL2022 --database RecruitCRM_Legacy
+  python sample_data/build_source_db.py --load --server .\\SQL2022 --database Cobaltdesk_Legacy
 """
 
 from __future__ import annotations
@@ -52,7 +52,7 @@ SCHEMA_FILE = ROOT / "Source Schema.csv"
 SQL_DIR     = ROOT / "sql" / "source"
 
 DEFAULT_SERVER = r"localhost\SQLEXPRESS"
-DEFAULT_DB     = "RecruitCRM_Legacy"
+DEFAULT_DB     = "Cobaltdesk_Legacy"
 
 
 # ══════════════════════════════════════════════════════════════════════════════

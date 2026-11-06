@@ -18,9 +18,9 @@ SELECT s.[InvoiceID] AS [__src_key],
        fk7.target_id AS [AddedBy],
        CAST(s.[UpdatedBy] AS NVARCHAR(200)) AS [__raw_UpdatedBy],
        fk8.target_id AS [UpdatedBy],
-       (SELECT TOP 1 lk.[Type_Name] FROM [RecruitCRM_Legacy].dbo.[InvoiceTypes] lk WHERE lk.[InvoiceType_ID] = s.[InvoiceType_ID]) AS [Type]
+       (SELECT TOP 1 lk.[Type_Name] FROM [Cobaltdesk_Legacy].dbo.[InvoiceTypes] lk WHERE lk.[InvoiceType_ID] = s.[InvoiceType_ID]) AS [Type]
 INTO #stage
-FROM [RecruitCRM_Legacy].dbo.[Invoice] s
+FROM [Cobaltdesk_Legacy].dbo.[Invoice] s
 JOIN mig.KeyMap k ON k.target_table = N'Invoice' AND k.source_table = N'Invoice' AND k.source_key = CAST(s.[InvoiceID] AS NVARCHAR(200))
 LEFT JOIN mig.KeyMap fk7 ON fk7.target_table = N'User' AND fk7.source_table = N'Recruiter' AND fk7.source_key = CAST(s.[CreatedBy] AS NVARCHAR(200))
 LEFT JOIN mig.KeyMap fk8 ON fk8.target_table = N'User' AND fk8.source_table = N'Recruiter' AND fk8.source_key = CAST(s.[UpdatedBy] AS NVARCHAR(200))

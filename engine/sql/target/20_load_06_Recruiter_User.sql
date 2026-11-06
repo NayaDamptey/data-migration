@@ -14,9 +14,9 @@ SELECT s.[RecruiterID] AS [__src_key],
        fk4.target_id AS [ManagerId],
        s.[CreatedAt] AS [EnteredDateTime],
        s.[UpdatedAt] AS [UpdatedDateTime],
-       (SELECT TOP 1 lk.[Description] FROM [RecruitCRM_Legacy].dbo.[Roles] lk WHERE lk.[Role_ID] = s.[Role_ID]) AS [Role]
+       (SELECT TOP 1 lk.[Description] FROM [Cobaltdesk_Legacy].dbo.[Roles] lk WHERE lk.[Role_ID] = s.[Role_ID]) AS [Role]
 INTO #stage
-FROM [RecruitCRM_Legacy].dbo.[Recruiter] s
+FROM [Cobaltdesk_Legacy].dbo.[Recruiter] s
 JOIN mig.KeyMap k ON k.target_table = N'User' AND k.source_table = N'Recruiter' AND k.source_key = CAST(s.[RecruiterID] AS NVARCHAR(200))
 LEFT JOIN mig.KeyMap fk4 ON fk4.target_table = N'User' AND fk4.source_table = N'Recruiter' AND fk4.source_key = CAST(s.[ReportsTo] AS NVARCHAR(200))
 WHERE 1 = 1;

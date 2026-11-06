@@ -1,7 +1,7 @@
 "use client";
 
 // Screen 1: Sign in (/signin). Sketch: docs/sketches/1-login.jpeg. Signing in lands on Source upload (/).
-// Auth will come from Clerk/Auth0; this form is a placeholder that accepts anything.
+// Real sign-in isn't wired up; this form is a placeholder that accepts anything.
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { Check, Logo, Spinner, SystemTile } from "../../components/ui";
@@ -39,7 +39,7 @@ export default function SignInPage() {
           </ul>
         </div>
         <div className="flex items-center gap-2 text-[12px] relative z-10">
-          {["Tracker", "JobAdder", "Bullhorn", "Vincere", "Seven20"].map((s) => <span key={s} className="grid place-items-center w-9 h-9 bg-white"><SystemTile name={s} size={24} /></span>)}
+          {["Larkspur", "Quillhire", "Beaconfield", "Vantora", "Ninefold", "Cobaltdesk"].map((s) => <span key={s} className="grid place-items-center w-9 h-9 bg-white"><SystemTile name={s} size={24} /></span>)}
           <span className="ml-1">and more</span>
         </div>
         {/* Decorative flow lines */}
