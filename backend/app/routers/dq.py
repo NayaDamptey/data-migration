@@ -75,6 +75,9 @@ async def decide(body: Decision) -> dict:
         raise HTTPException(404, "No such duplicate pair") from None
     except ValueError as e:
         raise HTTPException(422, str(e)) from None
+    # the decision reaches the middle tier and the target straight away, as a new version
+    from app import layers
+    layers.apply_decisions_async()
     return {"key": body.key, "decision": rec}
 
 

@@ -51,7 +51,7 @@ Note_ID,ObjectId,ObjectType,Notetext,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy
 50,56,Account,Email received from candidate — got another offer from a competitor at £65k vs our £60k permanent role. Trying to negotiate uplift with the client now.,2022-08-15 10:30:00,9,2022-08-15 10:30:00,27
 51,189,Account,"Meeting with Barclays account team today — Q2 budget approved, they want to trial us for their Manchester office too. Peter is the new contact there.",2022-08-15 10:30:00,17,2022-08-15 10:30:00,1
 52,73,Account,"Email to lead contact at Goldman Sachs — their recruiter took 2 of our candidates as direct hires last month. Relationship needs rebuilding, offering them a meet to discuss partnership terms.",2022-08-15 10:30:00,6,2022-08-15 10:30:00,3
-53,33,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Michael Page) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,12,2022-08-15 10:30:00,29
+53,33,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Mitchell Pace Recruitment) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,12,2022-08-15 10:30:00,29
 54,318,Person,"Call with Associate at Santander (Raj Patel) — interviewed our candidate Khalid yesterday, 'very impressed, likely to proceed to final round next week.'",2022-08-15 10:30:00,27,2022-08-15 10:30:00,14
 55,346,Person,"Call with Associate at Santander (Raj Patel) — interviewed our candidate Khalid yesterday, 'very impressed, likely to proceed to final round next week.'",2022-08-15 10:30:00,29,2022-08-15 10:30:00,23
 56,211,Req,"Called Sarah at Barclays - shortlist of 3 CVs sent yesterday, she's reviewing today. Feedback by EOD tomorrow expected.",2022-08-15 10:30:00,24,2022-08-15 10:30:00,22
@@ -163,7 +163,7 @@ Note_ID,ObjectId,ObjectType,Notetext,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy
 162,198,Account,Email from Barclays procurement re PSL renewal — they want updated insurance certs and compliance docs by end of month. Forwarded to ops.,2022-08-15 10:30:00,29,2022-08-15 10:30:00,4
 163,37,Account,"Called candidate re availability — she's currently on garden leave until 31st May, available from June 1st. Updated her profile and advised client of realistic start.",2022-08-15 10:30:00,15,2022-08-15 10:30:00,30
 164,62,Associate,"Spoke with Alex Prabhu (Thoughtworks) — shortlist of 4 CVs delivered today for the tech lead role. He's reviewing, interview slots likely early next week.",2022-08-15 10:30:00,24,2022-08-15 10:30:00,22
-165,451,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Michael Page) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,6,2022-08-15 10:30:00,1
+165,451,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Mitchell Pace Recruitment) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,6,2022-08-15 10:30:00,1
 166,45,Person,"Req ID 1923 (Senior Python at Capgemini) — role revised, now requires DevOps experience also. Updated spec sent, reviewing candidate fit.",2022-08-15 10:30:00,8,2022-08-15 10:30:00,15
 167,70,Account,Called Sarah re the Senior Python role — she's keen but wants to understand IR35 status before committing. Sent her the determination letter.,2022-08-15 10:30:00,23,2022-08-15 10:30:00,19
 168,169,Req,Left voicemail for Marcus (candidate) re interview slot at HSBC Wed 2pm. Awaiting confirmation callback.,2022-08-15 10:30:00,24,2022-08-15 10:30:00,23
@@ -210,12 +210,12 @@ Note_ID,ObjectId,ObjectType,Notetext,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy
 209,210,Req,"Left detailed voicemail for Maya (candidate) - offered role at TfL £52k perm, 25 days holiday, final answer needed by Wed EOD.",2022-08-15 10:30:00,7,2022-08-15 10:30:00,10
 210,211,Req,"Call with HR Director at BT Group - 2 interviews scheduled for next Thursday 10am & 2pm. Candidates prepped, travel info sent.",2022-08-15 10:30:00,19,2022-08-15 10:30:00,30
 211,212,Req,Chased Recruitment Manager at GlaxoSmithKline on salary approval for 3 roles - budget sign-off needed before we proceed.,2022-08-15 10:30:00,20,2022-08-15 10:30:00,19
-212,348,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Michael Page) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,2,2022-08-15 10:30:00,16
+212,348,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Mitchell Pace Recruitment) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,2,2022-08-15 10:30:00,16
 213,90,Account,Called Sarah re the Senior Python role — she's keen but wants to understand IR35 status before committing. Sent her the determination letter.,2022-08-15 10:30:00,9,2022-08-15 10:30:00,23
 214,215,Req,Email to Amanda at Deloitte - revised brief uploaded with updated tech stack (added Kubernetes). 2 new CVs ready to send.,2022-08-15 10:30:00,25,2022-08-15 10:30:00,18
 215,217,Person,"Candidate Rachel has left voicemail — wants to discuss permanent role options, not contracting anymore. Callback scheduled for tomorrow 10am.",2022-08-15 10:30:00,19,2022-08-15 10:30:00,20
 216,176,Account,Follow-up call to Associate at Canary Wharf firm — he's out until next Wednesday but his colleague Emma will cover. Sending her the candidate shortlist.,2022-08-15 10:30:00,1,2022-08-15 10:30:00,13
-217,493,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Michael Page) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,25,2022-08-15 10:30:00,29
+217,493,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Mitchell Pace Recruitment) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,25,2022-08-15 10:30:00,29
 218,244,Person,"Emma replied via email — available immediately, no notice required. AWS certified, 8 yrs experience. Sent to Accenture client this morning.",2022-08-15 10:30:00,18,2022-08-15 10:30:00,3
 219,126,Person,"Req ID 1923 (Senior Python at Capgemini) — role revised, now requires DevOps experience also. Updated spec sent, reviewing candidate fit.",2022-08-15 10:30:00,27,2022-08-15 10:30:00,23
 220,233,Person,"Called Marcus re notice period — currently 2 weeks, can start 15 Feb. Salary expectations £65k-£70k permanent. Sent CV to RBS this afternoon.",2022-08-15 10:30:00,24,2022-08-15 10:30:00,11
@@ -229,13 +229,13 @@ Note_ID,ObjectId,ObjectType,Notetext,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy
 228,229,Req,Candidate Tom flagged notice period extended to 8 weeks - outside IR35 rate now £550/day min. Updated brief with client.,2022-08-15 10:30:00,29,2022-08-15 10:30:00,15
 229,42,Account,Email from Barclays procurement re PSL renewal — they want updated insurance certs and compliance docs by end of month. Forwarded to ops.,2022-08-15 10:30:00,10,2022-08-15 10:30:00,20
 230,110,Account,Left voicemail for James (candidate) — his counter-offer at current firm is £75k vs our £72k placement. Waiting to hear if he'll take the permanent role.,2022-08-15 10:30:00,22,2022-08-15 10:30:00,5
-231,102,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Michael Page) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,16,2022-08-15 10:30:00,8
+231,102,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Mitchell Pace Recruitment) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,16,2022-08-15 10:30:00,8
 232,199,Person,"Call with Associate at Santander (Raj Patel) — interviewed our candidate Khalid yesterday, 'very impressed, likely to proceed to final round next week.'",2022-08-15 10:30:00,24,2022-08-15 10:30:00,26
 233,193,Associate,Email from Marcus Chen (HSBC) — they've paused the data engineering req due to project delay. Will revisit in May. Keeping brief on file.,2022-08-15 10:30:00,10,2022-08-15 10:30:00,6
 234,175,Associate,Candidate Michael Foster declined the role — preferred another offer. Noted: salary expectations now £700+/day (was £600). Updated his profile.,2022-08-15 10:30:00,19,2022-08-15 10:30:00,28
 235,211,Req,Email from Claire (candidate) - counter-offer from current employer £95k vs Barclays offer £88k. Discussing pro/cons with her.,2022-08-15 10:30:00,23,2022-08-15 10:30:00,15
 236,52,Person,"Candidate (Michael Chen) has salary expectation of £85k for perm role, not £75k we quoted. Flagged to client contact. Awaiting response.",2022-08-15 10:30:00,5,2022-08-15 10:30:00,5
-237,225,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Michael Page) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,12,2022-08-15 10:30:00,26
+237,225,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Mitchell Pace Recruitment) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,12,2022-08-15 10:30:00,26
 238,211,Req,"Called Sarah at Barclays - shortlist of 3 CVs sent yesterday, she's reviewing today. Feedback by EOD tomorrow expected.",2022-08-15 10:30:00,23,2022-08-15 10:30:00,17
 239,163,Account,"Email to account team re budget freeze — IT director at Santander has frozen all hiring until Q3. Putting 2 live reqs on hold, will revisit end of June.",2022-08-15 10:30:00,4,2022-08-15 10:30:00,14
 240,241,Req,"Email from James (Lloyds) - budget confirmed for Senior Java role, £75k-£85k. Wants to interview by end of week.",2022-08-15 10:30:00,9,2022-08-15 10:30:00,14
@@ -358,7 +358,7 @@ Note_ID,ObjectId,ObjectType,Notetext,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy
 357,38,Associate,Called Sarah Chen (Goldman Sachs) — she's aware we've also briefed with Accenture on one of the roles. Reassured her of our exclusivity commitment once placement confirmed.,2022-08-15 10:30:00,12,2022-08-15 10:30:00,27
 358,30,Account,"Called client — they want to increase the contract day rate from £550 to £600 due to scope expansion. Candidate happy with increase, contract amendment to follow.",2022-08-15 10:30:00,29,2022-08-15 10:30:00,14
 359,40,Req,Email to Amanda at Deloitte - revised brief uploaded with updated tech stack (added Kubernetes). 2 new CVs ready to send.,2022-08-15 10:30:00,10,2022-08-15 10:30:00,12
-360,162,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Michael Page) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,7,2022-08-15 10:30:00,25
+360,162,Person,Shortlist of 3 Java devs sent to Thoughtworks. Competitor (Mitchell Pace Recruitment) also briefed on the role per client. Highlighted our candidate's AWS experience.,2022-08-15 10:30:00,7,2022-08-15 10:30:00,25
 361,111,Person,"Associate at GE Healthcare (Linda Price) is on maternity leave until April. Referred us to new contact, Marcus Webb. Will reach out separately.",2022-08-15 10:30:00,25,2022-08-15 10:30:00,21
 362,231,Associate,"Email to Tariq Hussain (Rolls-Royce) — revised brief received for manufacturing engineer role. Salary now £55k (was £48k), role upgraded to senior level.",2022-08-15 10:30:00,26,2022-08-15 10:30:00,25
 363,155,Associate,Spoke with Emma Thompson (GlaxoSmithKline) — their IR35 determination process now stricter. All contractors must be outside IR35 effective immediately. Updating our req briefs.,2022-08-15 10:30:00,8,2022-08-15 10:30:00,5

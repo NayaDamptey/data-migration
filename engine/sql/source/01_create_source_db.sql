@@ -160,6 +160,7 @@ CREATE TABLE dbo.[Person] (
     [DOB] DATE NULL,
     [Account_Number] INT NULL,
     [GDPRConsent_ID] INT NULL,
+    [AddressID] INT NULL,
     [DeptID] INT NULL,
     [Role_ID] INT NULL,
     [CreatedAt] DATETIME NULL,
@@ -174,6 +175,7 @@ CREATE TABLE dbo.[Person] (
 );
 EXEC sys.sp_addextendedproperty N'MS_Description', N'Contacts and candidates', N'SCHEMA', N'dbo', N'TABLE', N'Person', N'COLUMN', N'Person_ID';
 EXEC sys.sp_addextendedproperty N'MS_Description', N'Foreign key', N'SCHEMA', N'dbo', N'TABLE', N'Person', N'COLUMN', N'GDPRConsent_ID';
+EXEC sys.sp_addextendedproperty N'MS_Description', N'Home address and contact details (candidates)', N'SCHEMA', N'dbo', N'TABLE', N'Person', N'COLUMN', N'AddressID';
 EXEC sys.sp_addextendedproperty N'MS_Description', N'Foreign key', N'SCHEMA', N'dbo', N'TABLE', N'Person', N'COLUMN', N'DeptID';
 EXEC sys.sp_addextendedproperty N'MS_Description', N'Foreign key', N'SCHEMA', N'dbo', N'TABLE', N'Person', N'COLUMN', N'Role_ID';
 GO

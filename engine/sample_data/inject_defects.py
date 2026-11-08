@@ -53,7 +53,7 @@ CATEGORY_INFO = {
     "SPLIT_HISTORY":        "Child rows re-pointed to the duplicate, splitting history across both records",
     "DUPLICATE_JOB":        "Same job raised twice under a new ID",
     "ORPHAN_CONTACT":       "Contact linked to no company",
-    "ORPHAN_CANDIDATE":     "Candidate linked to no job",
+    "PLACEMENT_ON_DELETED": "Live placement on a soft-deleted job or company",
     "ORPHAN_DOCUMENT":      "Document linked to no record",
     "ORPHAN_NOTE":          "Note linked to no record",
 }
@@ -307,7 +307,9 @@ class Injector:
     def soft_delete(self):
         live = {r["AccountID"] for r in self.rows("Req") if r["Deleted"] == "0" and r["StatusID"] in ("1", "2", "3")
                 and ("Req", r["ReqID"], "AccountID") not in self.used}
-        for r in self.pick("Accounts", "Deleted", 3, lambda r: r["Deleted"] == "0" and r["Account_ID"] in live):
+        placed = {h["Account_ID"] for h in self.rows("Req_Hired") if h["Pipeline_Stage"] == "Placed" and h["Deleted"] == "0"}
+        for r in self.pick("Accounts", "Deleted", 3, lambda r: r["Deleted"] == "0" and r["Account_ID"] in live
+                           and r["Account_ID"] not in placed):
             self.set("SOFT_DELETE_CONFLICT", "Accounts", r, "Deleted", 1, "account deleted but has open jobs")
 
     def account_dupes(self):
@@ -400,6 +402,31 @@ class Injector:
                            "CreatedAt": "2024-10-01 09:00:00"},
                           "candidate registered with no profile, CV or activity")
 
+    def placements_on_deleted(self):
+        """Jobs and companies soft-deleted while their placements stay live (each live placement is a finding)."""
+        def taken(table, pk):
+            return any(u[0] == table and u[1] == pk for u in self.used)
+        placed = [h for h in self.rows("Req_Hired") if h["Pipeline_Stage"] == "Placed" and h["Deleted"] == "0"]
+        by_req, by_acc = {}, {}
+        for h in placed:
+            by_req.setdefault(h["Req_ID"], []).append(h)
+            by_acc.setdefault(h["Account_ID"], []).append(h)
+        open_acc = {r["AccountID"] for r in self.rows("Req") if r["Deleted"] == "0" and r["StatusID"] in ("1", "2", "3")}
+        jobs = self.pick("Req", "Deleted", 2, lambda r: r["Deleted"] == "0" and r["StatusID"] == "4" and r["ReqID"] in by_req
+                         and not taken("Req", r["ReqID"]) and not taken("Accounts", r["AccountID"]))
+        for r in jobs:
+            self.raw_set("Req", r, "Deleted", 1)
+            for h in by_req[r["ReqID"]]:
+                self.record("PLACEMENT_ON_DELETED", "Req_Hired", h["Req_HiredID"], "Req.Deleted", "0", "1",
+                            f"job {r['ReqID']} deleted while placement is live")
+        skip = {r["AccountID"] for r in jobs}
+        for a in self.pick("Accounts", "Deleted", 2, lambda a: a["Deleted"] == "0" and a["Account_ID"] in by_acc
+                           and a["Account_ID"] not in open_acc and a["Account_ID"] not in skip and not taken("Accounts", a["Account_ID"])):
+            self.raw_set("Accounts", a, "Deleted", 1)
+            for h in by_acc[a["Account_ID"]]:
+                self.record("PLACEMENT_ON_DELETED", "Req_Hired", h["Req_HiredID"], "Accounts.Deleted", "0", "1",
+                            f"company {a['Account_ID']} deleted while placement is live")
+
     def unattached(self):
         """Notes and documents linked to no record: the id was lost, or points at a record that does not exist."""
         for r in self.pick("Notes", "ObjectId", 4, lambda r: r["ObjectId"] != ""):
@@ -433,13 +460,13 @@ class Injector:
     def run(self):
         # Only defects the STANDARD CHECKS look for are planted (validation/standard_checks.py):
         # duplicate people and entities, deleted-but-active records,
-        # orphaned candidates / documents / notes / records. Everything else is clean at source.
+        # live placements on deleted jobs or companies, orphaned contacts / documents / notes. Everything else is clean at source.
         # (emails, phones, postcodes, missing, ni_and_bank, domains, whitespace, dates, ranges and encoding are
         # kept below but not run: contact details are fixed at source, not checked on the dashboard.)
         # duplicates first: INSERT..SELECT copies must see the clean source rows
         # (orphans() — broken links in other tables — is kept but not run: fixed at source)
         for step in (self.account_dupes, self.person_dupes, self.transaction_dupes, self.job_dupes,
-                     self.orphan_candidates, self.orphan_contacts, self.unattached,
+                     self.orphan_contacts, self.unattached, self.placements_on_deleted,
                      self.soft_delete):
             step()
 

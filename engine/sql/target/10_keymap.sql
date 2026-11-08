@@ -2,6 +2,16 @@
 SET NOCOUNT ON;
 USE [RecruitPlatform_Target];
 GO
+-- Person->Applicant  (new string keys)
+INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
+SELECT N'Applicant', N'Person', CAST(s.[Person_ID] AS NVARCHAR(200)), LOWER(CONVERT(NVARCHAR(50), NEWID())), N'Person->Applicant'
+FROM [Cobaltdesk_Legacy].dbo.[Person] s
+WHERE s.[Person_ID] IS NOT NULL AND (s.[Associate] = 0)
+  AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'Applicant' AND x.source_table = N'Person' AND x.source_key = CAST(s.[Person_ID] AS NVARCHAR(200)));
+INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Person->Applicant', N'keys', @@ROWCOUNT);
+-- merged duplicate: legacy Person 10005 -> the new id of 370 (everything attached to the duplicate links to the kept record)
+UPDATE d SET d.target_id = s.target_id FROM mig.KeyMap d JOIN mig.KeyMap s ON s.target_table = d.target_table AND s.source_table = d.source_table AND s.source_key = N'370' WHERE d.target_table = N'Applicant' AND d.source_table = N'Person' AND d.source_key = N'10005';
+GO
 -- CV_Docs->Attachments  (new int keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'Attachments', N'CV_Docs', CAST(s.[Doc_ID] AS NVARCHAR(200)), CAST((SELECT ISNULL(MAX(CAST(target_id AS INT)), 0) FROM mig.KeyMap WHERE target_table = N'Attachments') + ROW_NUMBER() OVER (ORDER BY s.[Doc_ID]) AS NVARCHAR(50)), N'CV_Docs->Attachments'
@@ -18,11 +28,31 @@ WHERE s.[Doc_ID] IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'Attachments' AND x.source_table = N'Documents' AND x.source_key = CAST(s.[Doc_ID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Documents->Attachments', N'keys', @@ROWCOUNT);
 GO
+-- Addresses->Comms  (new int keys)
+INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
+SELECT N'Comms', N'Addresses', CAST(p.[Person_ID] AS NVARCHAR(200)), CAST((SELECT ISNULL(MAX(CAST(target_id AS INT)), 0) FROM mig.KeyMap WHERE target_table = N'Comms') + ROW_NUMBER() OVER (ORDER BY p.[Person_ID]) AS NVARCHAR(50)), N'Addresses->Comms'
+FROM [Cobaltdesk_Legacy].dbo.[Addresses] s
+     INNER JOIN [Cobaltdesk_Legacy].dbo.[Person] p ON p.[AddressID] = s.[AddressID]
+WHERE p.[Person_ID] IS NOT NULL AND (p.[Associate] = 0 AND s.[Phone] IS NOT NULL)
+  AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'Comms' AND x.source_table = N'Addresses' AND x.source_key = CAST(p.[Person_ID] AS NVARCHAR(200)));
+INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Addresses->Comms', N'keys', @@ROWCOUNT);
+GO
+-- Person->Comms  (new int keys)
+INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
+SELECT N'Comms', N'Person', CAST(s.[Person_ID] AS NVARCHAR(200)), CAST((SELECT ISNULL(MAX(CAST(target_id AS INT)), 0) FROM mig.KeyMap WHERE target_table = N'Comms') + ROW_NUMBER() OVER (ORDER BY s.[Person_ID]) AS NVARCHAR(50)), N'Person->Comms'
+FROM [Cobaltdesk_Legacy].dbo.[Person] s
+     LEFT JOIN [Cobaltdesk_Legacy].dbo.[Addresses] a ON a.[AddressID] = s.[AddressID]
+WHERE s.[Person_ID] IS NOT NULL AND (s.[Associate] = 0 AND a.[Email] IS NOT NULL)
+  AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'Comms' AND x.source_table = N'Person' AND x.source_key = CAST(s.[Person_ID] AS NVARCHAR(200)));
+INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Person->Comms', N'keys', @@ROWCOUNT);
+-- merged duplicate: legacy Person 10005 -> the new id of 370 (everything attached to the duplicate links to the kept record)
+UPDATE d SET d.target_id = s.target_id FROM mig.KeyMap d JOIN mig.KeyMap s ON s.target_table = d.target_table AND s.source_table = d.source_table AND s.source_key = N'370' WHERE d.target_table = N'Comms' AND d.source_table = N'Person' AND d.source_key = N'10005';
+GO
 -- Addresses->CompanyLocation  (new string keys)
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'CompanyLocation', N'Addresses', CAST(s.[AddressID] AS NVARCHAR(200)), LOWER(CONVERT(NVARCHAR(50), NEWID())), N'Addresses->CompanyLocation'
 FROM [Cobaltdesk_Legacy].dbo.[Addresses] s
-WHERE s.[AddressID] IS NOT NULL
+WHERE s.[AddressID] IS NOT NULL AND (s.[AddressID] IN (SELECT AddressID FROM [Cobaltdesk_Legacy].dbo.[Accounts]))
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'CompanyLocation' AND x.source_table = N'Addresses' AND x.source_key = CAST(s.[AddressID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Addresses->CompanyLocation', N'keys', @@ROWCOUNT);
 GO
@@ -30,7 +60,7 @@ GO
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'ContactLocation', N'Addresses', CAST(s.[AddressID] AS NVARCHAR(200)), LOWER(CONVERT(NVARCHAR(50), NEWID())), N'Addresses->ContactLocation'
 FROM [Cobaltdesk_Legacy].dbo.[Addresses] s
-WHERE s.[AddressID] IS NOT NULL
+WHERE s.[AddressID] IS NOT NULL AND (s.[AddressID] IN (SELECT Associate_AddressID FROM [Cobaltdesk_Legacy].dbo.[Associates]))
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'ContactLocation' AND x.source_table = N'Addresses' AND x.source_key = CAST(s.[AddressID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Addresses->ContactLocation', N'keys', @@ROWCOUNT);
 GO
@@ -46,7 +76,7 @@ GO
 INSERT INTO mig.KeyMap (target_table, source_table, source_key, target_id, mapping_id)
 SELECT N'PositionLocation', N'Addresses', CAST(s.[AddressID] AS NVARCHAR(200)), LOWER(CONVERT(NVARCHAR(50), NEWID())), N'Addresses->PositionLocation'
 FROM [Cobaltdesk_Legacy].dbo.[Addresses] s
-WHERE s.[AddressID] IS NOT NULL
+WHERE s.[AddressID] IS NOT NULL AND (s.[AddressID] IN (SELECT Address_ID FROM [Cobaltdesk_Legacy].dbo.[Req]))
   AND NOT EXISTS (SELECT 1 FROM mig.KeyMap x WHERE x.target_table = N'PositionLocation' AND x.source_table = N'Addresses' AND x.source_key = CAST(s.[AddressID] AS NVARCHAR(200)));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (N'Addresses->PositionLocation', N'keys', @@ROWCOUNT);
 GO

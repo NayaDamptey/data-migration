@@ -1,6 +1,60 @@
 {
   "version": 1,
   "sources": {
-    "legacy": {}
+    "legacy": {
+      "person:370:10005": {
+        "decision": "merge",
+        "entity": "person",
+        "a": "370",
+        "b": "10005",
+        "keep": "a",
+        "fields": {
+          "DOB": "a",
+          "GDPRConsent_ID": "a",
+          "CreatedAt": "a",
+          "Emp": "a"
+        },
+        "by": "reviewer",
+        "at": "2026-11-08T20:36:15"
+      },
+      "person:446:10011": {
+        "decision": "merge",
+        "entity": "person",
+        "a": "446",
+        "b": "10011",
+        "keep": "a",
+        "fields": {
+          "First_Name": "a",
+          "GDPRConsent_ID": "a",
+          "CreatedAt": "a"
+        },
+        "by": "reviewer",
+        "at": "2026-11-08T22:58:25"
+      },
+      "person:502:10001": {
+        "decision": "not_duplicate",
+        "entity": "person",
+        "a": "502",
+        "b": "10001",
+        "keep": null,
+        "fields": {},
+        "by": "reviewer",
+        "at": "2026-11-08T22:58:30"
+      },
+      "person:279:10003": {
+        "decision": "merge",
+        "entity": "person",
+        "a": "279",
+        "b": "10003",
+        "keep": "a",
+        "fields": {
+          "DOB": "a",
+          "GDPRConsent_ID": "a",
+          "CreatedAt": "a"
+        },
+        "by": "reviewer",
+        "at": "2026-11-08T22:58:32"
+      }
+    }
   }
 }

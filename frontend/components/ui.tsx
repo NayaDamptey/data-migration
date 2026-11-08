@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { isDemo } from "../lib/demo";
 import { useStore } from "../lib/store";
-import { ENTITIES, type FieldStatus } from "../lib/mock";
+import { type FieldStatus } from "../lib/mock";
 
 // Neutral placeholder mark: two stacked arrows (source -> target). Shown white on dark backgrounds.
 export function LogoMark({ size = 26, dark = false }: { size?: number; dark?: boolean }) {
@@ -55,9 +55,8 @@ export function SystemTile({ name, size = 36 }: { name: string; size?: number })
 }
 
 const TABS = [
-  { href: "/", label: "Source upload" },
+  { href: "/", label: "Setup" },
   { href: "/quality", label: "Data quality" },
-  { href: "/workspace", label: "Setup" },
   { href: "/canonical", label: "Schema mapping" },
   { href: "/target", label: "Destination data" },
   { href: "/versions", label: "Version review" },
@@ -77,20 +76,18 @@ const Icon = ({ name }: { name: keyof typeof icons }) => <svg width="18" height=
 
 export function Shell({ children }: { children: ReactNode }) {
   const path = usePathname();
-  const { setup, steps, runStep, fieldStatus, pendingChanges, runs, uploads, uploadsReady } = useStore();
+  const { setup, steps, runStep, pendingChanges, uploads, uploadsReady } = useStore();
   const uploadedCount = uploads.filter((u) => u.status === "uploaded").length;
   // the pipeline order: upload source first, then data quality
   const locked = (href: string) => href === "/quality" && uploadsReady && uploadedCount === 0;
   const LOCK_HINT = "Upload the source data first";
-  const review = ENTITIES.reduce((n, e) => n + e.fields.filter((f) => fieldStatus(e.key, f.name) === "review").length, 0);
   const running = Object.values(steps).includes("running");
   const pending = pendingChanges.length;
   const tabs = TABS;
   const nav = [
-    { href: "/", label: "Source upload", icon: "upload" as const, badge: uploadedCount || undefined },
+    { href: "/", label: "Setup", icon: "upload" as const, badge: uploadedCount || undefined },
     { href: "/quality", label: "Data quality", icon: "quality" as const },
-    { href: "/workspace", label: "Setup", icon: "setup" as const },
-    { href: "/canonical", label: "Schema mapping", icon: "schema" as const, badge: review || undefined },
+    { href: "/canonical", label: "Schema mapping", icon: "schema" as const },
     { href: "/target", label: "Destination data", icon: "data" as const },
     { href: "/versions", label: "Version review", icon: "versions" as const, badge: pending || undefined },
   ];
@@ -178,8 +175,7 @@ export function Shell({ children }: { children: ReactNode }) {
                 <h1 className="text-[28px] leading-tight font-bold tracking-tight truncate">{setup.sourceSystem} to {setup.targetSystem}</h1>
                 <p className="text-[13px] text-muted flex items-center gap-1.5 mt-0.5">
                   {running && <><span className="w-2 h-2 rounded-full bg-accent animate-pulse" />Running…<span className="text-faint">·</span></>}
-                  Version v{runs[0]?.version} · {runs[0]?.when}{pending > 0 && <> <span className="text-faint">·</span> {pending} unsaved</>}
-                  <span className="text-faint hidden sm:inline">·</span><span className="hidden sm:inline">{setup.sourceFormat} → {setup.output === "SQL inserts" ? `${setup.targetDatabase} inserts` : setup.output}</span>
+                  <span>{setup.sourceFormat} → {setup.output === "SQL inserts" ? `${setup.targetDatabase} inserts` : setup.output}</span>
                 </p>
               </div>
             </div>
@@ -200,7 +196,6 @@ export function Shell({ children }: { children: ReactNode }) {
                 <Link key={t.href} href={t.href} aria-current={active ? "page" : undefined}
                   className={`pb-3 text-[15px] border-b-[3px] whitespace-nowrap transition-colors ${active ? "border-ink text-ink font-medium" : "border-transparent text-muted hover:text-ink"}`}>
                   {t.label}
-                  {t.href === "/canonical" && review > 0 && <span className="ml-1.5 pill bg-warn-soft text-warn py-0">{review}</span>}
                   {t.href === "/versions" && pending > 0 && <span className="ml-1.5 pill bg-accent text-white py-0">{pending}</span>}
                 </Link>
               );

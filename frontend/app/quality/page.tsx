@@ -11,8 +11,7 @@ import { Modal, Shell, Spinner } from "../../components/ui";
 import { api } from "../../lib/api";
 import { useStore } from "../../lib/store";
 
-type Source = { id: string; label: string; detail: string; available: boolean };
-type Rule = { is_duplicate?: boolean; id: string; category: string; category_label: string; critical: boolean; table: string; description: string; violations: number; sample: { key: string; detail: string }[] };
+type Rule = { is_duplicate?: boolean; id: string; category: string; category_label: string; critical: boolean; table: string; key_column?: string | null; description: string; violations: number; sample: { key: string; detail: string }[] };
 type Report = {
   source: { id: string; label: string; checked_at: string; seconds: number; unrecognised_files?: string[]; note?: string };
   totals: { tables: number; rows: number; rules: number; passed: number; failed: number; violations: number; critical_violations: number; affected_records: number; score: number | null; clean_records_pct: number | null };
@@ -45,23 +44,12 @@ function DataQualityPage() {
   const openDuplicates = (entity?: string) => { setDupEntity(entity); setTab("duplicates"); window.scrollTo({ top: 0, behavior: "smooth" }); };
   const { projectId, uploads, uploadsReady } = useStore();
   const blocked = uploadsReady && !uploads.some((u) => u.status === "uploaded");
-  const [sources, setSources] = useState<Source[]>([]);
-  const [source, setSource] = useState<string>(params.get("source") ?? `upload:${projectId}`);
+  const source = "legacy";
   const [report, setReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [check, setCheck] = useState<StandardCheck | null>(null);
   const [open, setOpen] = useState<Rule | null>(null);
-
-  useEffect(() => {
-    api<Source[]>(`/dq/sources?project_id=${encodeURIComponent(projectId)}`)
-      .then((s) => {
-        setSources(s);
-        // the uploaded files are what this step checks; the other sources stay available for comparison
-        if (!s.find((x) => x.id === source)?.available) setSource(s.find((x) => x.id.startsWith("upload:") && x.available)?.id ?? "legacy");
-      })
-      .catch((e: Error) => setError(e.message));
-  }, [projectId]);
 
   const load = useCallback((refresh = false) => {
     setLoading(true);
@@ -103,20 +91,9 @@ function DataQualityPage() {
       <div className="flex flex-wrap items-end justify-between gap-4 mb-5">
         <div>
           <h2 className="section-title">Data quality</h2>
-          <p className="text-[13px] text-muted mt-0.5">
-            {report ? <>Last checked {report.source.checked_at}</> : "Every source record checked before anything moves."}
-          </p>
+          {report && <p className="text-[13px] text-muted mt-0.5">Last checked {report.source.checked_at}</p>}
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex border border-line bg-surface" role="radiogroup" aria-label="Data to check">
-            {(sources.length ? sources : [{ id: "legacy", label: "Legacy database", detail: "", available: true }]).map((s) => (
-              <button key={s.id} role="radio" aria-checked={source === s.id} disabled={!s.available} title={s.detail}
-                onClick={() => setSource(s.id)}
-                className={`h-9 px-3 text-[13px] font-medium ${source === s.id ? "bg-ink text-white" : "text-muted hover:text-ink disabled:opacity-40 disabled:hover:text-muted"}`}>
-                {s.label}
-              </button>
-            ))}
-          </div>
           <button className="btn-secondary h-9" onClick={() => load(true)} disabled={loading}>{loading ? <Spinner /> : "Check again"}</button>
         </div>
       </div>
@@ -171,7 +148,7 @@ function DataQualityPage() {
             <ul className="grid sm:grid-cols-2 xl:grid-cols-5 gap-3">
               {report.standard_checks.map((c) => (
                 <li key={c.id}>
-                  <button onClick={() => pickCheck(c)} title={c.why} aria-pressed={check?.id === c.id}
+                  <button onClick={() => pickCheck(c)} aria-pressed={check?.id === c.id}
                     className={`w-full h-full text-left border p-3 flex flex-col gap-1.5 transition-colors ${check?.id === c.id ? "border-ink bg-sunken" : "border-line hover:border-ink"} ${c.status === "fail" ? "" : "cursor-default"}`}>
                     <span className="flex items-center gap-2">
                       <CheckStatus status={c.status} />
@@ -185,37 +162,31 @@ function DataQualityPage() {
                 </li>
               ))}
             </ul>
-            {check && <p className="text-[12.5px] text-muted mt-3">{check.why} <button className="text-accent hover:underline" onClick={() => setCheck(null)}>Clear filter</button></p>}
+            {check && <p className="text-[12.5px] mt-3"><button className="text-accent hover:underline" onClick={() => setCheck(null)}>Clear filter</button></p>}
           </section>
 
           {!!report.duplicate_review?.total && (
             <div className="card p-4 flex flex-wrap items-center justify-between gap-3 text-[13px]">
               <p>
                 <span className="font-semibold">{report.duplicate_review.to_review} suspected duplicate pair{report.duplicate_review.to_review === 1 ? "" : "s"} to review</span>
-                <span className="text-muted"> · {report.duplicate_review.merged} merged · {report.duplicate_review.not_duplicate} not duplicates. Compare them side by side, then merge or keep both.</span>
+                <span className="text-muted"> · {report.duplicate_review.merged} merged · {report.duplicate_review.not_duplicate} not duplicates</span>
               </p>
               <button className="btn-primary h-9" onClick={() => openDuplicates()}>Review duplicates</button>
             </div>
           )}
 
-          {(report.answer_key || report.source.unrecognised_files?.length || report.not_applicable?.count) ? (
+          {(report.source.unrecognised_files?.length || report.not_applicable?.count) ? (
             <div className="grid md:grid-cols-2 gap-4">
-              {report.answer_key && (
-                <div className="card p-4 text-[13px] flex items-center gap-3">
-                  <span className="pill bg-ok-soft text-ok">{report.answer_key.found} / {report.answer_key.planted}</span>
-                  <span>known problems planted in the legacy data were found by these checks.</span>
-                </div>
-              )}
               {!!report.not_applicable?.count && (
                 <div className="card p-4 text-[13px]">
                   <span className="font-medium">{report.not_applicable.count} rules not run</span>
-                  <span className="text-muted"> — they need tables that weren’t uploaded: {report.not_applicable.missing_tables.slice(0, 8).join(", ")}{report.not_applicable.missing_tables.length > 8 ? "…" : ""}</span>
+                  <span className="text-muted">: {report.not_applicable.missing_tables.slice(0, 8).join(", ")}{report.not_applicable.missing_tables.length > 8 ? "…" : ""}</span>
                 </div>
               )}
               {!!report.source.unrecognised_files?.length && (
                 <div className="card p-4 text-[13px]">
                   <span className="font-medium">Not checked: </span>
-                  <span className="text-muted">{report.source.unrecognised_files.join(", ")} — the file name doesn’t match a known source table.</span>
+                  <span className="text-muted">{report.source.unrecognised_files.join(", ")}</span>
                 </div>
               )}
             </div>
@@ -241,8 +212,8 @@ function DataQualityPage() {
                         <td className="td text-right tabular-nums font-semibold">{fmt(r.violations)}</td>
                         <td className="td pr-5 text-muted max-w-[320px] truncate" title={r.sample[0]?.detail}>
                           {DUP_ENTITY[r.id] && r.id !== "dup.account.split_history"
-                            ? <>#{r.sample[0]?.detail.match(/\d+$/)?.[0]} ↔ #{r.sample[0]?.key} <span className="text-accent">· compare side by side</span></>
-                            : <>#{r.sample[0]?.key} {r.sample[0]?.detail}</>}
+                            ? <><span className="font-mono text-[12px]">{r.key_column ?? "id"} {r.sample[0]?.detail.match(/\d+$/)?.[0]} ↔ {r.sample[0]?.key}</span> <span className="text-accent">· compare</span></>
+                            : <span className="font-mono text-[12px]">{r.key_column ?? "id"} = {r.sample[0]?.key}: {r.sample[0]?.detail}</span>}
                         </td>
                       </tr>
                     ))}
@@ -254,7 +225,7 @@ function DataQualityPage() {
 
           {/* Next steps */}
           <div className="flex flex-wrap gap-3 justify-end">
-            <Link href="/workspace" className="btn-primary">Continue to the migration workflow →</Link>
+            <Link href="/" className="btn-primary">Back to the pipeline →</Link>
           </div>
         </div>
       )}

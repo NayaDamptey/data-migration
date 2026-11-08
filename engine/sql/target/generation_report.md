@@ -1,9 +1,9 @@
 # Target SQL generation report
 
-Generated 2026-11-06 15:49 from `mapping/migration_mapping.json`.
+Generated 2026-11-08 20:55 from `mapping/migration_mapping.json`.
 
-* Generated: **12** table mappings
-* Blocked: **9**
+* Generated: **15** table mappings
+* Blocked: **8**
 
 ## Blocked mappings (fix in the mapping UI, then regenerate)
 
@@ -24,9 +24,6 @@ Generated 2026-11-06 15:49 from `mapping/migration_mapping.json`.
 ### PONo->PurchaseOrder
 * parent Company is not migrated (blocked or unmapped) — CompanyID
 
-### Person->Applicant
-* C04 Deleted: Unknown transform 'coalesce_or'
-
 ### Req->Position
 * parent Company is not migrated (blocked or unmapped) — CompanyID
 
@@ -39,14 +36,17 @@ Generated 2026-11-06 15:49 from `mapping/migration_mapping.json`.
 
 ## Generated with warnings
 
+* `Person->Applicant` Deleted: Custom SQL expression — review by hand
 * `Documents->Attachments` AttachmentType: Low confidence (0.85) and not reviewed
 * `Documents->Attachments` FileType: Low confidence (0.72) and not reviewed
 * `CV_Docs->Attachments` UploadedBy: Legacy ID CV_Docs.Uploaded_Id copied into plain column Attachments.UploadedBy
 * `Documents->Attachments` UploadedBy: Legacy ID Documents.Uploaded_Id copied into plain column Attachments.UploadedBy
+* `Addresses->Comms` ID: Key comes from Person.Person_ID, not Addresses's primary key
+* `Addresses->Comms` ObjectID: Custom SQL expression — review by hand
+* `Person->Comms` ObjectID: Custom SQL expression — review by hand
 * `Invoice->Invoice` Type: Low confidence (0.88) and not reviewed
 * `Schedule->Task` TaskType: Low confidence (0.88) and not reviewed
 * `TimesheetItems->TimesheetActivity` AssocID: Legacy ID TimesheetItems.Person_ID copied into plain column TimesheetActivity.AssocID
 * `TimesheetItems->TimesheetActivity` AssocID: Low confidence (0.88) and not reviewed
-* `TimesheetItems->TimesheetActivity` TimesheetID: 5 row(s) reference a TimeSheets that is not loaded into Timesheets — they will be rejected
 * `TimeSheets->Timesheets` TimesheetType: Low confidence (0.85) and not reviewed
 * `Recruiter->User` Role: Low confidence (0.88) and not reviewed

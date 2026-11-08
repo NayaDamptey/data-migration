@@ -188,7 +188,13 @@ CREATE TABLE mig.LoadLog (
         return "\n     ".join(parts)
 
     def _filter(self, m: dict) -> str:
-        return f" AND ({qualify_sql(m['filter'], m)})" if (m.get("filter") or "").strip() else ""
+        if not (m.get("filter") or "").strip():
+            return ""
+        # source tables named in a sub-query (FROM Accounts) are read from the legacy DB
+        sql = re.sub(r"\b(FROM|JOIN)\s+([A-Za-z_]\w*)\b",
+                     lambda mt: f"{mt.group(1)} {SRC}{q(mt.group(2))}" if mt.group(2) in self.src.tables else mt.group(0),
+                     qualify_sql(m["filter"], m), flags=re.I)
+        return f" AND ({sql})"
 
     # ── 20 ────────────────────────────────────────────────────────────────────
     def expr(self, m: dict, c: dict, fk_alias: str | None) -> str:

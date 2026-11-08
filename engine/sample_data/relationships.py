@@ -46,6 +46,7 @@ FOREIGN_KEYS = [
     ("Associates", "Person_ID", "Person", "Person_ID"),
     ("Associates", "DeptID", "Departments", "DepartmentID"),
     ("Associates", "Associate_AddressID", "Addresses", "AddressID"),
+    ("Person", "AddressID", "Addresses", "AddressID"),
     ("Associates", "Associate_RoleID", "Roles", "Role_ID"),
     ("Associates", "DivisionID", "Division", "DivisionID"),
     ("AccountAssociates", "AssociateID", "Associates", "AssociateID"),

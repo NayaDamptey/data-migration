@@ -31,6 +31,8 @@ ALTER TABLE dbo.[Associates] WITH CHECK ADD CONSTRAINT [FK_Associates_DeptID] FO
 CREATE INDEX [IX_Associates_DeptID] ON dbo.[Associates] ([DeptID]);
 ALTER TABLE dbo.[Associates] WITH CHECK ADD CONSTRAINT [FK_Associates_Associate_AddressID] FOREIGN KEY ([Associate_AddressID]) REFERENCES dbo.[Addresses] ([AddressID]);
 CREATE INDEX [IX_Associates_Associate_AddressID] ON dbo.[Associates] ([Associate_AddressID]);
+ALTER TABLE dbo.[Person] WITH CHECK ADD CONSTRAINT [FK_Person_AddressID] FOREIGN KEY ([AddressID]) REFERENCES dbo.[Addresses] ([AddressID]);
+CREATE INDEX [IX_Person_AddressID] ON dbo.[Person] ([AddressID]);
 ALTER TABLE dbo.[Associates] WITH CHECK ADD CONSTRAINT [FK_Associates_Associate_RoleID] FOREIGN KEY ([Associate_RoleID]) REFERENCES dbo.[Roles] ([Role_ID]);
 CREATE INDEX [IX_Associates_Associate_RoleID] ON dbo.[Associates] ([Associate_RoleID]);
 ALTER TABLE dbo.[Associates] WITH CHECK ADD CONSTRAINT [FK_Associates_DivisionID] FOREIGN KEY ([DivisionID]) REFERENCES dbo.[Division] ([DivisionID]);
@@ -320,5 +322,5 @@ CREATE INDEX [IX_Categories_CreatedBy] ON dbo.[Categories] ([CreatedBy]);
 ALTER TABLE dbo.[Division] WITH CHECK ADD CONSTRAINT [FK_Division_CreatedBy] FOREIGN KEY ([CreatedBy]) REFERENCES dbo.[Recruiter] ([RecruiterID]);
 CREATE INDEX [IX_Division_CreatedBy] ON dbo.[Division] ([CreatedBy]);
 COMMIT;
-PRINT 'Added 156 foreign keys';
+PRINT 'Added 157 foreign keys';
 GO

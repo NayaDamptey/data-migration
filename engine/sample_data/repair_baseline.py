@@ -177,7 +177,7 @@ def run(read_csv, write_csv, columns: dict, root: Path) -> list[str]:
         "Person", "Associates", "AccountAssociates", "AssociateTypeRelation", "AssociateTypes", "Accounts",
         "Addresses", "Emp_Profile", "Emp_Documents", "CV_Docs", "BackgroundChecks", "ObjectHotlist",
         "Interview_Feedback", "Schedule", "Req", "Req_Hired", "TimesheetItems", "TimeSheets", "PONo",
-        "Invoice", "InvoiceEntries", "Log", "Req_Rates", "TimesheetType", "Recruiter", "Notes"]}
+        "Invoice", "InvoiceEntries", "Log", "Req_Rates", "TimesheetType", "Recruiter", "Notes", "EmpHist"]}
     changed: set[str] = set()
 
     def setv(table, row, col, val):
@@ -507,6 +507,121 @@ def run(read_csv, write_csv, columns: dict, root: Path) -> list[str]:
     deleted_people = {p["Person_ID"] for p in T["Person"] if p["Deleted"] == "1"}
     n_sd += sum(setv("Associates", s, "Active", 0) for s in T["Associates"] if s["Person_ID"] in deleted_people and s["Active"] == "1")
     log.append(f"Soft deletes: {n_sd} conflicts resolved (deleted parent with live children)")
+
+    # ── employment history: a real career per candidate (the generator gave every row the same title and dates) ──
+    ROLES = [  # keyword in the profile note -> role title (first match wins)
+        ("business analyst", "Business Analyst"), ("finance systems", "Finance Systems Analyst"), ("data analyst", "Data Analyst"),
+        ("data engineer", "Data Engineer"), ("python/ml", "Machine Learning Engineer"), ("python", "Python Developer"),
+        ("qa lead", "QA Engineer"), ("qa", "QA Automation Engineer"), ("test", "Test Analyst"), ("frontend", "Front-end Developer"),
+        ("full-stack", "Full Stack Developer"), ("mobile", "Mobile Developer"), ("c++", "C++ Engineer"), ("c#", "C# Developer"),
+        (".net", ".NET Developer"), ("java", "Java Developer"), ("devops", "DevOps Engineer"), ("cloud architect", "Cloud Architect"),
+        ("aws", "Cloud Infrastructure Engineer"), ("infrastructure", "Infrastructure Engineer"), ("project manager", "Project Manager"),
+        ("scrum", "Scrum Master"), ("dba", "Database Administrator"), ("sql", "SQL Developer"), ("security", "Security Analyst"),
+        ("network", "Network Engineer"), ("support", "IT Support Analyst"), ("developer", "Software Developer"), ("dev", "Software Developer"),
+    ]
+
+    def base_role(note: str) -> str:
+        text = (note or "").split(" - ", 1)[-1].split(".")[0].lower()
+        return next((title for key, title in ROLES if key in text), "Software Developer")
+
+    def ladder(role: str, n: int, note: str) -> list[str]:
+        """n titles, oldest first, ending at the candidate's current level (from the note: graduate / senior / lead)."""
+        levels = [f"Junior {role}", role, f"Senior {role}", f"Lead {role}", f"Principal {role}"]
+        text = (note or "").lower()
+        top = 0 if "graduate" in text or "first role" in text else 3 if re.search(r"lead|architect|principal", text)             else 2 if re.search(r"senior|1[0-9]\s*yrs|20\s*yrs|[6-9]\s*yrs", text) else 1
+        return [levels[max(0, top - (n - 1 - k))] for k in range(n)]
+
+    profile_note = {e["Emp_ProfileID"]: e["Profile_Notes"] for e in T["Emp_Profile"]}
+    by_emp = defaultdict(list)
+    for h in T["EmpHist"]:
+        by_emp[h["Emp_ID"]].append(h)
+    n_hist = 0
+    for emp, rows in sorted(by_emp.items(), key=lambda kv: int(kv[0])):
+        rows.sort(key=lambda h: int(h["Hist_ID"]))
+        note = profile_note.get(emp, "")
+        titles = ladder(base_role(note), len(rows), note)
+        current = rows[-1]["Ended_At"] == ""
+        end = date(2024, rng.randint(1, 12), 1) if not current else None
+        start_next = date(2024, 9, 1) if current else end
+        spans = []
+        for _ in rows:                      # newest first: each job 1-4 years, short gaps between jobs
+            start = date(start_next.year - rng.randint(1, 4), rng.randint(1, 12), 1)
+            spans.append((start, start_next))
+            start_next = date(start.year, start.month, 1) - timedelta(days=rng.choice([0, 0, 31, 62]))
+        spans.reverse()
+        for k, (h, (st, en)) in enumerate(zip(rows, spans)):
+            last = k == len(rows) - 1
+            n_hist += setv("EmpHist", h, "Title", titles[k])
+            n_hist += setv("EmpHist", h, "Started_At", f"{st.isoformat()} 00:00:00")
+            n_hist += setv("EmpHist", h, "Ended_At", "" if last and current else f"{(en - timedelta(days=1)).isoformat()} 00:00:00")
+    log.append(f"Careers: {len(by_emp)} candidates given a career history ({n_hist} values)")
+
+    # ── candidate contact details: a home address, email and mobile for every candidate ──
+    # (separate rng so the values are the same on every rebuild, whatever ran before)
+    crng = random.Random(SEED + 7)
+    TOWNS = [  # city, county, postcode districts, lat, long
+        ("London", "Greater London", ["N4", "SE15", "E17", "SW11", "NW6", "W12"], 51.507, -0.128),
+        ("Manchester", "Greater Manchester", ["M14", "M20", "M21", "M4"], 53.480, -2.243),
+        ("Leeds", "West Yorkshire", ["LS6", "LS8", "LS17", "LS27"], 53.800, -1.549),
+        ("Birmingham", "West Midlands", ["B13", "B15", "B29", "B17"], 52.486, -1.890),
+        ("Bristol", "Bristol", ["BS6", "BS7", "BS3"], 51.454, -2.588),
+        ("Glasgow", "Glasgow City", ["G12", "G41", "G3"], 55.864, -4.252),
+        ("Edinburgh", "City of Edinburgh", ["EH6", "EH10", "EH9"], 55.953, -3.188),
+        ("Sheffield", "South Yorkshire", ["S7", "S10", "S11"], 53.381, -1.470),
+        ("Nottingham", "Nottinghamshire", ["NG5", "NG7", "NG9"], 52.954, -1.158),
+        ("Liverpool", "Merseyside", ["L15", "L17", "L18"], 53.408, -2.991),
+        ("Newcastle upon Tyne", "Tyne and Wear", ["NE2", "NE6", "NE3"], 54.978, -1.617),
+        ("Cardiff", "Cardiff", ["CF5", "CF14", "CF24"], 51.481, -3.179),
+        ("Reading", "Berkshire", ["RG1", "RG4", "RG30"], 51.454, -0.978),
+        ("Cambridge", "Cambridgeshire", ["CB1", "CB4"], 52.205, 0.122),
+        ("Brighton", "East Sussex", ["BN1", "BN2", "BN3"], 50.822, -0.137),
+    ]
+    STREETS = ["Victoria Road", "Church Lane", "Park Avenue", "Station Road", "Mill Lane", "Grange Road", "Albert Street",
+               "Queens Road", "Kingsway", "Elm Grove", "Willow Close", "Highfield Road", "Clarendon Road", "Manor Way",
+               "Beech Avenue", "Orchard Street", "Hamilton Road", "Westbourne Grove", "St John's Road", "Belmont Street"]
+    PROVIDERS = ["gmail.com", "outlook.com", "yahoo.co.uk", "hotmail.co.uk", "icloud.com", "btinternet.com"]
+    LETTERS = "ABDEFGHJLNPQRSTUWXYZ"
+    import unicodedata
+
+    def ascii_name(x: str) -> str:
+        x = unicodedata.normalize("NFKD", x or "").encode("ascii", "ignore").decode()
+        return re.sub(r"[^a-z]", "", x.lower())
+
+    contact_people = {a["Person_ID"] for a in T["Associates"] if a["Person_ID"]}
+    addr_by_id = {a["AddressID"]: a for a in T["Addresses"]}
+    next_addr = max(int(a["AddressID"]) for a in T["Addresses"]) + 1
+    n_new = n_upd = 0
+    for p in sorted(T["Person"], key=lambda r: int(r["Person_ID"])):
+        if p["Person_ID"] in contact_people:
+            continue
+        city, county, districts, lat, lon = crng.choice(TOWNS)
+        fn, ln = ascii_name(p["First_Name"]), ascii_name(p["Last_Name"])
+        style = crng.randint(0, 3)
+        local = [f"{fn}.{ln}", f"{fn}{ln}", f"{fn[:1]}{ln}", f"{fn}.{ln}{crng.randint(1, 99)}"][style]
+        values = {
+            "Address_line1": f"{crng.randint(1, 180)} {crng.choice(STREETS)}",
+            "Address_line2": crng.choice(["", "", "", f"Flat {crng.randint(1, 24)}"]),
+            "City": city, "ZipCode": f"{crng.choice(districts)} {crng.randint(1, 9)}{crng.choice(LETTERS)}{crng.choice(LETTERS)}",
+            "Province": county, "Country": "United Kingdom",
+            "Email": f"{local}@{crng.choice(PROVIDERS)}",
+            "Phone": f"+44 7{crng.randint(400, 999)} {crng.randint(100000, 999999)}",
+            "OtherPhone": "", "WorkPhone": "",
+            "Longitude": f"{lon + crng.uniform(-0.05, 0.05):.6f}", "Latitude": f"{lat + crng.uniform(-0.04, 0.04):.6f}",
+            "CreatedAt": p["CreatedAt"], "CreatedBy": p["CreatedBy"],
+        }
+        aid = p.get("AddressID") or ""
+        if aid and aid in addr_by_id:
+            row = addr_by_id[aid]
+            n_upd += sum(setv("Addresses", row, k, v) for k, v in values.items())
+        else:
+            row = {"AddressID": str(next_addr), **values}
+            next_addr += 1
+            T["Addresses"].append(row)
+            addr_by_id[row["AddressID"]] = row
+            changed.add("Addresses")
+            setv("Person", p, "AddressID", row["AddressID"])
+            n_new += 1
+    log.append(f"Candidates: {n_new} home addresses with email and mobile added ({n_upd} values refreshed)")
 
     for t in sorted(changed):
         write_csv(t, T[t], columns[t])

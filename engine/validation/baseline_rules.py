@@ -212,54 +212,58 @@ RULES: list[Rule] = [
       for t, cs in SCHEMA.items() for c in cs if c["type"].startswith("NVARCHAR")],
 
     # ── soft deletes ─────────────────────────────────────────────────────────
-    Rule("softdelete.account_open_jobs", "SOFT_DELETE_CONFLICT", "Accounts", "Deleted account has no open jobs",
-         "SELECT a.Account_ID, 'open jobs' FROM Accounts a WHERE a.Deleted = 1 AND EXISTS (SELECT 1 FROM Req r "
+    Rule("softdelete.account_open_jobs", "SOFT_DELETE_CONFLICT", "Accounts", "Account soft-deleted (Deleted = 1) but has open Req rows",
+         "SELECT a.Account_ID, 'Deleted = 1; open Req rows exist' FROM Accounts a WHERE a.Deleted = 1 AND EXISTS (SELECT 1 FROM Req r "
          "WHERE r.AccountID = a.Account_ID AND r.Deleted = 0 AND r.StatusText IN ('Open','Interviewing','Offer Made'))"),
-    Rule("softdelete.job_placements", "SOFT_DELETE_CONFLICT", "Req", "Deleted job has no live placements",
-         "SELECT r.ReqID, 'live placements' FROM Req r WHERE r.Deleted = 1 AND EXISTS "
-         "(SELECT 1 FROM Req_Hired h WHERE h.Req_ID = r.ReqID AND h.Deleted = 0)"),
-    Rule("softdelete.person_active_contact", "SOFT_DELETE_CONFLICT", "Associates", "Deleted person is not an active contact",
-         "SELECT s.AssociateID, 'person deleted' FROM Associates s JOIN Person p ON p.Person_ID = s.Person_ID "
+    Rule("softdelete.person_active_contact", "SOFT_DELETE_CONFLICT", "Associates", "Associates.Active = 1 but linked Person.Deleted = 1",
+         "SELECT s.AssociateID, 'Person_ID ' || s.Person_ID || ' has Deleted = 1' FROM Associates s JOIN Person p ON p.Person_ID = s.Person_ID "
          "WHERE p.Deleted = 1 AND s.Active = 1"),
 
     # ── duplicates ───────────────────────────────────────────────────────────
-    Rule("dup.account", "DUPLICATE_ACCOUNT", "Accounts", "No two accounts share a normalised name or website", f"""
+    Rule("dup.account", "DUPLICATE_ACCOUNT", "Accounts", "Duplicate Accounts rows: same normalised Account_name or Website", f"""
         WITH k AS (SELECT Account_ID, Website, regexp_replace({ACCOUNT_KEY}, '[^a-z0-9]', '', 'g') AS name_key
                    FROM Accounts WHERE NULLIF(TRIM(Account_name), '') IS NOT NULL)
         SELECT DISTINCT b.Account_ID, 'duplicate of ' || a.Account_ID FROM k a JOIN k b
           ON a.Account_ID < b.Account_ID AND (a.name_key = b.name_key OR a.Website = b.Website)"""),
-    Rule("dup.account.split_history", "SPLIT_HISTORY", "Req", "Job does not sit on a duplicate account", f"""
+    Rule("dup.account.split_history", "SPLIT_HISTORY", "Req", "Req.AccountID points at a duplicate Accounts row", f"""
         WITH k AS (SELECT Account_ID, Website, regexp_replace({ACCOUNT_KEY}, '[^a-z0-9]', '', 'g') AS name_key
                    FROM Accounts WHERE NULLIF(TRIM(Account_name), '') IS NOT NULL),
              d AS (SELECT DISTINCT b.Account_ID FROM k a JOIN k b
                    ON a.Account_ID < b.Account_ID AND (a.name_key = b.name_key OR a.Website = b.Website))
         SELECT ReqID, 'on duplicate account ' || AccountID FROM Req WHERE AccountID IN (SELECT Account_ID FROM d)"""),
-    Rule("dup.person", "DUPLICATE_PERSON", "Person", "No near-duplicate people (nickname/typo/DOB swap/missing DOB)",
+    Rule("dup.person", "DUPLICATE_PERSON", "Person", "Duplicate Person rows: name variant (nickname/typo) with matching or missing DOB",
          f"SELECT DISTINCT p2.Person_ID, 'duplicate of ' || p1.Person_ID FROM {PERSON_PAIRS}"),
-    Rule("dup.associate", "DUPLICATE_ASSOCIATE", "Associates", "No contact whose person duplicates another contact's person",
+    Rule("dup.associate", "DUPLICATE_ASSOCIATE", "Associates", "Duplicate Associates rows: Person_ID points at a duplicate Person",
          f"""SELECT DISTINCT a2.AssociateID, 'duplicate of contact ' || a1.AssociateID FROM {PERSON_PAIRS}
              JOIN Associates a1 ON a1.Person_ID = p1.Person_ID JOIN Associates a2 ON a2.Person_ID = p2.Person_ID"""),
-    Rule("dup.timesheet_line", "DUPLICATE_TRANSACTION", "TimesheetItems", "No timesheet line entered twice", """
+    Rule("dup.timesheet_line", "DUPLICATE_TRANSACTION", "TimesheetItems", "Duplicate TimesheetItems rows: same Timesheet_ID, Person_ID, Req_ID, times and hours", """
         SELECT ItemID, 'copy of ' || first_id FROM (
             SELECT ItemID, min(ItemID) OVER w AS first_id, row_number() OVER (w ORDER BY ItemID) AS rn FROM TimesheetItems
             WINDOW w AS (PARTITION BY Timesheet_ID, Timesheet_TypeID, Person_ID, Req_ID,
                          StartTime, EndTime, TotalHours, CreatedAt)) WHERE rn > 1"""),
-    Rule("dup.job", "DUPLICATE_JOB", "Req", "No job raised twice (same client, title, type and start date)", """
+    Rule("dup.job", "DUPLICATE_JOB", "Req", "Duplicate Req rows: same AccountID, Req_Title, Worktype and StartDate", """
         SELECT ReqID, 'copy of job ' || first_id FROM (
             SELECT ReqID, min(ReqID) OVER w AS first_id, row_number() OVER (w ORDER BY ReqID) AS rn FROM Req
             WINDOW w AS (PARTITION BY AccountID, lower(trim(Req_Title)), Worktype, CAST(StartDate AS DATE))) WHERE rn > 1"""),
 
+    # ── live placements on deleted jobs or companies ─────────────────────────
+    Rule("placement.deleted_job", "PLACEMENT_ON_DELETED", "Req_Hired",
+         "Live placement (Pipeline_Stage = 'Placed', Deleted = 0) on a soft-deleted Req", """
+        SELECT h.Req_HiredID, 'Req_ID = ' || h.Req_ID || ' has Deleted = 1' FROM Req_Hired h JOIN Req r ON r.ReqID = h.Req_ID
+        WHERE h.Deleted = 0 AND h.Pipeline_Stage = 'Placed' AND r.Deleted = 1"""),
+    Rule("placement.deleted_company", "PLACEMENT_ON_DELETED", "Req_Hired",
+         "Live placement (Pipeline_Stage = 'Placed', Deleted = 0) on a soft-deleted Accounts row", """
+        SELECT h.Req_HiredID, 'Account_ID = ' || h.Account_ID || ' has Deleted = 1' FROM Req_Hired h
+        JOIN Accounts a ON a.Account_ID = h.Account_ID
+        WHERE h.Deleted = 0 AND h.Pipeline_Stage = 'Placed' AND a.Deleted = 1"""),
+
     # ── orphans: records linked to nothing ───────────────────────────────────
-    Rule("orphan.contact", "ORPHAN_CONTACT", "Associates", "Every contact is linked to a company", """
-        SELECT s.AssociateID, 'contact linked to no company' FROM Associates s
+    Rule("orphan.contact", "ORPHAN_CONTACT", "Associates", "Associates row with no AccountAssociates link to an Accounts row", """
+        SELECT s.AssociateID, 'no AccountAssociates row' FROM Associates s
         WHERE NOT EXISTS (SELECT 1 FROM AccountAssociates aa JOIN Accounts a ON a.Account_ID = aa.AccountID
                           WHERE aa.AssociateID = s.AssociateID)"""),
-    Rule("orphan.candidate", "ORPHAN_CANDIDATE", "Person", "Every candidate is linked to a job (application or placement)", """
-        SELECT p.Person_ID, 'candidate linked to no job' FROM Person p
-        WHERE p.Person_ID NOT IN (SELECT Person_ID FROM Associates WHERE Person_ID IS NOT NULL)
-          AND NOT EXISTS (SELECT 1 FROM Req_Hired h JOIN Req r ON r.ReqID = h.Req_ID WHERE h.Invoiced_PersonID = p.Person_ID)"""),
-    Rule("orphan.document", "ORPHAN_DOCUMENT", "Documents", "Every document is linked to a record", """
-        SELECT d.Doc_ID, coalesce(d.ObjectType, '?') || ' ' || coalesce(CAST(d.Doc_AssocID AS VARCHAR), 'no id') FROM Documents d
+    Rule("orphan.document", "ORPHAN_DOCUMENT", "Documents", "Documents row with NULL or unresolved Doc_AssocID / ObjectType and no link-table row", """
+        SELECT d.Doc_ID, 'ObjectType = ' || coalesce(d.ObjectType, 'NULL') || ', Doc_AssocID = ' || coalesce(CAST(d.Doc_AssocID AS VARCHAR), 'NULL') FROM Documents d
         WHERE (d.Doc_AssocID IS NULL OR d.ObjectType IS NULL OR NOT (
                (d.ObjectType = 'Associate' AND d.Doc_AssocID IN (SELECT AssociateID FROM Associates))
             OR (d.ObjectType = 'Req'       AND d.Doc_AssocID IN (SELECT ReqID FROM Req))
@@ -271,10 +275,10 @@ RULES: list[Rule] = [
           AND d.Doc_ID NOT IN (SELECT Doc_ID FROM BackgroundChecks WHERE Doc_ID IS NOT NULL)
           AND d.Doc_ID NOT IN (SELECT Document_ID FROM Leads WHERE Document_ID IS NOT NULL)
           AND d.Doc_ID NOT IN (SELECT Document_ID FROM Invoice WHERE Document_ID IS NOT NULL)"""),
-    Rule("orphan.cv", "ORPHAN_DOCUMENT", "CV_Docs", "Every CV is linked to a person",
-         "SELECT Doc_ID, 'CV linked to no person' FROM CV_Docs WHERE CV_AssocID IS NULL OR CV_AssocID NOT IN (SELECT Person_ID FROM Person)"),
-    Rule("orphan.note", "ORPHAN_NOTE", "Notes", "Every note is linked to a record", """
-        SELECT n.Note_ID, coalesce(n.ObjectType, '?') || ' ' || coalesce(CAST(n.ObjectId AS VARCHAR), 'no id') FROM Notes n
+    Rule("orphan.cv", "ORPHAN_DOCUMENT", "CV_Docs", "CV_Docs row with NULL or unresolved CV_AssocID (Person_ID)",
+         "SELECT Doc_ID, 'CV_AssocID = ' || coalesce(CAST(CV_AssocID AS VARCHAR), 'NULL') FROM CV_Docs WHERE CV_AssocID IS NULL OR CV_AssocID NOT IN (SELECT Person_ID FROM Person)"),
+    Rule("orphan.note", "ORPHAN_NOTE", "Notes", "Notes row with NULL or unresolved ObjectId / ObjectType", """
+        SELECT n.Note_ID, 'ObjectType = ' || coalesce(n.ObjectType, 'NULL') || ', ObjectId = ' || coalesce(CAST(n.ObjectId AS VARCHAR), 'NULL') FROM Notes n
         WHERE (n.ObjectId IS NULL OR n.ObjectType IS NULL OR NOT (
                (n.ObjectType = 'Associate' AND n.ObjectId IN (SELECT AssociateID FROM Associates))
             OR (n.ObjectType = 'Req'       AND n.ObjectId IN (SELECT ReqID FROM Req))

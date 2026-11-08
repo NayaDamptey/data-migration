@@ -2,12 +2,15 @@
 SET NOCOUNT ON;
 USE [RecruitPlatform_Target];
 WITH src AS (
-  SELECT N'CV_Docs->Attachments' AS mapping_id, N'Attachments' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[CV_Docs] s WHERE 1 = 1) AS source_rows
+  SELECT N'Person->Applicant' AS mapping_id, N'Applicant' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Person] s WHERE 1 = 1 AND (s.[Associate] = 0)) AS source_rows
+  UNION ALL SELECT N'CV_Docs->Attachments' AS mapping_id, N'Attachments' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[CV_Docs] s WHERE 1 = 1) AS source_rows
   UNION ALL SELECT N'Documents->Attachments' AS mapping_id, N'Attachments' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Documents] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Addresses->CompanyLocation' AS mapping_id, N'CompanyLocation' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Addresses] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Addresses->ContactLocation' AS mapping_id, N'ContactLocation' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Addresses] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'Addresses->Comms' AS mapping_id, N'Comms' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Addresses] s      INNER JOIN [Cobaltdesk_Legacy].dbo.[Person] p ON p.[AddressID] = s.[AddressID] WHERE 1 = 1 AND (p.[Associate] = 0 AND s.[Phone] IS NOT NULL)) AS source_rows
+  UNION ALL SELECT N'Person->Comms' AS mapping_id, N'Comms' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Person] s      LEFT JOIN [Cobaltdesk_Legacy].dbo.[Addresses] a ON a.[AddressID] = s.[AddressID] WHERE 1 = 1 AND (s.[Associate] = 0 AND a.[Email] IS NOT NULL)) AS source_rows
+  UNION ALL SELECT N'Addresses->CompanyLocation' AS mapping_id, N'CompanyLocation' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Addresses] s WHERE 1 = 1 AND (s.[AddressID] IN (SELECT AddressID FROM [Cobaltdesk_Legacy].dbo.[Accounts]))) AS source_rows
+  UNION ALL SELECT N'Addresses->ContactLocation' AS mapping_id, N'ContactLocation' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Addresses] s WHERE 1 = 1 AND (s.[AddressID] IN (SELECT Associate_AddressID FROM [Cobaltdesk_Legacy].dbo.[Associates]))) AS source_rows
   UNION ALL SELECT N'Invoice->Invoice' AS mapping_id, N'Invoice' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Invoice] s WHERE 1 = 1) AS source_rows
-  UNION ALL SELECT N'Addresses->PositionLocation' AS mapping_id, N'PositionLocation' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Addresses] s WHERE 1 = 1) AS source_rows
+  UNION ALL SELECT N'Addresses->PositionLocation' AS mapping_id, N'PositionLocation' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Addresses] s WHERE 1 = 1 AND (s.[AddressID] IN (SELECT Address_ID FROM [Cobaltdesk_Legacy].dbo.[Req]))) AS source_rows
   UNION ALL SELECT N'Referees->References' AS mapping_id, N'References' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Referees] s WHERE 1 = 1) AS source_rows
   UNION ALL SELECT N'Schedule->Task' AS mapping_id, N'Task' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[Schedule] s WHERE 1 = 1) AS source_rows
   UNION ALL SELECT N'TimesheetItems->TimesheetActivity' AS mapping_id, N'TimesheetActivity' AS target_table, (SELECT COUNT(*) FROM [Cobaltdesk_Legacy].dbo.[TimesheetItems] s WHERE 1 = 1) AS source_rows

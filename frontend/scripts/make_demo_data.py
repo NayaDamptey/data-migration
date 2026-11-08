@@ -59,6 +59,12 @@ def get(api: str, path: str):
         return scrub(json.loads(r.read()))
 
 
+def post(api: str, path: str):
+    req = urllib.request.Request(api + path, method="POST")
+    with urllib.request.urlopen(req, timeout=600) as r:
+        return json.loads(r.read())
+
+
 def write(name: str, data):
     p = OUT / name
     p.parent.mkdir(parents=True, exist_ok=True)
@@ -84,6 +90,14 @@ def main():
     size = write("report.json", report) + write("duplicates.json", dups)
     for r in report["rules"]:
         size += write(f"rules/{r['id']}.json", get(api, f"/dq/rules/{urllib.parse.quote(r['id'])}?source=legacy&limit=200"))
+
+    for layer in ("middle", "target"):
+        post(api, f"/layers/{layer}/run")
+        summary = get(api, f"/layers/{layer}/summary")
+        size += write(f"layers/{layer}_summary.json", summary) + write(f"layers/{layer}.json", get(api, f"/layers/{layer}"))
+        for entity in summary["entities"]:
+            size += write(f"layers/{layer}/{entity}.json", get(api, f"/layers/{layer}/{urllib.parse.quote(entity)}/rows?limit=300"))
+    size += write("layers/target_rejects.json", get(api, "/layers/target/rejects"))
 
     uploads = [{"name": f"{t['table']}.csv", "rows": t["rows"], "size": max(200, t["rows"] * 140),
                 "columns": t["columns"]} for t in sorted(report["tables"], key=lambda t: t["table"].lower())]

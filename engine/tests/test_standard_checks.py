@@ -60,7 +60,7 @@ EXPECTED = {
     "DUPLICATE_ACCOUNT": "duplicate_entities", "DUPLICATE_JOB": "duplicate_entities",
     "DUPLICATE_TRANSACTION": "duplicate_entities", "SPLIT_HISTORY": "duplicate_entities",
     "SOFT_DELETE_CONFLICT": "deleted_still_active", "ORPHAN_CONTACT": "orphaned_contacts",
-    "ORPHAN_CANDIDATE": "orphaned_candidates", "ORPHAN_DOCUMENT": "orphaned_documents", "ORPHAN_NOTE": "orphaned_notes",
+    "PLACEMENT_ON_DELETED": "placements_on_deleted", "ORPHAN_DOCUMENT": "orphaned_documents", "ORPHAN_NOTE": "orphaned_notes",
 }
 
 

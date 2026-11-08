@@ -36,23 +36,26 @@ D0034,DUPLICATE_TRANSACTION,TimesheetItems,ItemID,805,*,copy of ItemID=122,,doub
 D0035,DUPLICATE_JOB,Req,ReqID,321,*,copy of ReqID=236,CreatedAt=2024-11-04 10:00:00; UpdatedAt=2024-11-04 10:00:00,job 236 raised a second time
 D0036,DUPLICATE_JOB,Req,ReqID,322,*,copy of ReqID=127,CreatedAt=2024-11-04 10:00:00; UpdatedAt=2024-11-04 10:00:00,job 127 raised a second time
 D0037,DUPLICATE_JOB,Req,ReqID,323,*,copy of ReqID=88,CreatedAt=2024-11-04 10:00:00; UpdatedAt=2024-11-04 10:00:00,job 88 raised a second time
-D0038,ORPHAN_CANDIDATE,Person,Person_ID,10101,*,copy of Person_ID=504,First_Name=Evelyn; Middle_name=None; Last_Name=Marchetti; DOB=1991-02-03; GDPRConsent_ID=None; Associate=0; Emp=0; CreatedAt=2024-10-01 09:00:00,"candidate registered with no profile, CV or activity"
-D0039,ORPHAN_CANDIDATE,Person,Person_ID,10102,*,copy of Person_ID=381,First_Name=Rufus; Middle_name=None; Last_Name=Okonjo; DOB=1987-07-21; GDPRConsent_ID=None; Associate=0; Emp=0; CreatedAt=2024-10-01 09:00:00,"candidate registered with no profile, CV or activity"
-D0040,ORPHAN_CANDIDATE,Person,Person_ID,10103,*,copy of Person_ID=474,First_Name=Imogen; Middle_name=None; Last_Name=Fairweather; DOB=1995-11-30; GDPRConsent_ID=None; Associate=0; Emp=0; CreatedAt=2024-10-01 09:00:00,"candidate registered with no profile, CV or activity"
-D0041,ORPHAN_CONTACT,Associates,AssociateID,302,*,copy of AssociateID=235,Person_ID=10201; AssociateTitle=Ms; Active=1; CreatedAt=2024-09-01 09:05:00,Harriet Lindqvist: contact linked to no company
-D0042,ORPHAN_CONTACT,Associates,AssociateID,303,*,copy of AssociateID=136,Person_ID=10202; AssociateTitle=Mr; Active=1; CreatedAt=2024-09-01 09:05:00,Graham Achterberg: contact linked to no company
-D0043,ORPHAN_CONTACT,Associates,AssociateID,304,*,copy of AssociateID=103,Person_ID=10203; AssociateTitle=Ms; Active=1; CreatedAt=2024-09-01 09:05:00,Mhairi Vasudevan: contact linked to no company
-D0044,ORPHAN_CONTACT,Associates,AssociateID,305,*,copy of AssociateID=281,Person_ID=10204; AssociateTitle=Mr; Active=1; CreatedAt=2024-09-01 09:05:00,Fraser Rennie: contact linked to no company
-D0045,ORPHAN_NOTE,Notes,Note_ID,35,ObjectId,80,NULL,Person note lost its record id
-D0046,ORPHAN_NOTE,Notes,Note_ID,327,ObjectId,90,NULL,Account note lost its record id
-D0047,ORPHAN_NOTE,Notes,Note_ID,270,ObjectId,121,NULL,Account note lost its record id
-D0048,ORPHAN_NOTE,Notes,Note_ID,317,ObjectId,37,NULL,Account note lost its record id
-D0049,ORPHAN_NOTE,Notes,Note_ID,298,ObjectId,6,96676,Person note points at a record that does not exist
-D0050,ORPHAN_NOTE,Notes,Note_ID,23,ObjectId,24,90882,Req note points at a record that does not exist
-D0051,ORPHAN_NOTE,Notes,Note_ID,38,ObjectId,103,90281,Associate note points at a record that does not exist
-D0052,ORPHAN_DOCUMENT,Documents,Doc_ID,450,Doc_AssocID,171,NULL,Associate document lost its owner
-D0053,ORPHAN_DOCUMENT,Documents,Doc_ID,362,Doc_AssocID,245,NULL,Req document lost its owner
-D0054,ORPHAN_DOCUMENT,Documents,Doc_ID,429,Doc_AssocID,272,NULL,Req document lost its owner
-D0055,SOFT_DELETE_CONFLICT,Accounts,Account_ID,19,Deleted,0,1,account deleted but has open jobs
-D0056,SOFT_DELETE_CONFLICT,Accounts,Account_ID,38,Deleted,0,1,account deleted but has open jobs
-D0057,SOFT_DELETE_CONFLICT,Accounts,Account_ID,30,Deleted,0,1,account deleted but has open jobs
+D0038,ORPHAN_CONTACT,Associates,AssociateID,302,*,copy of AssociateID=161,Person_ID=10201; AssociateTitle=Ms; Active=1; CreatedAt=2024-09-01 09:05:00,Harriet Lindqvist: contact linked to no company
+D0039,ORPHAN_CONTACT,Associates,AssociateID,303,*,copy of AssociateID=235,Person_ID=10202; AssociateTitle=Mr; Active=1; CreatedAt=2024-09-01 09:05:00,Graham Achterberg: contact linked to no company
+D0040,ORPHAN_CONTACT,Associates,AssociateID,304,*,copy of AssociateID=136,Person_ID=10203; AssociateTitle=Ms; Active=1; CreatedAt=2024-09-01 09:05:00,Mhairi Vasudevan: contact linked to no company
+D0041,ORPHAN_CONTACT,Associates,AssociateID,305,*,copy of AssociateID=103,Person_ID=10204; AssociateTitle=Mr; Active=1; CreatedAt=2024-09-01 09:05:00,Fraser Rennie: contact linked to no company
+D0042,ORPHAN_NOTE,Notes,Note_ID,281,ObjectId,237,NULL,Associate note lost its record id
+D0043,ORPHAN_NOTE,Notes,Note_ID,35,ObjectId,80,NULL,Person note lost its record id
+D0044,ORPHAN_NOTE,Notes,Note_ID,327,ObjectId,90,NULL,Account note lost its record id
+D0045,ORPHAN_NOTE,Notes,Note_ID,270,ObjectId,121,NULL,Account note lost its record id
+D0046,ORPHAN_NOTE,Notes,Note_ID,320,ObjectId,64,91184,Account note points at a record that does not exist
+D0047,ORPHAN_NOTE,Notes,Note_ID,299,ObjectId,73,96676,Account note points at a record that does not exist
+D0048,ORPHAN_NOTE,Notes,Note_ID,23,ObjectId,24,90882,Req note points at a record that does not exist
+D0049,ORPHAN_DOCUMENT,Documents,Doc_ID,450,Doc_AssocID,171,NULL,Associate document lost its owner
+D0050,ORPHAN_DOCUMENT,Documents,Doc_ID,362,Doc_AssocID,245,NULL,Req document lost its owner
+D0051,ORPHAN_DOCUMENT,Documents,Doc_ID,429,Doc_AssocID,272,NULL,Req document lost its owner
+D0052,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,168,Req.Deleted,0,1,job 101 deleted while placement is live
+D0053,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,197,Req.Deleted,0,1,job 73 deleted while placement is live
+D0054,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,64,Accounts.Deleted,0,1,company 89 deleted while placement is live
+D0055,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,10,Accounts.Deleted,0,1,company 63 deleted while placement is live
+D0056,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,196,Accounts.Deleted,0,1,company 63 deleted while placement is live
+D0057,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,236,Accounts.Deleted,0,1,company 63 deleted while placement is live
+D0058,SOFT_DELETE_CONFLICT,Accounts,Account_ID,99,Deleted,0,1,account deleted but has open jobs
+D0059,SOFT_DELETE_CONFLICT,Accounts,Account_ID,59,Deleted,0,1,account deleted but has open jobs
+D0060,SOFT_DELETE_CONFLICT,Accounts,Account_ID,7,Deleted,0,1,account deleted but has open jobs

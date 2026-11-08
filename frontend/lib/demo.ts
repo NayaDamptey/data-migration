@@ -102,6 +102,24 @@ export async function demoApi<T>(path: string, init?: RequestInit): Promise<T> {
     saveDecisions(all);
     return { key: body.key, decision: all[body.key] ?? null } as T;
   }
+  if (p === "/layers/target/rejects") return (await file("layers/target_rejects.json")) as T;
+  if (p === "/versions") return { available: true, commits: [] } as T;
+  // middle tier and target layers: /layers/{layer}, /summary, /{entity}/rows, /run (edits need the API)
+  const lm = p.match(/^\/layers\/(middle|target)(?:\/(.+))?$/);
+  if (lm) {
+    const [, layer, rest] = lm;
+    if (!rest) return (await file(`layers/${layer}.json`)) as T;
+    if (rest === "summary" || rest === "run") return (await file(`layers/${layer}_summary.json`)) as T;
+    if (rest.endsWith("/fields")) throw new Error("Editing fields isn’t available in the demo.");
+    if (rest.endsWith("/rows")) {
+      const data = clone(await file(`layers/${layer}/${rest.slice(0, -"/rows".length)}.json`));
+      const q = (url.searchParams.get("q") ?? "").toLowerCase();
+      if (q) data.rows = data.rows.filter((r: Json) => Object.values(r).some((v) => typeof v === "string" && v.toLowerCase().includes(q)));
+      data.matched = data.rows.length;
+      data.rows = data.rows.slice(0, Number(url.searchParams.get("limit") ?? 100));
+      return data as T;
+    }
+  }
   throw new Error("This isn’t available in the demo.");
 }
 

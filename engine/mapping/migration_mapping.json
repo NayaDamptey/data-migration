@@ -4,7 +4,7 @@
       "approved_source_to_canonical.json",
       "approved_canonical_to_target.json"
     ],
-    "updated_at": "2026-11-06T14:40:15",
+    "updated_at": "2026-11-08T20:55:24",
     "updated_by": "seed",
     "source_db": "Cobaltdesk_Legacy",
     "target_db": "RecruitPlatform_Target",
@@ -16,7 +16,7 @@
       "target_table": "Applicant",
       "source_table": "Person",
       "joins": [],
-      "filter": "",
+      "filter": "s.Associate = 0",
       "status": "draft",
       "notes": "Seeded from canonical entity canonical_applicant",
       "columns": [
@@ -62,11 +62,14 @@
         },
         {
           "target": "Deleted",
-          "source": "s.Deleted",
-          "transform": "coalesce_or",
+          "source": "",
+          "transform": "custom",
           "confidence": 0.92,
           "status": "draft",
-          "notes": "OR with IsArchived"
+          "notes": "Deleted or archived",
+          "params": {
+            "sql": "CASE WHEN s.Deleted = 1 OR s.IsArchived = 1 THEN 1 ELSE 0 END"
+          }
         },
         {
           "target": "AddedAt",
@@ -242,6 +245,188 @@
       ]
     },
     {
+      "id": "Addresses->Comms",
+      "target_table": "Comms",
+      "source_table": "Addresses",
+      "status": "draft",
+      "notes": "Candidate mobile (Addresses.Phone of the candidate's home address)",
+      "joins": [
+        {
+          "alias": "p",
+          "table": "Person",
+          "on": "p.AddressID = s.AddressID",
+          "type": "INNER"
+        }
+      ],
+      "filter": "p.Associate = 0 AND s.Phone IS NOT NULL",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "p.Person_ID",
+          "transform": "key",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": "one mobile per candidate (duplicate people share an address)"
+        },
+        {
+          "target": "ObjectID",
+          "source": "",
+          "transform": "custom",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": "",
+          "params": {
+            "sql": "(SELECT km.target_id FROM mig.KeyMap km WHERE km.target_table = 'Applicant' AND km.source_table = 'Person' AND km.source_key = CAST(p.Person_ID AS NVARCHAR(200)))"
+          }
+        },
+        {
+          "target": "ObjectType",
+          "source": "",
+          "transform": "constant",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": "",
+          "params": {
+            "value": "Applicant"
+          }
+        },
+        {
+          "target": "Value",
+          "source": "s.Phone",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Type",
+          "source": "",
+          "transform": "constant",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": "",
+          "params": {
+            "value": "Mobile"
+          }
+        },
+        {
+          "target": "Deleted",
+          "source": "p.Deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedBy",
+          "source": "p.UpdatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "Person->Comms",
+      "target_table": "Comms",
+      "source_table": "Person",
+      "status": "draft",
+      "notes": "Candidate email (Addresses.Email via Person.AddressID)",
+      "joins": [
+        {
+          "alias": "a",
+          "table": "Addresses",
+          "on": "a.AddressID = s.AddressID",
+          "type": "LEFT"
+        }
+      ],
+      "filter": "s.Associate = 0 AND a.Email IS NOT NULL",
+      "columns": [
+        {
+          "target": "ID",
+          "source": "s.Person_ID",
+          "transform": "key",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "ObjectID",
+          "source": "",
+          "transform": "custom",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": "",
+          "params": {
+            "sql": "(SELECT km.target_id FROM mig.KeyMap km WHERE km.target_table = 'Applicant' AND km.source_table = 'Person' AND km.source_key = CAST(s.Person_ID AS NVARCHAR(200)))"
+          }
+        },
+        {
+          "target": "ObjectType",
+          "source": "",
+          "transform": "constant",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": "",
+          "params": {
+            "value": "Applicant"
+          }
+        },
+        {
+          "target": "Value",
+          "source": "a.Email",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "Type",
+          "source": "",
+          "transform": "constant",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": "",
+          "params": {
+            "value": "Email"
+          }
+        },
+        {
+          "target": "Deleted",
+          "source": "s.Deleted",
+          "transform": "direct",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "AddedBy",
+          "source": "s.CreatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        },
+        {
+          "target": "UpdatedBy",
+          "source": "s.UpdatedBy",
+          "transform": "fk_lookup",
+          "confidence": 1.0,
+          "status": "draft",
+          "notes": ""
+        }
+      ]
+    },
+    {
       "id": "Accounts->Company",
       "target_table": "Company",
       "source_table": "Accounts",
@@ -350,7 +535,7 @@
       "target_table": "CompanyLocation",
       "source_table": "Addresses",
       "joins": [],
-      "filter": "",
+      "filter": "s.AddressID IN (SELECT AddressID FROM Accounts)",
       "status": "draft",
       "notes": "Seeded from canonical entity canonical_address",
       "columns": [
@@ -521,7 +706,7 @@
       "target_table": "ContactLocation",
       "source_table": "Addresses",
       "joins": [],
-      "filter": "",
+      "filter": "s.AddressID IN (SELECT Associate_AddressID FROM Associates)",
       "status": "draft",
       "notes": "Seeded from canonical entity canonical_address",
       "columns": [
@@ -1139,7 +1324,7 @@
       "target_table": "PositionLocation",
       "source_table": "Addresses",
       "joins": [],
-      "filter": "",
+      "filter": "s.AddressID IN (SELECT Address_ID FROM Req)",
       "status": "draft",
       "notes": "Seeded from canonical entity canonical_address",
       "columns": [

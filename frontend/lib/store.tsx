@@ -78,7 +78,6 @@ const Ctx = createContext<Store | null>(null);
 
 export const PROJECT_ID = "harrow-finch-cobaltdesk-beaconfield";
 
-const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const original = (entity: string, field: string) => ENTITIES.find((e) => e.key === entity)?.fields.find((x) => x.name === field);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
@@ -129,9 +128,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const runStep = useCallback(async (step: "quality" | "canonical" | "target") => {
     setSteps((s) => ({ ...s, [step]: "running" }));
     if (step === "quality") {
-      // data quality runs on the uploaded source (step 1 must be done first)
-      const source = `upload:${PROJECT_ID}`;
-      const sourceLabel = "your uploaded files";
+      // data quality runs on the legacy source database (step 1 must be done first)
+      const source = "legacy";
+      const sourceLabel = "legacy database";
       if (!uploadsRef.current.some((u) => u.status === "uploaded")) {
         setQuality({ source, sourceLabel, passed: 0, total: 0, toReview: 0, error: "Upload the source data first." });
         setSteps((s) => ({ ...s, quality: "idle" }));
@@ -156,9 +155,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         ...r,
       ]);
     }
-    await wait(2000);
-    setSteps((s) => ({ ...s, [step]: "done" }));
-    setRuns((r) => r.map((x) => (x.status === "running" ? { ...x, status: "complete" } : x)));
+    // canonical: run the middle-tier scripts (source -> mid); target: run the target scripts (mid -> target)
+    try {
+      await api(`/layers/${step === "canonical" ? "middle" : "target"}/run`, { method: "POST" });
+      setSteps((s) => ({ ...s, [step]: "done", ...(step === "canonical" ? { target: "idle" as const } : {}) }));
+      setRuns((r) => r.map((x) => (x.status === "running" ? { ...x, status: "complete" } : x)));
+    } catch {
+      setSteps((s) => ({ ...s, [step]: "idle" }));
+      setRuns((r) => r.filter((x) => x.status !== "running"));
+    }
   }, []);
 
   const addRequest = useCallback((text: string) => {

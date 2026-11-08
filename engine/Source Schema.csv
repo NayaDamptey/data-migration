@@ -80,6 +80,7 @@ Person,Last_Name,NVARCHAR(50),,
 Person,DOB,DATE,,
 Person,Account_Number,INT,,
 Person,GDPRConsent_ID,INT,,Foreign Key
+Person,AddressID,INT,Home address and contact details (candidates),Foreign Key
 Person,DeptID,INT,,Foreign Key
 Person,Role_ID,INT,,Foreign Key
 Person,CreatedAt,DATETIME,,

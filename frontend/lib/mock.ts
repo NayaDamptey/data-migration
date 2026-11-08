@@ -506,13 +506,6 @@ export type Run = {
   status: "complete" | "running" | "failed";
 };
 
-export const INITIAL_RUNS: Run[] = [
-  { id: "r-3", version: 3, label: "Fixed candidate source values", when: "Today, 10:42", by: "Naya Damptey", status: "complete" },
-  { id: "r-2", version: 2, label: "Added NOTE and AUDIT tables", when: "Yesterday, 16:10", by: "Naya Damptey", status: "complete" },
-  { id: "r-1", version: 1, label: "First upload", when: "28 Sep, 09:15", by: "Tom Reid", status: "complete" },
-];
+export const INITIAL_RUNS: Run[] = [];
 
-export const INITIAL_REQUESTS = [
-  { id: "cr-1", text: "Map “Totaljobs”, “TJ” and “total jobs” all to Job board.", status: "done" as const, when: "Today, 10:30" },
-  { id: "cr-2", text: "Don’t migrate candidates who haven’t been updated since 2015.", status: "open" as const, when: "Today, 11:05" },
-];
+export const INITIAL_REQUESTS: { id: string; text: string; status: "open" | "done"; when: string }[] = [];

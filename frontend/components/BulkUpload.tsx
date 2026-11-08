@@ -149,7 +149,8 @@ export function BulkUpload({ onNotice }: { onNotice: (m: string) => void }) {
 
   return (
     <section
-      className={`card relative ${dragging ? "ring-2 ring-accent/50" : ""}`}
+      id="source-files"
+      className={`card relative scroll-mt-28 ${dragging ? "ring-2 ring-accent/50" : ""}`}
       onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
       onDragLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setDragging(false); }}
       onDrop={onDrop}

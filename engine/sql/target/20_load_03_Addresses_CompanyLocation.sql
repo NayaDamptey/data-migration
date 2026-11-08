@@ -16,7 +16,7 @@ SELECT s.[AddressID] AS [__src_key],
 INTO #stage
 FROM [Cobaltdesk_Legacy].dbo.[Addresses] s
 JOIN mig.KeyMap k ON k.target_table = N'CompanyLocation' AND k.source_table = N'Addresses' AND k.source_key = CAST(s.[AddressID] AS NVARCHAR(200))
-WHERE 1 = 1;
+WHERE 1 = 1 AND (s.[AddressID] IN (SELECT AddressID FROM [Cobaltdesk_Legacy].dbo.[Accounts]));
 INSERT INTO mig.LoadLog (mapping_id, step, row_count) VALUES (@mid, N'staged', @@ROWCOUNT);
 INSERT INTO mig.Rejects (mapping_id, target_table, target_column, source_table, source_key, action, reason)
 SELECT @mid, N'CompanyLocation', N'ID', N'Addresses', CAST([__src_key] AS NVARCHAR(200)), N'truncated', N'ID: longer than 50 characters, cut to fit' FROM #stage WHERE LEN(CAST([ID] AS NVARCHAR(MAX))) > 50;

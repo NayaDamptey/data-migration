@@ -53,7 +53,7 @@ export function Compare({ pair, onDecide }: { pair: Pair; onDecide: (b: { key: s
         <div>
           <p className="text-[12px] font-semibold uppercase tracking-wide text-muted">{pair.label} · {pair.table}</p>
           <h3 className="text-[16px] font-semibold mt-0.5">{title(pair, "a")} <span className="text-faint font-normal">and</span> {title(pair, "b")}</h3>
-          <p className="text-[12.5px] text-muted mt-1">Flagged because: {pair.reason.replace(/^No /, "").replace(/^near-duplicate /, "near-duplicate ")}</p>
+          <p className="text-[12.5px] text-muted mt-1">{pair.reason.replace(/^No /, "").replace(/^near-duplicate /, "near-duplicate ")}</p>
         </div>
         {decided && (
           <div className="text-right text-[12.5px]">
@@ -117,12 +117,6 @@ export function Compare({ pair, onDecide }: { pair: Pair; onDecide: (b: { key: s
               Merge into #{keep === "a" ? pair.a : pair.b}
             </button>
           </div>
-        )}
-        {!decided && (
-          <p className="w-full text-[12px] text-muted">
-            Merging keeps #{keep === "a" ? pair.a : pair.b} with the values selected above.
-            {linksTotal(pair.links[keep === "a" ? "b" : "a"]) > 0 && ` The ${linksTotal(pair.links[keep === "a" ? "b" : "a"])} record(s) attached to #${keep === "a" ? pair.b : pair.a} will be moved to it.`}
-          </p>
         )}
       </div>
     </section>

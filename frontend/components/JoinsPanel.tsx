@@ -178,7 +178,6 @@ export function JoinsPanel({ entity }: { entity: Entity }) {
       <div className="flex flex-wrap items-center justify-between gap-2 px-5 pt-4 pb-3">
         <div>
           <h3 className="text-[13px] font-semibold">SQL model <span className="text-muted font-normal">· {inQuery.length} source table{inQuery.length > 1 ? "s" : ""}</span></h3>
-          <p className="text-[12px] text-muted">Dotted parts of the code are editable. Changes here and in the field table below stay in sync.</p>
         </div>
         <div className="flex gap-1">
           {joinsChanged(entity.key) && <button className="btn-ghost h-7 px-2.5 text-[12px]" onClick={() => resetJoins(entity.key)}>Reset joins</button>}
@@ -188,7 +187,7 @@ export function JoinsPanel({ entity }: { entity: Entity }) {
       <div className="mx-5 mb-4 bg-nav font-mono text-[12.5px] leading-[1.9]">
         <div className="flex items-center gap-2 px-4 h-9 border-b border-nav-line text-[11.5px] text-nav-text">
           <span className="text-white">{entity.key}.sql</span>
-          <span className="text-[#5E77A8]">· generated T-SQL</span>
+          <span className="text-[#5E77A8]">· prototype</span>
         </div>
         <div className="overflow-x-auto py-3">
           <table className="border-collapse">
