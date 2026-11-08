@@ -1,3 +1,4 @@
 # The baseline CSVs are written by Python's csv module (CRLF rows, LF inside quoted text).
 # Store them byte-for-byte so a rebuild on any OS (CI checks this) produces an identical file.
 engine/sample_data/source/*.csv -text
+*.bak binary

@@ -56,7 +56,10 @@ cd backend && APP_ENV=development uvicorn app.main:app --port 8000   # the UI ca
 # Frontend
 cd frontend && npm install && npm run dev                            # http://localhost:3000
 
-# Legacy source database in SQL Server Express (needs pyodbc)
+# Legacy source database in SQL Server Express: restore the synthetic backup (SQL Server 2022+;
+# copy engine/backups/Cobaltdesk_Legacy.bak into the server's Backup folder first) ...
+sqlcmd -S "localhost\SQLEXPRESS" -E -i engine/backups/restore_Cobaltdesk_Legacy.sql
+# ... or rebuild it from the CSVs (needs pyodbc)
 python engine/sample_data/build_source_db.py --load
 
 # Middle tier + target scripts (also run from the UI): write them, or write and run them

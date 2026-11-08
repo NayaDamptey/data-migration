@@ -20,6 +20,8 @@ reference/sql/
 # merged engine / local runs
 storage/
 *.bak
+# the legacy source is synthetic: its backup is shared
+!engine/backups/Cobaltdesk_Legacy.bak
 engine/**/__pycache__/
 engine/.pytest_cache/
 frontend/.env.local

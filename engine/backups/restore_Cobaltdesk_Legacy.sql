@@ -1,7 +1,8 @@
 /* =============================================================================
    restore_Cobaltdesk_Legacy.sql
    Restores backups/Cobaltdesk_Legacy.bak (legacy recruitment CRM source DB:
-   58 tables, 156 FKs (8 disabled), 242 planted data-quality defects, dq.* profiling procs).
+   58 tables, 157 FKs, 60 planted data-quality problems, dq.* profiling procs).
+   The data is synthetic (generated); all company and system names are fictional.
 
    Requirements
      * SQL Server 2022 or later (any edition, incl. Express / Developer).
