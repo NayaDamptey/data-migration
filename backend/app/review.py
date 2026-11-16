@@ -90,8 +90,9 @@ def _compute_flags() -> dict[str, dict[str, list[dict]]]:
             ent = RULE_TABLE.get(table_of.get(rid, ""))
             if not ent:
                 continue
+            rule = next(r for r in RULES if r.id == rid)
             for row in rows:
-                detail = f": {row[1]}" if len(row) > 1 and row[1] else ""
+                detail = f": {bridge._detail(rule, row)}" if len(row) > 1 and row[1] else ""
                 out[ent][str(row[0])].append({"level": "check", "message": f"{check_of.get(rid, rid)}{detail}"})
     except Exception:                                        # noqa: BLE001 — checks not run yet
         pass
@@ -243,6 +244,12 @@ def source(key: str, rid: str, column: str) -> dict:
                      "key": None, "raw": row[0], "derived": True} for a, c in derived]
         note = ("Taken from the most recent related row (latest job / latest application)" if derived
                 else None if direct else "A fixed value set by the mapping, not read from the source")
-        return {"column": column, "expression": expr, "value": row[0], "sources": sources, "note": note}
+        from app import privacy
+        for s_ in sources:
+            s_["raw"] = privacy.mask_value("source", s_["table"], s_["column"], s_["raw"])
+        value = privacy.mask_value("middle", key, column, row[0])
+        if any(privacy.categories("source", s_["table"]).get(s_["column"]) in privacy._pii().HIGH for s_ in sources):
+            value = privacy._pii().mask(row[0])
+        return {"column": column, "expression": expr, "value": value, "sources": sources, "note": note}
     return {"column": column, "expression": None, "value": None, "sources": [],
             "note": "This record was merged or comes from a duplicate; its source row isn't the one shown"}

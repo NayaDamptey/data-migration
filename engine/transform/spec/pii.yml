@@ -1,0 +1,146 @@
+activities:
+  subject:
+    category: free_text
+    status: suggested
+    why: column name
+candidate_profiles:
+  bank:
+    category: bank_account
+    status: suggested
+    why: column name
+  notes:
+    category: free_text
+    status: suggested
+    why: column name
+  sort_code:
+    category: sort_code
+    status: suggested
+    why: column name and 100% of sample values
+candidates:
+  address_line_1:
+    category: address
+    status: suggested
+    why: column name
+  address_line_2:
+    category: address
+    status: suggested
+    why: column name
+  email:
+    category: email
+    status: suggested
+    why: column name and 100% of sample values
+  first_name:
+    category: name
+    status: suggested
+    why: column name
+  last_name:
+    category: name
+    status: suggested
+    why: column name
+  mobile:
+    category: phone
+    status: suggested
+    why: column name and 88% of sample values
+  phone:
+    category: phone
+    status: suggested
+    why: column name
+  postcode:
+    category: address
+    status: suggested
+    why: column name
+clients:
+  address_line_1:
+    category: address
+    status: suggested
+    why: column name
+  address_line_2:
+    category: address
+    status: suggested
+    why: column name
+  phone:
+    category: phone
+    status: suggested
+    why: column name and 100% of sample values
+  postcode:
+    category: address
+    status: suggested
+    why: column name
+contacts:
+  email:
+    category: email
+    status: suggested
+    why: column name and 100% of sample values
+  first_name:
+    category: name
+    status: suggested
+    why: column name
+  last_name:
+    category: name
+    status: suggested
+    why: column name
+  mobile:
+    category: phone
+    status: suggested
+    why: column name and 100% of sample values
+  phone:
+    category: phone
+    status: suggested
+    why: column name and 100% of sample values
+interviews:
+  feedback:
+    category: free_text
+    status: suggested
+    why: column name
+leads:
+  email:
+    category: email
+    status: suggested
+    why: column name and 100% of sample values
+  full_name:
+    category: name
+    status: suggested
+    why: column name
+  note:
+    category: free_text
+    status: suggested
+    why: column name
+  phone:
+    category: phone
+    status: suggested
+    why: column name and 94% of sample values
+notes:
+  body:
+    category: free_text
+    status: suggested
+    why: column name
+references:
+  email:
+    category: email
+    status: suggested
+    why: column name and 100% of sample values
+  full_name:
+    category: name
+    status: suggested
+    why: column name
+  phone:
+    category: phone
+    status: suggested
+    why: column name and 98% of sample values
+  reference_text:
+    category: free_text
+    status: suggested
+    why: column name
+users:
+  email:
+    category: email
+    status: suggested
+    why: column name and 100% of sample values
+  first_name:
+    category: name
+    status: suggested
+    why: column name
+  last_name:
+    category: name
+    status: suggested
+    why: column name

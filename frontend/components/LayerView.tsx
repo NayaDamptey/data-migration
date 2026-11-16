@@ -9,7 +9,10 @@ import { useEffect, useState } from "react";
 import { api } from "../lib/api";
 import { Spinner } from "./ui";
 
-type Field = { column: string; expression: string; default: string; overridden: boolean };
+type Pii = { category: string | null; label?: string; level?: "personal" | "high"; status: "suggested" | "confirmed" | "inherited"; why?: string | null } | null;
+type Field = { column: string; expression: string; default: string; overridden: boolean; pii?: Pii };
+const PII_CATEGORIES: [string, string][] = [["name", "Name"], ["email", "Email"], ["phone", "Phone"], ["address", "Address"],
+  ["free_text", "Free text"], ["dob", "Date of birth"], ["ni_number", "NI number"], ["bank_account", "Bank account"], ["sort_code", "Sort code"]];
 type LayerEntity = {
   key: string; label: string; table: string; file: string; sources: string[]; rows: number | null;
   inserts: { n: number; source: string; fields: Field[] }[]; sql: string;
@@ -131,10 +134,23 @@ export function LayerScripts({ layer, initial }: { layer: string; initial?: stri
       const m = (ex as Error).message;
       let detail: string | undefined;
       try { detail = JSON.parse(m.slice(m.indexOf("{"))).detail; } catch { /* not JSON */ }
-      setFieldError({ key: k, msg: detail ? `SQL Server: ${detail.replace(/\s*\(\d+\)$/, "")}` : m });
+      setFieldError({ key: k, msg: detail ?? m });
     }
     finally { setSaving(null); }
   };
+
+  // personal data tag on a middle-tier field (confirm, change or clear); masking follows the tag
+  const saveTag = async (column: string, category: string | null) => {
+    setSaving(`pii:${column}`);
+    try {
+      await api(`/privacy/tags/${encodeURIComponent(e.key)}/${encodeURIComponent(column)}`, {
+        method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ category }),
+      });
+      setDetail(await api<LayerDetail>(`/layers/${layer}`));
+    } catch (ex) { setError((ex as Error).message); }
+    finally { setSaving(null); }
+  };
+  const toConfirm = e.inserts.flatMap((i) => i.fields).filter((f) => f.pii?.status === "suggested");
 
   return (
     <div className="card overflow-hidden grid md:grid-cols-[230px_1fr] min-h-[620px]">
@@ -143,13 +159,19 @@ export function LayerScripts({ layer, initial }: { layer: string; initial?: stri
         <div className="px-5 pt-4 pb-3 border-b border-line">
           <h2 className="text-[17px] font-semibold">{e.label}</h2>
           <p className="text-[12px] text-muted mt-0.5 font-mono">{e.sources.join(", ")} → {e.table}</p>
+          {layer === "middle" && toConfirm.length > 0 && (
+            <p className="text-[12.5px] mt-2">
+              {toConfirm.length} personal data tag{toConfirm.length > 1 ? "s" : ""} suggested.{" "}
+              <button className="text-accent hover:underline" onClick={async () => { for (const f of toConfirm) await saveTag(f.column, f.pii!.category); }}>Confirm all</button>
+            </p>
+          )}
         </div>
 
         {e.inserts.map((ins) => (
           <div key={`${e.key}-${ins.n}`} className="px-5 pt-4">
             {e.inserts.length > 1 && <p className="text-[12px] font-mono text-muted mb-1">INSERT {ins.n + 1} · FROM {ins.source}</p>}
             <table className="w-full text-[12.5px]">
-              <thead><tr><th className="th pl-0 w-[220px]">Column</th><th className="th">Expression</th></tr></thead>
+              <thead><tr><th className="th pl-0 w-[220px]">Column</th><th className="th">Expression</th><th className="th w-[210px]">Personal data</th></tr></thead>
               <tbody>
                 {ins.fields.map((f) => {
                   const k = `${ins.n}:${f.column}`;
@@ -165,6 +187,10 @@ export function LayerScripts({ layer, initial }: { layer: string; initial?: stri
                           </button>
                         )}
                         {fieldError?.key === k && <p className="text-[12px] text-bad mt-1">{fieldError.msg}</p>}
+                      </td>
+                      <td className="td align-top">
+                        <PiiCell pii={f.pii} editable={layer === "middle"} busy={saving === `pii:${f.column}`}
+                          onSet={(c) => saveTag(f.column, c)} />
                       </td>
                     </tr>
                   );
@@ -228,4 +254,30 @@ export function useView(storageKey: string) {
   }, [storageKey]);
   const change = (v: View) => { setView(v); try { localStorage.setItem(storageKey, v); } catch {} };
   return [view, change] as const;
+}
+
+// Personal data tag of one field: suggested (confirm or change), confirmed, or inherited (target)
+function PiiCell({ pii, editable, busy, onSet }: { pii?: Pii; editable: boolean; busy: boolean; onSet: (c: string | null) => void }) {
+  if (busy) return <Spinner className="text-accent mt-2" />;
+  const cat = pii?.category ?? null;
+  const masked = pii?.level === "high";
+  if (!editable) {
+    return cat ? <p className="text-[12px] pt-2">{pii!.label}{masked && <span className="pill bg-sunken text-muted py-0 ml-1.5">masked</span>}</p>
+      : <span className="text-faint text-[12px]">—</span>;
+  }
+  return (
+    <div>
+      <select className="field h-8 text-[12px] py-0" value={cat ?? ""} onChange={(ev) => onSet(ev.target.value || null)}
+        aria-label="Personal data category">
+        <option value="">Not personal data</option>
+        {PII_CATEGORIES.map(([k, l]) => <option key={k} value={k}>{l}</option>)}
+      </select>
+      <p className="text-[11.5px] mt-1 text-muted">
+        {pii?.status === "suggested"
+          ? <>Suggested ({pii.why}) · <button className="text-accent hover:underline" onClick={() => onSet(cat)}>Confirm</button></>
+          : pii?.status === "confirmed" ? "Confirmed" : null}
+        {masked && <span className="pill bg-sunken text-muted py-0 ml-1.5">masked</span>}
+      </p>
+    </div>
+  );
 }

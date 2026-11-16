@@ -5,3 +5,8 @@ python-multipart>=0.0.9      # file uploads
 boto3>=1.34                  # only for UPLOAD_MODE=api (S3); local uploads don't need it
 duckdb>=1.1                  # data quality checks (engine/validation)
 pyodbc>=5.0                  # optional: checks against SQL Server
+presidio-analyzer>=2.2,<3  # personal data detection (pattern recognizers)
+dbt-duckdb>=1.9,<2       # the transformation engine (engine/transform)
+polars>=1.0
+sqlglot>=26,<28
+pyyaml>=6.0

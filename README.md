@@ -51,6 +51,16 @@ duplicate decisions start a new run with the merges applied, and every run is a 
 Next: run builds as Celery jobs, keep mappings, decisions, approvals and run history in Postgres, and
 export INSERT scripts in any SQL dialect with SQLGlot.
 
+## Personal data
+
+Every middle-tier field can be tagged with a personal data category (name, email, phone, address, free
+text, date of birth, NI number, bank account, sort code). Tags are suggested from the column name and from
+Microsoft Presidio's pattern detectors run on sample values, then confirmed or changed in the developer
+view; they are kept with the mapping spec (`engine/transform/spec/pii.yml`). Source and target fields
+inherit the tag of the middle-tier field they feed or are fed by. High-sensitivity values (date of birth,
+NI number, bank account, sort code) are masked everywhere the app shows data, keeping only the last two
+characters; searching can't find a masked value. Next: mask sample values before any AI call.
+
 ## Screens (in order)
 
 1. **Setup** (`/`): source and destination, the source upload (CSVs, folders or zips) and the pipeline:
@@ -133,6 +143,6 @@ Plain Python, used by the API through `backend/app/engine_bridge.py` and `backen
 - **Languages:** TypeScript, Python, T-SQL, SQL (DuckDB)
 - **Frontend:** Next.js, React, Tailwind CSS
 - **API:** FastAPI, Uvicorn, Pydantic
-- **Data:** Parquet, DuckDB, Polars, dbt Core (dbt-duckdb), SQLGlot; SQL Server Express (restoring the legacy backup), pyodbc
+- **Data:** Parquet, DuckDB, Polars, dbt Core (dbt-duckdb), SQLGlot, Microsoft Presidio (personal data); SQL Server Express (restoring the legacy backup), pyodbc
 - **Testing and CI:** pytest, GitHub Actions
 - **Hosting (demo):** Vercel

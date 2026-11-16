@@ -188,7 +188,7 @@ def _assemble(raw: dict) -> dict:
                           "critical": r.category in CRITICAL, "table": r.table, "key_column": _engine()[2].get(r.table),
                           "description": r.description,
                           "violations": len(rows), "is_duplicate": rid in D.DUP_RULE_IDS,
-                          "sample": [{"key": str(x[0]), "detail": (str(x[1]) if len(x) > 1 and x[1] is not None else "")[:160]}
+                          "sample": [{"key": str(x[0]), "detail": _detail(r, x)[:160]}
                                      for x in rows[:5]]})
     stats = raw["stats"]
     total_rows = sum(s["rows"] for s in stats.values())
@@ -252,6 +252,13 @@ def report(source: str, refresh: bool = False) -> dict:
     return _assemble(_raw(source, refresh))
 
 
+def _detail(rule, row) -> str:
+    """A finding's detail text, masked when it shows a high-sensitivity column (e.g. a date of birth)."""
+    from app import privacy
+    text = str(row[1]) if len(row) > 1 and row[1] is not None else ""
+    return privacy._pii().mask(text) if text and privacy.masks_detail(rule.table, rule.sql) else text
+
+
 def duplicate_pairs(source: str, entity: str | None = None) -> dict:
     """Every suspected duplicate pair with both records side by side, what is linked to each, and the decision."""
     from validation import duplicates as D
@@ -261,7 +268,14 @@ def duplicate_pairs(source: str, entity: str | None = None) -> dict:
     decisions = D.load_decisions(source)
     fks = all_foreign_keys(schema)
     pairs = [p for p in D.pairs_from_results(raw["results"]) if not entity or p["entity"] == entity]
-    out = [{**D.pair_detail(raw["con"], p, fks), "decision": decisions.get(p["key"])} for p in pairs]
+    from app import privacy
+    out = []
+    for p in pairs:
+        d = D.pair_detail(raw["con"], p, fks)
+        for f in d.get("fields", []):     # "same" is worked out before masking
+            f["a"] = privacy.mask_value("source", d.get("table", ""), f["column"], f["a"])
+            f["b"] = privacy.mask_value("source", d.get("table", ""), f["column"], f["b"])
+        out.append({**d, "decision": decisions.get(p["key"])})
     counts = {}
     for e in D.ENTITIES:
         ps = [p for p in D.pairs_from_results(raw["results"]) if p["entity"] == e.key]
@@ -299,7 +313,10 @@ def rule_rows(source: str, rule_id: str, limit: int = 200) -> dict:
             got = cur.fetchone()
             if got:
                 rec = {d[0]: (None if v is None else str(v)) for d, v in zip(cur.description, got)}
-        records.append({"key": str(key), "detail": str(rest[0]) if rest and rest[0] is not None else "", "record": rec})
+        if rec:
+            from app import privacy
+            rec = privacy.mask_rows("source", rule.table, [rec])[0]
+        records.append({"key": str(key), "detail": _detail(rule, (key, *rest)), "record": rec})
     return {"rule": {"id": rule.id, "category": rule.category, "category_label": CATEGORY_LABELS.get(rule.category, rule.category),
                      "table": rule.table, "key_column": pk, "description": rule.description, "sql": rule.sql.strip()},
             "total": len(rows), "rows": records}

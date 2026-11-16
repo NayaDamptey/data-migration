@@ -125,7 +125,7 @@ def _counts(name: str, data: dict) -> dict:
     return {e["key"]: by_table.get(e["table"]) for e in _spec(name)["entities"]}
 
 
-def rows(name: str, key: str, limit: int = 100, q: str | None = None) -> dict:
+def rows(name: str, key: str, limit: int = 100, q: str | None = None, raw: bool = False) -> dict:
     _check(name)
     B, RU = _engine()
     rid = _current()
@@ -152,6 +152,9 @@ def rows(name: str, key: str, limit: int = 100, q: str | None = None) -> dict:
             out.sort(key=lambda r: (len(r[first] or ""), r[first] or ""))
             _rows[ck] = out
         data = _rows[ck]
+    if not raw:                                          # high-sensitivity personal data is masked
+        from app import privacy
+        data = privacy.mask_rows(name, key, data)
     found = data
     if q:
         ql = q.lower()
@@ -179,9 +182,17 @@ def detail(name: str) -> dict:
     spec, base = _spec(name), _spec(name, with_overrides=False)
     mine = B.load_overrides().get(name, {})
     counts = _counts(name, RU.info(rid))
+    from app import privacy
+    P = privacy._pii()
+    tags = privacy.ensure_tags()
     ents = []
     for e in spec["entities"]:
         be = next(x for x in base["entities"] if x["key"] == e["key"])
+        cats = privacy.categories(name, e["key"])
+        mine_tags = tags.get(e["key"], {}) if name == "middle" else {}
+        pii_of = lambda c: ({"category": cats[c], "label": P.CATEGORIES[cats[c]][0], "level": P.CATEGORIES[cats[c]][1],   # noqa: E731
+                             "status": mine_tags.get(c, {}).get("status", "inherited"), "why": mine_tags.get(c, {}).get("why")}
+                            if c in cats else ({"category": None, "status": "confirmed"} if mine_tags.get(c, {}).get("status") == "confirmed" else None))
         f = _model_file(name, e)
         import re
         sources = sorted({m for s in e["selects"] for m in re.findall(r"\b(?:src|mid)__(\w+)", s["from"])})
@@ -190,7 +201,7 @@ def detail(name: str) -> dict:
             "file": f.relative_to(B.DBT).as_posix(), "sources": sources, "rows": counts.get(e["key"]),
             "inserts": [{"n": n, "source": s["from"], "fields": [
                 {"column": c, "expression": str(x), "default": str(be["selects"][n]["columns"][c]),
-                 "overridden": f"{e['key']}:{n}:{c}" in mine}
+                 "overridden": f"{e['key']}:{n}:{c}" in mine, "pii": pii_of(c)}
                 for c, x in s["columns"].items()]} for n, s in enumerate(e["selects"])],
             "sql": f.read_text(encoding="utf-8") if f.exists() else "",
         })
