@@ -40,9 +40,12 @@ Dolt                                      every run, field change and merge is a
    - **Developer view:** each entity's INSERT script; any field's expression can be changed (it is saved,
      re-run on SQL Server and undone if it fails).
    - **Request a change:** plain-English change requests.
-4. **Destination data** (`/target`): the target tables, their INSERT scripts (editable), the rows that
+4. **Review records** (`/review`): the customer's own data as records (Candidates, Clients, Contacts, Jobs,
+   Placements), records to check first. Each record shows its details, related records and plain-language
+   flags; clicking a value shows where it came from in the legacy source (table, column, row).
+5. **Destination data** (`/target`): the target tables, their INSERT scripts (editable), the rows that
    were rejected or flagged, and Get data (CSV files or SQL inserts).
-5. **Version review** (`/versions`): every version stored in Dolt. A merge shows both records side by
+6. **Version review** (`/versions`): every version stored in Dolt. A merge shows both records side by
    side and the record they became; a load shows an audit trail of source tables read and target
    tables loaded.
 

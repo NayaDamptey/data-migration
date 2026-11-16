@@ -99,6 +99,15 @@ def main():
             size += write(f"layers/{layer}/{entity}.json", get(api, f"/layers/{layer}/{urllib.parse.quote(entity)}/rows?limit=300"))
     size += write("layers/target_rejects.json", get(api, "/layers/target/rejects"))
 
+    # review by records: every list, and the records a visitor is likely to open (flagged ones and the first 25)
+    for entity in ("candidates", "clients", "contacts", "jobs", "placements"):
+        lst = get(api, f"/review/{entity}")
+        size += write(f"review/{entity}.json", lst)
+        for r in [x for x in lst["records"] if x["flags"]][:60] + lst["records"][:25]:
+            name = f"review/{entity}/{r['id']}.json"
+            if not (OUT / name).exists():
+                size += write(name, get(api, f"/review/{entity}/{urllib.parse.quote(r['id'])}"))
+
     uploads = [{"name": f"{t['table']}.csv", "rows": t["rows"], "size": max(200, t["rows"] * 140),
                 "columns": t["columns"]} for t in sorted(report["tables"], key=lambda t: t["table"].lower())]
     size += write("uploads.json", uploads)

@@ -95,7 +95,15 @@ def apply_decisions_async():
 
 
 def _ensure(name: str):
-    if name not in _ran:
+    """Make sure a layer's tables exist: reuse what is already in SQL Server, run the scripts only if not."""
+    if name in _ran:
+        return
+    TI, layer = _layer(name)
+    try:
+        TI.read(layer, layer.entities[0].key)
+        TI.read(layer, layer.entities[-1].key)
+        _ran.add(name)
+    except Exception:                                        # noqa: BLE001 — not loaded yet
         run(name)
 
 

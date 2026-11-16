@@ -103,6 +103,21 @@ export async function demoApi<T>(path: string, init?: RequestInit): Promise<T> {
     return { key: body.key, decision: all[body.key] ?? null } as T;
   }
   if (p === "/layers/target/rejects") return (await file("layers/target_rejects.json")) as T;
+  // review by records: lists and a sample of records are in the snapshot; value sources need the database
+  const rv = p.match(/^\/review\/(\w+)(?:\/([^/]+))?(?:\/source\/.+)?$/);
+  if (rv) {
+    const [, ent, id] = rv;
+    if (p.includes("/source/")) throw new Error("Where a value came from is shown when running with the database.");
+    if (id) {
+      try { return (await file(`review/${ent}/${decodeURIComponent(id)}.json`)) as T; }
+      catch { throw new Error("This record isn’t in the demo sample. Try a flagged record or one near the top of the list."); }
+    }
+    const data = clone(await file(`review/${ent}.json`));
+    const q = (url.searchParams.get("q") ?? "").toLowerCase();
+    if (url.searchParams.get("flagged") === "true") data.records = data.records.filter((r: Json) => r.flags > 0);
+    if (q) data.records = data.records.filter((r: Json) => `${r.title} ${r.subtitle} ${r.id}`.toLowerCase().includes(q));
+    return data as T;
+  }
   if (p === "/versions") return { available: true, commits: [] } as T;
   // middle tier and target layers: /layers/{layer}, /summary, /{entity}/rows, /run (edits need the API)
   const lm = p.match(/^\/layers\/(middle|target)(?:\/(.+))?$/);

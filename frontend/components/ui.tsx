@@ -58,6 +58,7 @@ const TABS = [
   { href: "/", label: "Setup" },
   { href: "/quality", label: "Data quality" },
   { href: "/canonical", label: "Schema mapping" },
+  { href: "/review", label: "Review records" },
   { href: "/target", label: "Destination data" },
   { href: "/versions", label: "Version review" },
 ];
@@ -69,6 +70,7 @@ const icons = {
   pipeline: <path d="M3 5h4v4H3zM11 11h4v4h-4zM7 7h2a2 2 0 0 1 2 2v2" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />,
   setup: <><circle cx="9" cy="9" r="2.2" fill="none" stroke="currentColor" strokeWidth="1.4" /><path d="M9 2.5v2M9 13.5v2M2.5 9h2M13.5 9h2M4.4 4.4l1.4 1.4M12.2 12.2l1.4 1.4M4.4 13.6l1.4-1.4M12.2 5.8l1.4-1.4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></>,
   schema: <path d="M3 4h5v3H3zM10 11h5v3h-5zM10 4h5v3h-5zM5.5 7v5.5H10M12.5 7v4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />,
+  review: <><rect x="2.5" y="3" width="13" height="12" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.4" /><circle cx="6.5" cy="7.5" r="1.6" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M4.3 12.2c.6-1.4 1.4-2 2.2-2s1.6.6 2.2 2M10.5 7h3M10.5 9.5h3" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></>,
   versions: <><circle cx="5" cy="4.5" r="1.8" fill="none" stroke="currentColor" strokeWidth="1.4" /><circle cx="5" cy="13.5" r="1.8" fill="none" stroke="currentColor" strokeWidth="1.4" /><circle cx="13" cy="7" r="1.8" fill="none" stroke="currentColor" strokeWidth="1.4" /><path d="M5 6.3v5.4M13 8.8c0 2.2-2 3-4.5 3H6.8" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></>,
   data: <><ellipse cx="9" cy="4.5" rx="5.5" ry="2" fill="none" stroke="currentColor" strokeWidth="1.4" /><path d="M3.5 4.5v9c0 1.1 2.5 2 5.5 2s5.5-.9 5.5-2v-9M3.5 9c0 1.1 2.5 2 5.5 2s5.5-.9 5.5-2" fill="none" stroke="currentColor" strokeWidth="1.4" /></>,
 };
@@ -88,6 +90,7 @@ export function Shell({ children }: { children: ReactNode }) {
     { href: "/", label: "Setup", icon: "upload" as const, badge: uploadedCount || undefined },
     { href: "/quality", label: "Data quality", icon: "quality" as const },
     { href: "/canonical", label: "Schema mapping", icon: "schema" as const },
+    { href: "/review", label: "Review records", icon: "review" as const },
     { href: "/target", label: "Destination data", icon: "data" as const },
     { href: "/versions", label: "Version review", icon: "versions" as const, badge: pending || undefined },
   ];

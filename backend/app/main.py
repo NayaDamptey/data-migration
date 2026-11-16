@@ -3,7 +3,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import dq, local_files, projects, runs, uploads, layers, versions
+from app.routers import dq, local_files, projects, runs, uploads, layers, versions, review
 
 app = FastAPI(title="Migryr API", version="0.2.0")
 app.add_middleware(
@@ -19,6 +19,7 @@ app.include_router(dq.router, prefix="/dq", tags=["data quality"])
 app.include_router(local_files.router, tags=["local uploads"])
 app.include_router(layers.router, prefix="/layers", tags=["middle tier and target"])
 app.include_router(versions.router, prefix="/versions", tags=["versions (Dolt)"])
+app.include_router(review.router, prefix="/review", tags=["review by records"])
 
 
 @app.get("/health")
