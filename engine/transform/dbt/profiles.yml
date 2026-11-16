@@ -1,0 +1,8 @@
+# One DuckDB file per run (storage/projects/<project>/runs/<run>/warehouse.duckdb), reading that run's Parquet.
+migryr:
+  target: run
+  outputs:
+    run:
+      type: duckdb
+      path: "{{ env_var('MIGRYR_WAREHOUSE') }}"
+      threads: 4

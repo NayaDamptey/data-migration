@@ -27,3 +27,7 @@ engine/.pytest_cache/
 frontend/.env.local
 .next-demo/
 tools/
+# dbt build output
+engine/transform/dbt/target/
+engine/transform/dbt/logs/
+engine/transform/dbt/dbt_packages/

@@ -1,0 +1,14 @@
+-- generated from spec/target.yml: middle tier -> Attachments
+{{ config(alias='Attachments') }}
+SELECT
+    TRY_CAST(CASE WHEN d.document_id LIKE 'CV%' THEN 100000 + TRY_CAST(SUBSTRING(d.document_id, 3, 20) AS INT) ELSE TRY_CAST(SUBSTRING(d.document_id, 2, 20) AS INT) END AS INTEGER) AS AttachmentID,
+    TRY_CAST(d.entity_type AS VARCHAR) AS AttachmentType,
+    TRY_CAST(LEFT(CAST(d.file_name AS TEXT), 50) AS VARCHAR) AS AttachmentName,
+    TRY_CAST(LEFT(CAST(d.storage_path AS TEXT), 50) AS VARCHAR) AS FilePath,
+    TRY_CAST(d.file_type AS VARCHAR) AS FileType,
+    TRY_CAST(d.uploaded_at AS TIMESTAMP) AS UploadedAt,
+    TRY_CAST(0 AS BOOLEAN) AS IsPrimary,
+    TRY_CAST(0 AS BOOLEAN) AS IsArchived,
+    TRY_CAST(0 AS BOOLEAN) AS IsDeleted
+FROM {{ ref('mid_documents') }} AS d
+WHERE ((d.entity_type = 'candidate' AND EXISTS(SELECT 1 FROM {{ ref('mid_candidates') }} AS x WHERE x.candidate_id = d.entity_id)) OR (d.entity_type = 'contact' AND EXISTS(SELECT 1 FROM {{ ref('mid_contacts') }} AS x WHERE x.contact_id = d.entity_id AND NOT x.client_id IS NULL)) OR (d.entity_type = 'job' AND EXISTS(SELECT 1 FROM {{ ref('mid_jobs') }} AS x WHERE x.job_id = d.entity_id AND NOT x.client_id IS NULL)) OR (d.entity_type = 'client' AND EXISTS(SELECT 1 FROM {{ ref('mid_clients') }} AS x WHERE x.client_id = d.entity_id)))

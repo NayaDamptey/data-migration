@@ -1,0 +1,768 @@
+layer: target
+entities:
+- key: User
+  table: User
+  label: Users
+  selects:
+  - from: mid__Users AS u
+    joins: []
+    where: ''
+    columns:
+      UserID: u.user_id
+      Loginname: LEFT(CAST(u.email AS TEXT), STRPOS(u.email || '@', '@') - 1)
+      FullName: CONCAT_WS(' ', u.first_name, u.last_name)
+      Email: u.email
+      Role: u.role
+      Status: CASE WHEN u.is_active = 1 THEN 'Active' ELSE 'Inactive' END
+      IsDeleted: '0'
+      IsArchived: '0'
+- key: Company
+  table: Company
+  label: Clients
+  selects:
+  - from: mid__Clients AS c
+    joins: []
+    where: ''
+    columns:
+      ID: c.client_id
+      CompanyName: LEFT(CAST(c.company_name AS TEXT), 50)
+      Industry: c.industry
+      Website: LEFT(CAST(c.website AS TEXT), 50)
+      Telephone: c.phone
+      LocationID: CASE WHEN NOT c.address_line_1 IS NULL THEN c.client_id END
+      Type: '''Client'''
+      Company_OwnerID: c.owner_user_id
+      AddedBy: c.owner_user_id
+      AddedDate: c.created_at
+      Isdeleted: CASE WHEN c.status = 'deleted' THEN 1 ELSE 0 END
+      IsArchive: '0'
+- key: CompanyLocation
+  table: CompanyLocation
+  label: Client locations
+  selects:
+  - from: mid__Clients AS c
+    joins: []
+    where: NOT c.address_line_1 IS NULL
+    columns:
+      ID: c.client_id
+      CompanyID: c.client_id
+      AddressLine1: c.address_line_1
+      AddressLine2: c.address_line_2
+      City: c.city
+      PostCode: c.postcode
+      Country: c.country
+      AddedAt: c.created_at
+- key: Contact
+  table: Contact
+  label: Contacts
+  selects:
+  - from: mid__Contacts AS ct
+    joins: []
+    where: ''
+    columns:
+      ID: ct.contact_id
+      FirstName: ct.first_name
+      LastName: ct.last_name
+      CompanyID: ct.client_id
+      Email: ct.email
+      Phone: COALESCE(ct.phone, ct.mobile)
+      PositionTitle: LEFT(CAST(ct.job_title AS TEXT), 50)
+      Contacttype: '''Client contact'''
+      ContactOwnerID: ct.owner_user_id
+      IsDeleted: '0'
+      IsArchived: CASE WHEN ct.status = 'inactive' THEN 1 ELSE 0 END
+      AddedBy: ct.owner_user_id
+      AddedAt: ct.created_at
+    checks:
+    - condition: NOT ct.client_id IS NULL AND EXISTS(SELECT 1 FROM mid__Clients AS x WHERE x.client_id = ct.client_id)
+      reason: contact linked to no company (orphan)
+      action: reject
+- key: Applicant
+  table: Applicant
+  label: Candidates
+  selects:
+  - from: mid__Candidates AS ca
+    joins: []
+    where: ''
+    columns:
+      ApplicantID: ca.candidate_id
+      FirstName: ca.first_name
+      LastName: ca.last_name
+      ApplicantCommsID: CASE WHEN NOT ca.email IS NULL THEN TRY_CAST(ca.candidate_id AS INT) * 10 + 1 END
+      Status: ca.status
+      JobTitle: LEFT(CAST(ca.current_job_title AS TEXT), 50)
+      Source: ca.source
+      Active: '1'
+      ApplicantOwner: ca.owner_user_id
+      AddedBy: ca.owner_user_id
+      AddedAt: ca.created_at
+      Deleted: '0'
+- key: Comms
+  table: Comms
+  label: Candidate email & mobile
+  selects:
+  - from: mid__Candidates AS ca
+    joins: []
+    where: NOT ca.email IS NULL
+    columns:
+      ID: TRY_CAST(ca.candidate_id AS INT) * 10 + 1
+      ObjectID: ca.candidate_id
+      ObjectType: '''Applicant'''
+      Value: ca.email
+      Type: '''Email'''
+      Deleted: '0'
+      AddedBy: ca.owner_user_id
+  - from: mid__Candidates AS ca
+    joins: []
+    where: NOT ca.mobile IS NULL
+    columns:
+      ID: TRY_CAST(ca.candidate_id AS INT) * 10 + 2
+      ObjectID: ca.candidate_id
+      ObjectType: '''Applicant'''
+      Value: ca.mobile
+      Type: '''Mobile'''
+      Deleted: '0'
+      AddedBy: ca.owner_user_id
+- key: Position
+  table: Position
+  label: Jobs
+  selects:
+  - from: mid__Jobs AS j
+    joins: []
+    where: ''
+    columns:
+      ID: TRY_CAST(j.job_id AS INT)
+      PositionName: LEFT(CAST(j.title AS TEXT), 50)
+      CompanyID: j.client_id
+      ContactID: j.contact_id
+      Status: j.status
+      Filled: CASE WHEN j.status = 'filled' THEN 1 ELSE 0 END
+      Closed: CASE WHEN j.status IN ('filled', 'cancelled') THEN 1 ELSE 0 END
+      Deleted: CASE WHEN j.status = 'deleted' THEN 1 ELSE 0 END
+      PositionChargeRate: j.rate
+      Salary: CAST(j.salary_min AS VARCHAR)
+      Currency: '''GBP'''
+      DateBegins: j.opened_at
+      DateEnds: j.closed_at
+      Addedby: j.owner_user_id
+      PositionOwnerID: j.owner_user_id
+    checks:
+    - condition: NOT j.client_id IS NULL AND EXISTS(SELECT 1 FROM mid__Clients AS x WHERE x.client_id = j.client_id)
+      reason: job linked to no company
+      action: reject
+- key: Placements
+  table: Placements
+  label: Placements
+  selects:
+  - from: mid__Placements AS pl
+    joins:
+    - LEFT JOIN mid__Jobs AS j ON j.job_id = pl.job_id
+    where: ''
+    columns:
+      ID: TRY_CAST(pl.placement_id AS INT)
+      ApplicantID: pl.candidate_id
+      PositionID: TRY_CAST(pl.job_id AS INT)
+      CompanyID: j.client_id
+      EmploymentType: pl.placement_type
+      StartDate: pl.start_date
+      EndDate: pl.end_date
+      Fee: pl.fee
+      Status: '''Placed'''
+      OwnerID: pl.owner_user_id
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = pl.job_id AND NOT x.client_id IS NULL)
+      reason: linked to no job, or to a job with no company
+      action: reject
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = pl.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+    - condition: NOT EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = pl.job_id AND x.status = 'deleted')
+      reason: live placement on a deleted job
+      action: flag
+    - condition: NOT EXISTS(SELECT 1 FROM mid__Clients AS x WHERE x.client_id = j.client_id AND x.status = 'deleted')
+      reason: live placement on a deleted company
+      action: flag
+- key: Notes
+  table: Notes
+  label: Notes
+  selects:
+  - from: mid__Notes AS n
+    joins: []
+    where: ''
+    columns:
+      ID: TRY_CAST(n.note_id AS INT)
+      Text: n.body
+      ApplicantID: CASE WHEN n.entity_type = 'candidate' THEN n.entity_id END
+      CompanyID: CASE WHEN n.entity_type = 'client' THEN n.entity_id END
+      PositionID: CASE WHEN n.entity_type = 'job' THEN TRY_CAST(n.entity_id AS INT) END
+      ContactID: CASE WHEN n.entity_type = 'contact' THEN n.entity_id END
+      Deleted: '0'
+      AddedAt: n.created_at
+      UserID: n.author_user_id
+    checks:
+    - condition: (n.entity_type = 'candidate' AND EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = n.entity_id)) OR (n.entity_type
+        = 'contact' AND EXISTS(SELECT 1 FROM mid__Contacts AS x WHERE x.contact_id = n.entity_id AND NOT x.client_id IS NULL)) OR (n.entity_type
+        = 'job' AND EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = n.entity_id AND NOT x.client_id IS NULL)) OR (n.entity_type = 'client'
+        AND EXISTS(SELECT 1 FROM mid__Clients AS x WHERE x.client_id = n.entity_id))
+      reason: linked to no migrated record (orphan)
+      action: reject
+- key: Task
+  table: Task
+  label: Activities
+  selects:
+  - from: mid__Activities AS a
+    joins: []
+    where: ''
+    columns:
+      ID: TRY_CAST(a.activity_id AS INT)
+      TaskType: a.activity_type
+      OwnerUserID: a.user_id
+      Subject: LEFT(CAST(a.subject AS TEXT), 50)
+      Note: a.subject
+      Status: '''Completed'''
+      StartDate: CAST(a.occurred_at AS DATE)
+      Completed: '1'
+      AddedAt: a.occurred_at
+  - from: mid__Interviews AS iv
+    joins: []
+    where: ''
+    columns:
+      ID: 100000 + TRY_CAST(iv.interview_id AS INT)
+      TaskType: '''Interview'''
+      OwnerUserID: 'NULL'
+      Subject: '''Interview feedback'''
+      Note: iv.feedback
+      Status: '''Completed'''
+      StartDate: CAST(iv.interview_date AS DATE)
+      Completed: '1'
+      AddedAt: iv.created_at
+- key: TaskItem
+  table: TaskItem
+  label: Activity links
+  selects:
+  - from: mid__Activities AS a
+    joins: []
+    where: NOT a.candidate_id IS NULL
+    columns:
+      ID: TRY_CAST(a.activity_id AS INT) * 10 + 1
+      TaskID: TRY_CAST(a.activity_id AS INT)
+      ObjectID: a.candidate_id
+      ObjectType: '''Applicant'''
+      AddedAt: a.occurred_at
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = a.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+  - from: mid__Activities AS a
+    joins: []
+    where: NOT a.contact_id IS NULL
+    columns:
+      ID: TRY_CAST(a.activity_id AS INT) * 10 + 2
+      TaskID: TRY_CAST(a.activity_id AS INT)
+      ObjectID: a.contact_id
+      ObjectType: '''Contact'''
+      AddedAt: a.occurred_at
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Contacts AS x WHERE x.contact_id = a.contact_id AND NOT x.client_id IS NULL)
+      reason: contact not migrated
+      action: reject
+  - from: mid__Activities AS a
+    joins: []
+    where: NOT a.job_id IS NULL
+    columns:
+      ID: TRY_CAST(a.activity_id AS INT) * 10 + 3
+      TaskID: TRY_CAST(a.activity_id AS INT)
+      ObjectID: a.job_id
+      ObjectType: '''Position'''
+      AddedAt: a.occurred_at
+  - from: mid__Interviews AS iv
+    joins: []
+    where: ''
+    columns:
+      ID: 1000000 + TRY_CAST(iv.interview_id AS INT)
+      TaskID: 100000 + TRY_CAST(iv.interview_id AS INT)
+      ObjectID: iv.candidate_id
+      ObjectType: '''Applicant'''
+      AddedAt: iv.created_at
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = iv.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+- key: Attachments
+  table: Attachments
+  label: Documents
+  selects:
+  - from: mid__Documents AS d
+    joins: []
+    where: ''
+    columns:
+      AttachmentID: CASE WHEN d.document_id LIKE 'CV%' THEN 100000 + TRY_CAST(SUBSTRING(d.document_id, 3, 20) AS INT) ELSE TRY_CAST(SUBSTRING(d.document_id,
+        2, 20) AS INT) END
+      AttachmentType: d.entity_type
+      AttachmentName: LEFT(CAST(d.file_name AS TEXT), 50)
+      FilePath: LEFT(CAST(d.storage_path AS TEXT), 50)
+      FileType: d.file_type
+      UploadedAt: d.uploaded_at
+      IsPrimary: '0'
+      IsArchived: '0'
+      IsDeleted: '0'
+    checks:
+    - condition: (d.entity_type = 'candidate' AND EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = d.entity_id)) OR (d.entity_type
+        = 'contact' AND EXISTS(SELECT 1 FROM mid__Contacts AS x WHERE x.contact_id = d.entity_id AND NOT x.client_id IS NULL)) OR (d.entity_type
+        = 'job' AND EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = d.entity_id AND NOT x.client_id IS NULL)) OR (d.entity_type = 'client'
+        AND EXISTS(SELECT 1 FROM mid__Clients AS x WHERE x.client_id = d.entity_id))
+      reason: linked to no migrated record (orphan)
+      action: reject
+- key: Department
+  table: Department
+  label: Departments
+  selects:
+  - from: mid__Departments AS d
+    joins: []
+    where: ''
+    columns:
+      ID: TRY_CAST(d.department_id AS INT)
+      Name: d.name
+      AddedAt: d.created_at
+      UpdatedAt: d.updated_at
+- key: SkillCategory
+  table: SkillCategory
+  label: Skill categories
+  selects:
+  - from: mid__SkillCategories AS sc
+    joins: []
+    where: ''
+    columns:
+      ID: sc.category_id
+      CategoryName: sc.name
+      Deleted: sc.deleted
+- key: Skills
+  table: Skills
+  label: Skills
+  selects:
+  - from: mid__Skills AS sk
+    joins: []
+    where: ''
+    columns:
+      ID: sk.skill_id
+      SkillName: sk.name
+      SkillCategoryID: sk.category_id
+      Status: CASE WHEN sk.deleted = 1 THEN 'Inactive' ELSE 'Active' END
+- key: PositionType
+  table: PositionType
+  label: Job types
+  selects:
+  - from: (SELECT DISTINCT employment_type FROM mid__Jobs WHERE NOT employment_type IS NULL) AS j
+    joins: []
+    where: ''
+    columns:
+      ID: ROW_NUMBER() OVER (ORDER BY j.employment_type NULLS FIRST)
+      Type: UPPER(LEFT(CAST(j.employment_type AS TEXT), 1)) || SUBSTRING(j.employment_type, 2, 50)
+- key: Position_Details
+  table: Position_Details
+  label: Job details
+  selects:
+  - from: mid__Jobs AS j
+    joins: []
+    where: ''
+    columns:
+      ID: TRY_CAST(j.job_id AS INT)
+      PositionID: TRY_CAST(j.job_id AS INT)
+      Requirement: j.description
+      Location: j.location
+      ClosingDate: j.closed_at
+      PayFrequency: CASE WHEN j.rate_unit = 'day' THEN 'Daily' WHEN NOT j.salary_min IS NULL THEN 'Annual' END
+      AddedBy: j.owner_user_id
+    checks:
+    - condition: NOT j.client_id IS NULL
+      reason: job linked to no company
+      action: reject
+- key: Position_Applicant
+  table: Position_Applicant
+  label: Applications
+  selects:
+  - from: mid__Applications AS a
+    joins: []
+    where: ''
+    columns:
+      ID: TRY_CAST(a.application_id AS INT)
+      PositionID: TRY_CAST(a.job_id AS INT)
+      ApplicantID: a.candidate_id
+      CompanyID: a.client_id
+      ApplicationDate: CAST(a.applied_at AS DATE)
+      StatusTxt: UPPER(LEFT(CAST(a.stage AS TEXT), 1)) || SUBSTRING(a.stage, 2, 50)
+      AddedBy: a.owner_user_id
+      AddedAt: a.applied_at
+      Active: CASE WHEN a.stage IN ('placed', 'rejected') OR a.deleted = 1 THEN 0 ELSE 1 END
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = a.job_id AND NOT x.client_id IS NULL)
+      reason: linked to no job, or to a job with no company
+      action: reject
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = a.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+- key: Shortlist
+  table: Shortlist
+  label: Shortlists
+  selects:
+  - from: mid__Applications AS a
+    joins: []
+    where: a.stage IN ('screening', 'interview', 'offer')
+    columns:
+      ID: TRY_CAST(a.application_id AS INT)
+      PositionID: TRY_CAST(a.job_id AS INT)
+      ApplicantID: a.candidate_id
+      ShortlistedDate: CAST(a.applied_at AS DATE)
+      Status: UPPER(LEFT(CAST(a.stage AS TEXT), 1)) || SUBSTRING(a.stage, 2, 50)
+      AddedBy: a.owner_user_id
+      AddedAt: a.applied_at
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = a.job_id AND NOT x.client_id IS NULL)
+      reason: linked to no job, or to a job with no company
+      action: reject
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = a.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+- key: Offer
+  table: Offer
+  label: Offers
+  selects:
+  - from: mid__Applications AS a
+    joins: []
+    where: a.stage IN ('offer', 'placed')
+    columns:
+      ID: TRY_CAST(a.application_id AS INT)
+      PlacementID: CASE WHEN a.stage = 'placed' THEN TRY_CAST(a.application_id AS INT) END
+      Accepted: CASE WHEN a.stage = 'placed' THEN 1 ELSE 0 END
+      Terms: a.employment_type
+      RecruiterID: a.owner_user_id
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = a.job_id AND NOT x.client_id IS NULL)
+      reason: linked to no job, or to a job with no company
+      action: reject
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = a.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+- key: Deal
+  table: Deal
+  label: Deals
+  selects:
+  - from: mid__Placements AS pl
+    joins:
+    - LEFT JOIN mid__Jobs AS j ON j.job_id = pl.job_id
+    where: ''
+    columns:
+      ID: TRY_CAST(pl.placement_id AS INT)
+      PlacementID: TRY_CAST(pl.placement_id AS INT)
+      RecruiterID: pl.owner_user_id
+      CompanyID: j.client_id
+      DealDate: pl.start_date
+      DealType: pl.placement_type
+      DealValue: pl.fee
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = pl.job_id AND NOT x.client_id IS NULL)
+      reason: linked to no job, or to a job with no company
+      action: reject
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = pl.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+- key: Deal_Stage
+  table: Deal_Stage
+  label: Deal stages
+  selects:
+  - from: mid__Placements AS pl
+    joins: []
+    where: ''
+    columns:
+      ID: TRY_CAST(pl.placement_id AS INT)
+      DealID: TRY_CAST(pl.placement_id AS INT)
+      Stage: '''Won'''
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = pl.job_id AND NOT x.client_id IS NULL)
+      reason: linked to no job, or to a job with no company
+      action: reject
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = pl.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+- key: Work_History
+  table: Work_History
+  label: Work history
+  selects:
+  - from: mid__WorkHistory AS w
+    joins: []
+    where: w.deleted = 0
+    columns:
+      ID: TRY_CAST(w.history_id AS INT)
+      ApplicationID: w.candidate_id
+      CompanyName: LEFT(CAST(w.employer AS TEXT), 50)
+      PositionTitle: LEFT(CAST(w.job_title AS TEXT), 50)
+      StartDate: w.start_date
+      EndDate: w.end_date
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = w.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+- key: References
+  table: References
+  label: References
+  selects:
+  - from: mid__References AS r
+    joins: []
+    where: ''
+    columns:
+      ID: r.reference_id
+      ApplicantID: r.candidate_id
+      Fullname: r.full_name
+      PositionTitle: LEFT(CAST(r.job_title AS TEXT), 50)
+      CompanyName: LEFT(CAST(r.company AS TEXT), 50)
+      Relationship: r.relationship
+      Email: LEFT(CAST(r.email AS TEXT), 50)
+      PhoneContact: r.phone
+      ReferenceType: '''Employment'''
+      Notes: LEFT(CAST(r.status AS TEXT), 50)
+      VerifiedAt: CASE WHEN r.status = 'Received' THEN r.updated_at END
+      AddedAt: r.created_at
+      UpdatedAt: r.updated_at
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = r.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+- key: Employment_Details
+  table: Employment_Details
+  label: Candidate profiles
+  selects:
+  - from: mid__CandidateProfiles AS cp
+    joins:
+    - LEFT JOIN mid__Consents AS c ON c.person_id = cp.candidate_id
+    where: ''
+    columns:
+      ID: TRY_CAST(cp.profile_id AS INT)
+      Employment_Type: cp.employment_type
+      ApplicantID: cp.candidate_id
+      MarketingEmail: c.email_ok
+      MarketingPhone: c.phone_ok
+      MarketingText: c.text_ok
+      Bank: LEFT(CAST(cp.bank AS TEXT), 50)
+      SortCode: cp.sort_code
+      Notes: cp.notes
+      AddedBy: cp.added_by
+      AddedAt: cp.created_at
+      UpdatedAt: cp.updated_at
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = cp.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+- key: Marketing
+  table: Marketing
+  label: Marketing consent
+  selects:
+  - from: mid__Consents AS c
+    joins: []
+    where: c.person_id IN (SELECT candidate_id FROM mid__Candidates)
+    columns:
+      ID: TRY_CAST(c.consent_id AS INT)
+      ApplicantID: c.person_id
+      Email: CASE WHEN c.email_ok = 1 THEN 'Yes' ELSE 'No' END
+      Phone: CASE WHEN c.phone_ok = 1 THEN 'Yes' ELSE 'No' END
+      Text: CASE WHEN c.text_ok = 1 THEN 'Yes' ELSE 'No' END
+      GDPRConsent: '1'
+      OptIn: CASE WHEN c.email_ok = 1 OR c.phone_ok = 1 OR c.text_ok = 1 THEN 1 ELSE 0 END
+      OptOut: CASE WHEN c.email_ok = 0 AND c.phone_ok = 0 AND c.text_ok = 0 THEN 1 ELSE 0 END
+      AddedAt: c.created_at
+      UpdatedAt: c.updated_at
+      AddedBy: c.added_by
+- key: Sources
+  table: Sources
+  label: Candidate sources
+  selects:
+  - from: (SELECT DISTINCT source FROM mid__Candidates WHERE NOT source IS NULL) AS s
+    joins: []
+    where: ''
+    columns:
+      ID: CAST(ROW_NUMBER() OVER (ORDER BY s.source NULLS FIRST) AS VARCHAR)
+      Name: UPPER(LEFT(CAST(s.source AS TEXT), 1)) || SUBSTRING(s.source, 2, 50)
+- key: Currencies
+  table: Currencies
+  label: Currencies
+  selects:
+  - from: (SELECT DISTINCT currency FROM mid__Invoices WHERE NOT currency IS NULL) AS cu
+    joins: []
+    where: ''
+    columns:
+      CurrencyID: ROW_NUMBER() OVER (ORDER BY cu.currency NULLS FIRST)
+      CurrencyCode: cu.currency
+- key: Timesheets
+  table: Timesheets
+  label: Timesheets
+  selects:
+  - from: mid__Timesheets AS t
+    joins: []
+    where: ''
+    columns:
+      ID: TRY_CAST(t.timesheet_id AS INT)
+      StartDate: t.start_date
+      EndDate: t.end_date
+      Payrate: t.pay_rate
+      ChargeRate: t.charge_rate
+      Currency: '''GBP'''
+      Status: UPPER(LEFT(CAST(t.status AS TEXT), 1)) || SUBSTRING(t.status, 2, 50)
+      TimesheetType: t.timesheet_type
+      TotalWeekHours: (SELECT SUM(l.hours) FROM mid__TimesheetLines AS l WHERE l.timesheet_id = t.timesheet_id)
+      ApprovedBy: t.approved_by
+      Deleted: '0'
+- key: TimesheetActivity
+  table: TimesheetActivity
+  label: Timesheet lines
+  selects:
+  - from: mid__TimesheetLines AS l
+    joins:
+    - LEFT JOIN mid__Timesheets AS t ON t.timesheet_id = l.timesheet_id
+    where: ''
+    columns:
+      ActivityID: TRY_CAST(l.line_id AS INT)
+      TimesheetID: TRY_CAST(l.timesheet_id AS INT)
+      AssocID: TRY_CAST(l.candidate_id AS INT)
+      TimesheetDate: t.start_date
+      HoursWorked: l.hours
+      Status: t.status
+      AddedBy: l.added_by
+      AddedAt: l.created_at
+    checks:
+    - condition: EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = l.candidate_id)
+      reason: not a migrated candidate (a contact, a removed duplicate or missing)
+      action: reject
+- key: PurchaseOrder
+  table: PurchaseOrder
+  label: Purchase orders
+  selects:
+  - from: mid__PurchaseOrders AS po
+    joins: []
+    where: ''
+    columns:
+      PONo: po.po_no
+      CompanyID: po.client_id
+      PODate: po.issue_date
+      POAmount: po.amount
+      Status: UPPER(LEFT(CAST(po.status AS TEXT), 1)) || SUBSTRING(po.status, 2, 50)
+      AddedAt: po.created_at
+      AddedBy: po.added_by
+- key: PurchaseOrderItems
+  table: PurchaseOrderItems
+  label: Purchase order lines
+  selects:
+  - from: mid__PurchaseOrders AS po
+    joins: []
+    where: ''
+    columns:
+      ID: ROW_NUMBER() OVER (ORDER BY po.po_no NULLS FIRST)
+      PONo: po.po_no
+      PositionID: TRY_CAST(po.job_id AS INT)
+      Description: po.description
+      Quantity: '1'
+      UnitPrice: po.amount
+      Amount: po.amount
+      Status: UPPER(LEFT(CAST(po.status AS TEXT), 1)) || SUBSTRING(po.status, 2, 50)
+      AddedBy: po.added_by
+      AddedAt: po.created_at
+- key: Invoice
+  table: Invoice
+  label: Invoices
+  selects:
+  - from: mid__Invoices AS inv
+    joins: []
+    where: ''
+    columns:
+      ID: TRY_CAST(inv.invoice_id AS INT)
+      Type: inv.invoice_type
+      InvoiceNo: inv.invoice_no
+      PlacementID: (SELECT TRY_CAST(l.placement_id AS INT) FROM mid__InvoiceLines AS l WHERE l.invoice_id = inv.invoice_id AND NOT l.placement_id
+        IS NULL LIMIT 1)
+      Amount: inv.net_amount
+      TaxAmount: inv.vat_amount
+      Currency: inv.currency
+      InvoiceDate: inv.invoice_date
+      DueDate: inv.due_date
+      Status: UPPER(LEFT(CAST(inv.status AS TEXT), 1)) || SUBSTRING(inv.status, 2, 50)
+      Notes: inv.description
+      AddedBy: inv.added_by
+- key: Leads
+  table: Leads
+  label: Leads
+  selects:
+  - from: mid__Leads AS ld
+    joins: []
+    where: ''
+    columns:
+      ID: TRY_CAST(ld.lead_id AS INT)
+      Fullname: ld.full_name
+      PipelineStage: ld.status
+      CompanyID: ld.client_id
+      Type: ld.title
+      Source: ld.source
+      Notes: ld.note
+      Deleted: '0'
+      AddedAt: ld.sourced_at
+      AddedBy: ld.assigned_to
+- key: ApplicantAttachment
+  table: ApplicantAttachment
+  label: Candidate documents
+  selects:
+  - from: mid__Documents AS d
+    joins: []
+    where: d.entity_type = 'candidate'
+    columns:
+      ID: CASE WHEN d.document_id LIKE 'CV%' THEN 100000 + TRY_CAST(SUBSTRING(d.document_id, 3, 20) AS INT) ELSE TRY_CAST(SUBSTRING(d.document_id,
+        2, 20) AS INT) END
+      AttachmentID: CASE WHEN d.document_id LIKE 'CV%' THEN 100000 + TRY_CAST(SUBSTRING(d.document_id, 3, 20) AS INT) ELSE TRY_CAST(SUBSTRING(d.document_id,
+        2, 20) AS INT) END
+      ApplicantID: d.entity_id
+      AddedAt: d.uploaded_at
+    checks:
+    - condition: (d.entity_type = 'candidate' AND EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = d.entity_id)) OR (d.entity_type
+        = 'contact' AND EXISTS(SELECT 1 FROM mid__Contacts AS x WHERE x.contact_id = d.entity_id AND NOT x.client_id IS NULL)) OR (d.entity_type
+        = 'job' AND EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = d.entity_id AND NOT x.client_id IS NULL)) OR (d.entity_type = 'client'
+        AND EXISTS(SELECT 1 FROM mid__Clients AS x WHERE x.client_id = d.entity_id))
+      reason: linked to no migrated record (orphan)
+      action: reject
+- key: ContactAttachment
+  table: ContactAttachment
+  label: Contact documents
+  selects:
+  - from: mid__Documents AS d
+    joins: []
+    where: d.entity_type = 'contact'
+    columns:
+      ID: CASE WHEN d.document_id LIKE 'CV%' THEN 100000 + TRY_CAST(SUBSTRING(d.document_id, 3, 20) AS INT) ELSE TRY_CAST(SUBSTRING(d.document_id,
+        2, 20) AS INT) END
+      AttachmentID: CASE WHEN d.document_id LIKE 'CV%' THEN 100000 + TRY_CAST(SUBSTRING(d.document_id, 3, 20) AS INT) ELSE TRY_CAST(SUBSTRING(d.document_id,
+        2, 20) AS INT) END
+      ContactID: d.entity_id
+      AddedAt: d.uploaded_at
+    checks:
+    - condition: (d.entity_type = 'candidate' AND EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = d.entity_id)) OR (d.entity_type
+        = 'contact' AND EXISTS(SELECT 1 FROM mid__Contacts AS x WHERE x.contact_id = d.entity_id AND NOT x.client_id IS NULL)) OR (d.entity_type
+        = 'job' AND EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = d.entity_id AND NOT x.client_id IS NULL)) OR (d.entity_type = 'client'
+        AND EXISTS(SELECT 1 FROM mid__Clients AS x WHERE x.client_id = d.entity_id))
+      reason: linked to no migrated record (orphan)
+      action: reject
+- key: PositionAttachment
+  table: PositionAttachment
+  label: Job documents
+  selects:
+  - from: mid__Documents AS d
+    joins: []
+    where: d.entity_type = 'job'
+    columns:
+      ID: CASE WHEN d.document_id LIKE 'CV%' THEN 100000 + TRY_CAST(SUBSTRING(d.document_id, 3, 20) AS INT) ELSE TRY_CAST(SUBSTRING(d.document_id,
+        2, 20) AS INT) END
+      AttachmentID: CASE WHEN d.document_id LIKE 'CV%' THEN 100000 + TRY_CAST(SUBSTRING(d.document_id, 3, 20) AS INT) ELSE TRY_CAST(SUBSTRING(d.document_id,
+        2, 20) AS INT) END
+      PositionID: TRY_CAST(d.entity_id AS INT)
+      AddedAt: d.uploaded_at
+    checks:
+    - condition: (d.entity_type = 'candidate' AND EXISTS(SELECT 1 FROM mid__Candidates AS x WHERE x.candidate_id = d.entity_id)) OR (d.entity_type
+        = 'contact' AND EXISTS(SELECT 1 FROM mid__Contacts AS x WHERE x.contact_id = d.entity_id AND NOT x.client_id IS NULL)) OR (d.entity_type
+        = 'job' AND EXISTS(SELECT 1 FROM mid__Jobs AS x WHERE x.job_id = d.entity_id AND NOT x.client_id IS NULL)) OR (d.entity_type = 'client'
+        AND EXISTS(SELECT 1 FROM mid__Clients AS x WHERE x.client_id = d.entity_id))
+      reason: linked to no migrated record (orphan)
+      action: reject

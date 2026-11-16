@@ -1,0 +1,750 @@
+layer: middle
+entities:
+- key: users
+  table: Users
+  label: Users
+  selects:
+  - from: src__Recruiter AS r
+    joins:
+    - LEFT JOIN src__Roles AS ro ON ro.Role_ID = r.Role_ID
+    where: ''
+    columns:
+      user_id: r.RecruiterID
+      first_name: LEFT(CAST(r.Fullname AS TEXT), STRPOS(r.Fullname || ' ', ' ') - 1)
+      last_name: NULLIF(LTRIM(SUBSTRING(r.Fullname, STRPOS(r.Fullname || ' ', ' ') + 1, 200)), '')
+      email: r.email
+      role: LOWER(ro.Description)
+      office: 'NULL'
+      is_active: '1'
+  types:
+    user_id: VARCHAR
+    first_name: VARCHAR
+    last_name: VARCHAR
+    email: VARCHAR
+    role: VARCHAR
+    office: VARCHAR
+    is_active: BOOLEAN
+- key: clients
+  table: Clients
+  label: Clients
+  selects:
+  - from: src__Accounts AS a
+    joins:
+    - LEFT JOIN src__Addresses AS ad ON ad.AddressID = a.AddressID
+    - LEFT JOIN src__AccountStatus AS st ON st.Account_StatusID = a.AccountStatusTypeID
+    where: ''
+    columns:
+      client_id: a.Account_ID
+      company_name: a.Account_name
+      industry: a.Industry
+      website: a.Website
+      phone: COALESCE(ad.WorkPhone, ad.Phone)
+      address_line_1: ad.Address_line1
+      address_line_2: ad.Address_line2
+      city: ad.City
+      postcode: ad.ZipCode
+      country: ad.Country
+      status: CASE WHEN a.Deleted = 1 THEN 'deleted' ELSE LOWER(st.Description) END
+      owner_user_id: a.CreatedBy
+      created_at: a.CreatedAt
+  types:
+    client_id: VARCHAR
+    company_name: VARCHAR
+    industry: VARCHAR
+    website: VARCHAR
+    phone: VARCHAR
+    address_line_1: VARCHAR
+    address_line_2: VARCHAR
+    city: VARCHAR
+    postcode: VARCHAR
+    country: VARCHAR
+    status: VARCHAR
+    owner_user_id: VARCHAR
+    created_at: TIMESTAMP
+- key: contacts
+  table: Contacts
+  label: Contacts
+  selects:
+  - from: src__Associates AS s
+    joins:
+    - LEFT JOIN src__Person AS p ON p.Person_ID = s.Person_ID
+    - LEFT JOIN src__Addresses AS ad ON ad.AddressID = s.Associate_AddressID
+    - LEFT JOIN LATERAL (SELECT MIN(aa.AccountID) AS AccountID FROM src__AccountAssociates AS aa WHERE aa.AssociateID = s.AssociateID) AS co ON
+      TRUE
+    where: ''
+    columns:
+      contact_id: s.AssociateID
+      client_id: co.AccountID
+      first_name: p.First_Name
+      last_name: p.Last_Name
+      job_title: s.Associate_Tag
+      email: ad.Email
+      phone: ad.WorkPhone
+      mobile: ad.Phone
+      status: CASE WHEN s.Active = 1 THEN 'active' ELSE 'inactive' END
+      owner_user_id: s.CreatedBy
+      created_at: s.CreatedAt
+  types:
+    contact_id: VARCHAR
+    client_id: VARCHAR
+    first_name: VARCHAR
+    last_name: VARCHAR
+    job_title: VARCHAR
+    email: VARCHAR
+    phone: VARCHAR
+    mobile: VARCHAR
+    status: VARCHAR
+    owner_user_id: VARCHAR
+    created_at: TIMESTAMP
+- key: candidates
+  table: Candidates
+  label: Candidates
+  selects:
+  - from: src__Person AS p
+    joins:
+    - LEFT JOIN src__Addresses AS ad ON ad.AddressID = p.AddressID
+    - LEFT JOIN LATERAL (SELECT eh.Title, eh.PlaceofWork FROM src__EmpHist AS eh JOIN src__Emp_Profile AS ep ON ep.Emp_ProfileID = eh.Emp_ID WHERE
+      ep.Person_ID = p.Person_ID ORDER BY eh.Started_At DESC LIMIT 1) AS cj ON TRUE
+    - LEFT JOIN LATERAL (SELECT h.Source, h.Pipeline_Stage FROM src__Req_Hired AS h WHERE h.Invoiced_PersonID = p.Person_ID ORDER BY h.CreatedAt
+      DESC, h.Req_HiredID DESC LIMIT 1) AS lh ON TRUE
+    where: NOT EXISTS(SELECT 1 FROM src__Associates AS s WHERE s.Person_ID = p.Person_ID)
+    columns:
+      candidate_id: p.Person_ID
+      first_name: p.First_Name
+      last_name: p.Last_Name
+      email: ad.Email
+      mobile: ad.Phone
+      phone: NULLIF(ad.OtherPhone, '')
+      current_job_title: cj.Title
+      current_employer: cj.PlaceofWork
+      address_line_1: ad.Address_line1
+      address_line_2: NULLIF(ad.Address_line2, '')
+      city: ad.City
+      postcode: ad.ZipCode
+      country: ad.Country
+      source: LOWER(lh.Source)
+      status: LOWER(lh.Pipeline_Stage)
+      linkedin_url: 'NULL'
+      owner_user_id: p.CreatedBy
+      created_at: p.CreatedAt
+  types:
+    candidate_id: VARCHAR
+    first_name: VARCHAR
+    last_name: VARCHAR
+    email: VARCHAR
+    mobile: VARCHAR
+    phone: VARCHAR
+    current_job_title: VARCHAR
+    current_employer: VARCHAR
+    address_line_1: VARCHAR
+    address_line_2: VARCHAR
+    city: VARCHAR
+    postcode: VARCHAR
+    country: VARCHAR
+    source: VARCHAR
+    status: VARCHAR
+    linkedin_url: VARCHAR
+    owner_user_id: VARCHAR
+    created_at: TIMESTAMP
+- key: jobs
+  table: Jobs
+  label: Jobs
+  selects:
+  - from: src__Req AS r
+    joins:
+    - LEFT JOIN LATERAL (SELECT rr.BillRate, rr.Salary FROM src__Req_Rates AS rr WHERE rr.Req_ID = r.ReqID ORDER BY rr.Req_RateID NULLS FIRST
+      LIMIT 1) AS rt ON TRUE
+    - LEFT JOIN src__Addresses AS ad ON ad.AddressID = r.Address_ID
+    where: ''
+    columns:
+      job_id: r.ReqID
+      client_id: r.AccountID
+      contact_id: r.AssociateID
+      title: r.Req_Title
+      employment_type: LOWER(r.Worktype)
+      salary_min: rt.Salary
+      salary_max: 'NULL'
+      rate: rt.BillRate
+      rate_unit: CASE WHEN NOT rt.BillRate IS NULL THEN 'day' END
+      location: ad.City
+      status: CASE WHEN r.Deleted = 1 THEN 'deleted' ELSE LOWER(r.StatusText) END
+      owner_user_id: r.CreatedBy
+      opened_at: CAST(r.StartDate AS DATE)
+      closed_at: CAST(r.EndDate AS DATE)
+      description: r.Req_Description
+  types:
+    job_id: VARCHAR
+    client_id: VARCHAR
+    contact_id: VARCHAR
+    title: VARCHAR
+    employment_type: VARCHAR
+    salary_min: DECIMAL(12,2)
+    salary_max: DECIMAL(12,2)
+    rate: DECIMAL(12,2)
+    rate_unit: VARCHAR
+    location: VARCHAR
+    status: VARCHAR
+    owner_user_id: VARCHAR
+    opened_at: DATE
+    closed_at: DATE
+    description: VARCHAR
+- key: placements
+  table: Placements
+  label: Placements
+  selects:
+  - from: src__Req_Hired AS h
+    joins: []
+    where: h.Pipeline_Stage = 'Placed'
+    columns:
+      placement_id: h.Req_HiredID
+      candidate_id: h.Invoiced_PersonID
+      job_id: h.Req_ID
+      start_date: CAST(h.StartDate AS DATE)
+      end_date: CAST(h.EndDate AS DATE)
+      salary: 'NULL'
+      fee: h.FeeValue
+      placement_type: LOWER(h.Worktype)
+      owner_user_id: h.Owner_ID
+  types:
+    placement_id: VARCHAR
+    candidate_id: VARCHAR
+    job_id: VARCHAR
+    start_date: DATE
+    end_date: DATE
+    salary: DECIMAL(12,2)
+    fee: DECIMAL(12,2)
+    placement_type: VARCHAR
+    owner_user_id: VARCHAR
+- key: notes
+  table: Notes
+  label: Notes
+  selects:
+  - from: src__Notes AS n
+    joins:
+    - LEFT JOIN LATERAL (SELECT MIN(s.AssociateID) AS AssociateID FROM src__Associates AS s WHERE n.ObjectType = 'Person' AND s.Person_ID = n.ObjectId)
+      AS pc ON TRUE
+    where: ''
+    columns:
+      note_id: n.Note_ID
+      entity_type: CASE n.ObjectType WHEN 'Person' THEN CASE WHEN NOT pc.AssociateID IS NULL THEN 'contact' ELSE 'candidate' END WHEN 'Associate'
+        THEN 'contact' WHEN 'Req' THEN 'job' WHEN 'Account' THEN 'client' END
+      entity_id: CASE WHEN n.ObjectType = 'Person' AND NOT pc.AssociateID IS NULL THEN CAST(pc.AssociateID AS VARCHAR) ELSE CAST(n.ObjectId AS
+        VARCHAR) END
+      author_user_id: n.CreatedBy
+      note_type: 'NULL'
+      body: n.Notetext
+      created_at: n.CreatedAt
+  types:
+    note_id: VARCHAR
+    entity_type: VARCHAR
+    entity_id: VARCHAR
+    author_user_id: VARCHAR
+    note_type: VARCHAR
+    body: VARCHAR
+    created_at: TIMESTAMP
+- key: histories
+  table: Histories
+  label: Histories
+  selects:
+  - from: src__Log AS l
+    joins: []
+    where: ''
+    columns:
+      history_id: l.LogID
+      entity_type: LOWER(l.Entity_Type)
+      entity_id: l.Entity_ID
+      field_changed: l.Action
+      old_value: 'NULL'
+      new_value: 'NULL'
+      changed_by: l.User_ID
+      changed_at: l.Timestamp
+  types:
+    history_id: VARCHAR
+    entity_type: VARCHAR
+    entity_id: VARCHAR
+    field_changed: VARCHAR
+    old_value: VARCHAR
+    new_value: VARCHAR
+    changed_by: VARCHAR
+    changed_at: TIMESTAMP
+- key: activities
+  table: Activities
+  label: Activities
+  selects:
+  - from: src__Schedule AS sc
+    joins:
+    - LEFT JOIN LATERAL (SELECT MIN(s.AssociateID) AS AssociateID FROM src__Associates AS s WHERE s.Person_ID = sc.Person_ID) AS ct ON TRUE
+    where: ''
+    columns:
+      activity_id: sc.Schedule_ID
+      activity_type: sc.ScheduleType
+      candidate_id: CASE WHEN sc.Person_Type = 'Candidate' THEN sc.Person_ID END
+      contact_id: CASE WHEN sc.Person_Type = 'Contact' THEN ct.AssociateID END
+      job_id: sc.Req_ID
+      user_id: sc.CreatedBy
+      occurred_at: sc.StartDate
+      outcome: 'NULL'
+      subject: sc.Notes
+  types:
+    activity_id: VARCHAR
+    activity_type: VARCHAR
+    candidate_id: VARCHAR
+    contact_id: VARCHAR
+    job_id: VARCHAR
+    user_id: VARCHAR
+    occurred_at: TIMESTAMP
+    outcome: VARCHAR
+    subject: VARCHAR
+- key: documents
+  table: Documents
+  label: Documents
+  selects:
+  - from: src__Documents AS d
+    joins:
+    - LEFT JOIN LATERAL (SELECT MIN(s.AssociateID) AS AssociateID FROM src__Associates AS s WHERE d.ObjectType = 'Person' AND s.Person_ID = d.Doc_AssocID)
+      AS pc ON TRUE
+    where: ''
+    columns:
+      document_id: '''D'' || CAST(d.Doc_ID AS VARCHAR)'
+      entity_type: CASE d.ObjectType WHEN 'Person' THEN CASE WHEN NOT pc.AssociateID IS NULL THEN 'contact' ELSE 'candidate' END WHEN 'Associate'
+        THEN 'contact' WHEN 'Req' THEN 'job' WHEN 'Account' THEN 'client' END
+      entity_id: CASE WHEN d.ObjectType = 'Person' AND NOT pc.AssociateID IS NULL THEN CAST(pc.AssociateID AS VARCHAR) ELSE CAST(d.Doc_AssocID
+        AS VARCHAR) END
+      file_name: RIGHT(CAST(d.Path AS TEXT), STRPOS(REVERSE(d.Path), '/') - 1)
+      file_type: LOWER(RIGHT(CAST(d.Path AS TEXT), STRPOS(REVERSE(d.Path), '.') - 1))
+      storage_path: d.Path
+      uploaded_at: d.CreatedAt
+  - from: src__CV_Docs AS c
+    joins: []
+    where: ''
+    columns:
+      document_id: '''CV'' || CAST(c.Doc_ID AS VARCHAR)'
+      entity_type: '''candidate'''
+      entity_id: c.CV_AssocID
+      file_name: RIGHT(CAST(c.Path AS TEXT), STRPOS(REVERSE(c.Path), '/') - 1)
+      file_type: LOWER(RIGHT(CAST(c.Path AS TEXT), STRPOS(REVERSE(c.Path), '.') - 1))
+      storage_path: c.Path
+      uploaded_at: c.CreatedAt
+  types:
+    document_id: VARCHAR
+    entity_type: VARCHAR
+    entity_id: VARCHAR
+    file_name: VARCHAR
+    file_type: VARCHAR
+    storage_path: VARCHAR
+    uploaded_at: TIMESTAMP
+- key: departments
+  table: Departments
+  label: Departments
+  selects:
+  - from: src__Departments AS d
+    joins: []
+    where: ''
+    columns:
+      department_id: d.DepartmentID
+      name: d.Name
+      deleted: d.Deleted
+      created_at: d.CreatedAt
+      updated_at: d.UpdatedAt
+  types:
+    department_id: VARCHAR
+    name: VARCHAR
+    deleted: BOOLEAN
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+- key: skill_categories
+  table: SkillCategories
+  label: Skill categories
+  selects:
+  - from: src__SkillCategory AS sc
+    joins: []
+    where: ''
+    columns:
+      category_id: sc.CategoryID
+      name: sc.Name
+      deleted: sc.Deleted
+  types:
+    category_id: VARCHAR
+    name: VARCHAR
+    deleted: BOOLEAN
+- key: skills
+  table: Skills
+  label: Skills
+  selects:
+  - from: src__Skills AS sk
+    joins: []
+    where: ''
+    columns:
+      skill_id: sk.SkillID
+      name: sk.SkillName
+      category_id: sk.Skill_CategoryID
+      deleted: sk.Deleted
+  types:
+    skill_id: VARCHAR
+    name: VARCHAR
+    category_id: VARCHAR
+    deleted: BOOLEAN
+- key: applications
+  table: Applications
+  label: Applications
+  selects:
+  - from: src__Req_Hired AS h
+    joins: []
+    where: ''
+    columns:
+      application_id: h.Req_HiredID
+      candidate_id: h.Invoiced_PersonID
+      job_id: h.Req_ID
+      client_id: h.Account_ID
+      contact_id: h.Associate_ID
+      stage: LOWER(h.Pipeline_Stage)
+      employment_type: LOWER(h.Worktype)
+      start_date: CAST(h.StartDate AS DATE)
+      end_date: CAST(h.EndDate AS DATE)
+      fee: h.FeeValue
+      source: LOWER(h.Source)
+      owner_user_id: h.Owner_ID
+      deleted: h.Deleted
+      applied_at: h.CreatedAt
+  types:
+    application_id: VARCHAR
+    candidate_id: VARCHAR
+    job_id: VARCHAR
+    client_id: VARCHAR
+    contact_id: VARCHAR
+    stage: VARCHAR
+    employment_type: VARCHAR
+    start_date: DATE
+    end_date: DATE
+    fee: DECIMAL(12,2)
+    source: VARCHAR
+    owner_user_id: VARCHAR
+    deleted: BOOLEAN
+    applied_at: TIMESTAMP
+- key: interviews
+  table: Interviews
+  label: Interviews
+  selects:
+  - from: src__Interview_Feedback AS f
+    joins: []
+    where: ''
+    columns:
+      interview_id: f.Interview_FeedbackID
+      candidate_id: f.Interviewee_ID
+      interviewer_person_id: f.Interviewer_ID
+      interview_date: f.Interview_Date
+      feedback: f.Notes
+      callback: f.Callback
+      created_at: f.CreatedAt
+  types:
+    interview_id: VARCHAR
+    candidate_id: VARCHAR
+    interviewer_person_id: VARCHAR
+    interview_date: TIMESTAMP
+    feedback: VARCHAR
+    callback: VARCHAR
+    created_at: TIMESTAMP
+- key: work_history
+  table: WorkHistory
+  label: Work history
+  selects:
+  - from: src__EmpHist AS eh
+    joins:
+    - JOIN src__Emp_Profile AS ep ON ep.Emp_ProfileID = eh.Emp_ID
+    where: ''
+    columns:
+      history_id: eh.Hist_ID
+      candidate_id: ep.Person_ID
+      employer: eh.PlaceofWork
+      job_title: eh.Title
+      start_date: CAST(eh.Started_At AS DATE)
+      end_date: CAST(eh.Ended_At AS DATE)
+      deleted: eh.Deleted
+  types:
+    history_id: VARCHAR
+    candidate_id: VARCHAR
+    employer: VARCHAR
+    job_title: VARCHAR
+    start_date: DATE
+    end_date: DATE
+    deleted: BOOLEAN
+- key: references
+  table: References
+  label: References
+  selects:
+  - from: src__EmpRef AS er
+    joins:
+    - JOIN src__Referees AS rf ON rf.Referee_ID = er.Ref_ID
+    - JOIN src__Emp_Profile AS ep ON ep.Emp_No = er.EmpNo
+    where: ''
+    columns:
+      reference_id: er.EmpRef_ID
+      candidate_id: ep.Person_ID
+      full_name: rf.Fullname
+      job_title: rf.Job_Title
+      company: rf.Company
+      relationship: er.Relationship
+      email: rf.email
+      phone: rf.Telephone
+      status: er.Status
+      reference_text: er.Reference
+      created_at: er.CreatedAt
+      updated_at: er.UpdatedAt
+  types:
+    reference_id: VARCHAR
+    candidate_id: VARCHAR
+    full_name: VARCHAR
+    job_title: VARCHAR
+    company: VARCHAR
+    relationship: VARCHAR
+    email: VARCHAR
+    phone: VARCHAR
+    status: VARCHAR
+    reference_text: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+- key: candidate_profiles
+  table: CandidateProfiles
+  label: Candidate profiles
+  selects:
+  - from: src__Emp_Profile AS ep
+    joins: []
+    where: ''
+    columns:
+      profile_id: ep.Emp_ProfileID
+      candidate_id: ep.Person_ID
+      employment_type: ep.Emp_TypeDescription
+      notes: ep.Profile_Notes
+      bank: ep.BankDetails
+      sort_code: ep.SortCode
+      added_by: ep.CreatedBy
+      created_at: ep.CreatedAt
+      updated_at: ep.UpdatedAt
+  types:
+    profile_id: VARCHAR
+    candidate_id: VARCHAR
+    employment_type: VARCHAR
+    notes: VARCHAR
+    bank: VARCHAR
+    sort_code: VARCHAR
+    added_by: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+- key: consents
+  table: Consents
+  label: Marketing consent
+  selects:
+  - from: src__GDPR_Consent AS g
+    joins: []
+    where: ''
+    columns:
+      consent_id: g.GDPR_ConsentID
+      person_id: g.Person_ID
+      email_ok: g.Email
+      phone_ok: g.Phone
+      text_ok: g.Text
+      added_by: g.CreatedBy
+      created_at: g.CreatedAt
+      updated_at: g.UpdatedAt
+  types:
+    consent_id: VARCHAR
+    person_id: VARCHAR
+    email_ok: BOOLEAN
+    phone_ok: BOOLEAN
+    text_ok: BOOLEAN
+    added_by: VARCHAR
+    created_at: TIMESTAMP
+    updated_at: TIMESTAMP
+- key: timesheets
+  table: Timesheets
+  label: Timesheets
+  selects:
+  - from: src__TimeSheets AS t
+    joins:
+    - LEFT JOIN src__TimesheetType AS tt ON tt.Timesheet_TypeID = t.Timesheet_TypeID
+    where: ''
+    columns:
+      timesheet_id: t.ID
+      po_no: t.PONo
+      timesheet_type: tt."Desc"
+      pay_rate: t.Payrate
+      charge_rate: t.Billrate
+      start_date: CAST(t.StartDate AS DATE)
+      end_date: CAST(t.Enddate AS DATE)
+      status: LOWER(t.Status)
+      approved_by: t.Approved_By
+      approved_at: t.Approved_Date
+  types:
+    timesheet_id: VARCHAR
+    po_no: VARCHAR
+    timesheet_type: VARCHAR
+    pay_rate: DECIMAL(12,2)
+    charge_rate: DECIMAL(12,2)
+    start_date: DATE
+    end_date: DATE
+    status: VARCHAR
+    approved_by: VARCHAR
+    approved_at: TIMESTAMP
+- key: timesheet_lines
+  table: TimesheetLines
+  label: Timesheet lines
+  selects:
+  - from: src__TimesheetItems AS i
+    joins:
+    - LEFT JOIN src__TimesheetType AS tt ON tt.Timesheet_TypeID = i.Timesheet_TypeID
+    where: ''
+    columns:
+      line_id: i.ItemID
+      timesheet_id: i.Timesheet_ID
+      candidate_id: i.Person_ID
+      job_id: i.Req_ID
+      line_type: tt."Desc"
+      start_time: i.StartTime
+      end_time: i.EndTime
+      hours: i.TotalHours
+      added_by: i.CreatedBy
+      created_at: i.CreatedAt
+  types:
+    line_id: VARCHAR
+    timesheet_id: VARCHAR
+    candidate_id: VARCHAR
+    job_id: VARCHAR
+    line_type: VARCHAR
+    start_time: VARCHAR
+    end_time: VARCHAR
+    hours: DECIMAL(12,2)
+    added_by: VARCHAR
+    created_at: TIMESTAMP
+- key: purchase_orders
+  table: PurchaseOrders
+  label: Purchase orders
+  selects:
+  - from: src__PONo AS po
+    joins: []
+    where: ''
+    columns:
+      po_no: po.PONo
+      client_id: po.VendorID
+      job_id: po.ReqID
+      department_id: po.DepartmentID
+      status: LOWER(po.POStatus)
+      issue_date: CAST(po.Issue_Date AS DATE)
+      due_date: CAST(po.DateDue AS DATE)
+      currency: po.Currency
+      amount: po.Amount
+      tax_amount: po.TaxAmount
+      description: po."Desc"
+      added_by: po.CreatedBy
+      created_at: po.CreatedAt
+  types:
+    po_no: VARCHAR
+    client_id: VARCHAR
+    job_id: VARCHAR
+    department_id: VARCHAR
+    status: VARCHAR
+    issue_date: DATE
+    due_date: DATE
+    currency: VARCHAR
+    amount: DECIMAL(12,2)
+    tax_amount: DECIMAL(12,2)
+    description: VARCHAR
+    added_by: VARCHAR
+    created_at: TIMESTAMP
+- key: invoices
+  table: Invoices
+  label: Invoices
+  selects:
+  - from: src__Invoice AS inv
+    joins:
+    - LEFT JOIN src__InvoiceTypes AS it ON it.InvoiceType_ID = inv.InvoiceType_ID
+    where: ''
+    columns:
+      invoice_id: inv.InvoiceID
+      invoice_no: inv.Invoice_No
+      po_no: inv.PONo
+      client_id: inv.Vendor_ID
+      invoice_type: it.Type_Name
+      status: LOWER(inv.Status)
+      currency: inv.Currency
+      net_amount: inv.NETAmount
+      vat_amount: inv.Amount - inv.NETAmount
+      gross_amount: inv.Amount
+      invoice_date: CAST(inv.InvoiceDate AS DATE)
+      due_date: CAST(inv.DateDue AS DATE)
+      description: inv."Desc"
+      added_by: inv.CreatedBy
+  types:
+    invoice_id: VARCHAR
+    invoice_no: VARCHAR
+    po_no: VARCHAR
+    client_id: VARCHAR
+    invoice_type: VARCHAR
+    status: VARCHAR
+    currency: VARCHAR
+    net_amount: DECIMAL(12,2)
+    vat_amount: DECIMAL(12,2)
+    gross_amount: DECIMAL(12,2)
+    invoice_date: DATE
+    due_date: DATE
+    description: VARCHAR
+    added_by: VARCHAR
+- key: invoice_lines
+  table: InvoiceLines
+  label: Invoice lines
+  selects:
+  - from: src__InvoiceEntries AS ie
+    joins: []
+    where: ''
+    columns:
+      line_id: ie.Invoice_EntryID
+      invoice_id: ie.Invoice_ID
+      placement_id: ie.Plac_ID
+      description: ie."Desc"
+      quantity: ie.Quantity
+      unit_price: ie.Unit_Price
+      amount: ie.Amount
+      created_at: ie.CreatedAt
+  types:
+    line_id: VARCHAR
+    invoice_id: VARCHAR
+    placement_id: VARCHAR
+    description: VARCHAR
+    quantity: DECIMAL(12,2)
+    unit_price: DECIMAL(12,2)
+    amount: DECIMAL(12,2)
+    created_at: TIMESTAMP
+- key: leads
+  table: Leads
+  label: Leads
+  selects:
+  - from: src__Leads AS ld
+    joins: []
+    where: ''
+    columns:
+      lead_id: ld.Lead_ID
+      full_name: ld.Name
+      title: ld.Lead_Name
+      status: ld.Lead_Status
+      source: ld.Lead_Source
+      client_id: ld.Account_ID
+      contact_id: ld.Associate_ID
+      job_id: ld.Req_ID
+      email: ld.Email
+      phone: ld.Phone
+      note: ld.Note
+      assigned_to: ld.Assigned_To
+      sourced_at: ld.Sourced_Date
+  types:
+    lead_id: VARCHAR
+    full_name: VARCHAR
+    title: VARCHAR
+    status: VARCHAR
+    source: VARCHAR
+    client_id: VARCHAR
+    contact_id: VARCHAR
+    job_id: VARCHAR
+    email: VARCHAR
+    phone: VARCHAR
+    note: VARCHAR
+    assigned_to: VARCHAR
+    sourced_at: TIMESTAMP

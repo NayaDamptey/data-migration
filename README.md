@@ -25,6 +25,29 @@ RecruitPlatform_Target.dbo.<Table>        target: one INSERT ... SELECT script p
 Dolt                                      every run, field change and merge is a version
 ```
 
+## Platform data core (in progress: dbt on DuckDB)
+
+The migration is moving to the platform stack. The processing no longer needs SQL Server:
+
+```
+source (restored .bak or uploaded CSVs)  ──►  Parquet, one file per table, per run       engine/ingest/to_parquet.py
+mapping spec (DuckDB SQL, YAML)          ──►  dbt project, generated                      engine/transform/spec/*.yml, build_dbt.py
+dbt build on DuckDB                      ──►  staging → middle tier (merges applied)
+                                              → target → rejects, plus tests on every key
+                                              and link                                    engine/transform/run.py
+target                                   ──►  Parquet per table (export via SQLGlot next)
+```
+
+```bash
+python engine/transform/run.py --run r1                                   # from the restored legacy database
+python engine/transform/run.py --run r1 --csv engine/sample_data/source   # from CSV files
+```
+
+Each run keeps its own Parquet input and DuckDB warehouse in `storage/projects/<project>/runs/<run>/`.
+Its output matches the SQL Server scripts table for table (25 middle-tier and 37 target tables, the same
+rejects). Next: run it from the API as a Celery job, keep mappings, decisions, approvals and run
+history in Postgres, and export INSERT scripts in any SQL dialect with SQLGlot.
+
 ## Screens (in order)
 
 1. **Setup** (`/`): source and destination, the source upload (CSVs, folders or zips) and the pipeline:
@@ -110,6 +133,6 @@ Plain Python, used by the API through `backend/app/engine_bridge.py` and `backen
 - **Languages:** TypeScript, Python, T-SQL, SQL (DuckDB)
 - **Frontend:** Next.js, React, Tailwind CSS
 - **API:** FastAPI, Uvicorn, Pydantic
-- **Data:** SQL Server Express (source, middle tier and target), DuckDB (data quality rules), Dolt (versions), pyodbc
+- **Data:** Parquet, DuckDB, Polars, dbt Core (dbt-duckdb), SQLGlot; SQL Server Express (restoring the legacy backup), pyodbc; Dolt (versions, being replaced)
 - **Testing and CI:** pytest, GitHub Actions
 - **Hosting (demo):** Vercel

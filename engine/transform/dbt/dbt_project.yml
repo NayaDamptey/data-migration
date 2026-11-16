@@ -1,0 +1,36 @@
+# Migryr transformation project. Models and seeds are generated from the mapping spec
+# (transform/spec/*.yml) by transform/build_dbt.py; only this file, profiles.yml and macros/ are hand-written.
+name: migryr
+version: "1.0.0"
+config-version: 2
+profile: migryr
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+target-path: "{{ env_var('MIGRYR_DBT_TARGET', 'target') }}"
+log-path: "{{ env_var('MIGRYR_DBT_LOGS', 'logs') }}"
+
+models:
+  migryr:
+    staging:
+      +materialized: view
+      +schema: staging
+    mid:
+      +materialized: table
+      +schema: mid
+    target:
+      +materialized: table
+      +schema: target
+    audit:
+      +materialized: table
+      +schema: audit
+
+seeds:
+  migryr:
+    +schema: decisions
+    +column_types:
+      kind: varchar
+      duplicate: varchar
+      survivor: varchar
+      column_name: varchar

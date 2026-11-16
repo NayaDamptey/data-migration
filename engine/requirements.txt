@@ -1,3 +1,7 @@
 duckdb>=1.1
 pytest>=8.0
 pyodbc>=5.0              # optional: SQL Server load, tests/test_defects.py, validator --source sqlserver
+polars>=1.0               # ingestion to Parquet
+dbt-duckdb>=1.9,<2       # transformation: dbt Core on DuckDB
+sqlglot>=26,<28          # SQL dialect translation
+pyyaml>=6.0              # mapping spec

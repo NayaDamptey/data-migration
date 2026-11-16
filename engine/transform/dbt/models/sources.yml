@@ -1,0 +1,64 @@
+version: 2
+sources:
+- name: legacy
+  meta:
+    external_location: '{{ env_var(''MIGRYR_SOURCE_DIR'') }}/{name}.parquet'
+  tables:
+  - name: APIsession
+  - name: AccountAssociates
+  - name: AccountRate
+  - name: AccountStatus
+  - name: AccountType
+  - name: Accounts
+  - name: Addresses
+  - name: AssociateTypeRelation
+  - name: AssociateTypes
+  - name: Associates
+  - name: BackgroundChecks
+  - name: CV_Docs
+  - name: Categories
+  - name: Compliance
+  - name: ComplianceDocuments
+  - name: ComplianceItems
+  - name: ComplianceTypes
+  - name: Departments
+  - name: Division
+  - name: DocumentType
+  - name: Documents
+  - name: EmpEdu
+  - name: EmpHist
+  - name: EmpRef
+  - name: Emp_Documents
+  - name: Emp_Profile
+  - name: GDPR_Consent
+  - name: Hotlists
+  - name: Interview_Feedback
+  - name: Invoice
+  - name: InvoiceEntries
+  - name: InvoiceTypes
+  - name: Languages
+  - name: Leads
+  - name: Log
+  - name: Notes
+  - name: ObjectHotlist
+  - name: ObjectSKills
+  - name: PONo
+  - name: Person
+  - name: Recruiter
+  - name: RecruiterDocuments
+  - name: Referees
+  - name: Req
+  - name: Req_Documents
+  - name: Req_Hired
+  - name: Req_Rates
+  - name: Roles
+  - name: Schedule
+  - name: Sectors
+  - name: SkillCategory
+  - name: Skills
+  - name: TagEntity
+  - name: Tags
+  - name: TimeSheets
+  - name: TimesheetItems
+  - name: TimesheetType
+  - name: WebForms

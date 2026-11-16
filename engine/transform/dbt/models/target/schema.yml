@@ -1,0 +1,350 @@
+version: 2
+models:
+- name: target_user
+  columns:
+  - name: UserID
+    data_tests:
+    - not_null
+    - unique
+- name: target_company
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_companylocation
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_contact
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: CompanyID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_company')
+          field: ID
+- name: target_applicant
+  columns:
+  - name: ApplicantID
+    data_tests:
+    - not_null
+    - unique
+- name: target_comms
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: ObjectID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_applicant')
+          field: ApplicantID
+- name: target_position
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: CompanyID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_company')
+          field: ID
+- name: target_placements
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: ApplicantID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_applicant')
+          field: ApplicantID
+  - name: PositionID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_position')
+          field: ID
+- name: target_notes
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: ApplicantID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_applicant')
+          field: ApplicantID
+  - name: ContactID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_contact')
+          field: ID
+  - name: CompanyID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_company')
+          field: ID
+  - name: PositionID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_position')
+          field: ID
+- name: target_task
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_taskitem
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: ObjectID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_applicant')
+          field: ApplicantID
+        config:
+          where: ObjectType = 'Applicant'
+    - relationships:
+        arguments:
+          to: ref('target_contact')
+          field: ID
+        config:
+          where: ObjectType = 'Contact'
+- name: target_attachments
+  columns:
+  - name: AttachmentID
+    data_tests:
+    - not_null
+    - unique
+- name: target_department
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_skillcategory
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_skills
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_positiontype
+  columns: []
+- name: target_position_details
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: PositionID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_position')
+          field: ID
+- name: target_position_applicant
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: ApplicantID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_applicant')
+          field: ApplicantID
+  - name: PositionID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_position')
+          field: ID
+- name: target_shortlist
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_offer
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: PlacementID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_placements')
+          field: ID
+- name: target_deal
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: PlacementID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_placements')
+          field: ID
+- name: target_deal_stage
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_work_history
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: ApplicationID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_applicant')
+          field: ApplicantID
+- name: target_references
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: ApplicantID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_applicant')
+          field: ApplicantID
+- name: target_employment_details
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: ApplicantID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_applicant')
+          field: ApplicantID
+- name: target_marketing
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_sources
+  columns: []
+- name: target_currencies
+  columns:
+  - name: CurrencyID
+    data_tests:
+    - not_null
+    - unique
+- name: target_timesheets
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_timesheetactivity
+  columns:
+  - name: ActivityID
+    data_tests:
+    - not_null
+    - unique
+- name: target_purchaseorder
+  columns:
+  - name: PONo
+    data_tests:
+    - not_null
+    - unique
+- name: target_purchaseorderitems
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_invoice
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_leads
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+- name: target_applicantattachment
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: ApplicantID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_applicant')
+          field: ApplicantID
+- name: target_contactattachment
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: ContactID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_contact')
+          field: ID
+- name: target_positionattachment
+  columns:
+  - name: ID
+    data_tests:
+    - not_null
+    - unique
+  - name: PositionID
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('target_position')
+          field: ID
