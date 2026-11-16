@@ -1,15 +1,17 @@
 "use client";
 
-// Screen 1: Sign in (/signin). Sketch: docs/sketches/1-login.jpeg. Signing in lands on Source upload (/).
-// Real sign-in isn't wired up; this form is a placeholder that accepts anything.
+// Sign in (/signin). Every page sends a signed-out visitor here; the demo account is prefilled.
+// Signing in returns to the page they wanted (?next=), or Setup (/).
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { Check, Logo, Spinner, SystemTile } from "../../components/ui";
+import { DEMO_USER, signIn } from "../../lib/session";
 
 export default function SignInPage() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState(DEMO_USER.username);
+  const [password, setPassword] = useState(DEMO_USER.password);
+  const [remember, setRemember] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -19,9 +21,14 @@ export default function SignInPage() {
       setError("Enter your username and password.");
       return;
     }
+    if (!signIn(username, password, remember)) {
+      setError("Wrong username or password.");
+      return;
+    }
     setError(null);
     setBusy(true);
-    setTimeout(() => router.push("/"), 600);
+    const next = new URLSearchParams(window.location.search).get("next");
+    setTimeout(() => router.replace(next && next.startsWith("/") && !next.startsWith("//") ? next : "/"), 400);
   }
 
   return (
@@ -58,14 +65,14 @@ export default function SignInPage() {
           <div className="space-y-4">
             <div>
               <label htmlFor="username" className="label">Username</label>
-              <input id="username" className="field h-12" autoComplete="username" autoFocus value={username} onChange={(e) => setUsername(e.target.value)} placeholder="you@agency.co.uk" />
+              <input id="username" className="field h-12" autoComplete="username" value={username} onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div>
               <label htmlFor="password" className="label">Password</label>
               <input id="password" type="password" className="field h-12" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             <label className="flex items-center gap-2 text-[13px] text-muted cursor-pointer select-none">
-              <input type="checkbox" className="w-4 h-4 accent-[#0A1F44]" defaultChecked />
+              <input type="checkbox" className="w-4 h-4 accent-[#0A1F44]" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
               Keep me signed in
             </label>
           </div>
@@ -73,7 +80,7 @@ export default function SignInPage() {
           {error && <p role="alert" className="mt-4 text-[13px] text-bad bg-bad-soft rounded-lg px-3 py-2">{error}</p>}
 
           <div className="flex flex-col gap-2 mt-8">
-            <button type="submit" className="btn-primary h-12 text-[16px] w-full" disabled={busy}>
+            <button type="submit" className="btn-primary h-12 text-[16px] w-full" disabled={busy} autoFocus>
               {busy ? <Spinner /> : "Sign in"}
             </button>
             <button type="button" className="btn-secondary h-12 text-[16px] w-full" onClick={() => { setUsername(""); setPassword(""); setError(null); }}>Cancel</button>

@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState, type ReactNode } from "react";
 import { isDemo } from "../lib/demo";
+import { isSignedIn, signOut } from "../lib/session";
 import { useStore } from "../lib/store";
 import { type FieldStatus } from "../lib/mock";
 
@@ -78,6 +79,13 @@ const Icon = ({ name }: { name: keyof typeof icons }) => <svg width="18" height=
 
 export function Shell({ children }: { children: ReactNode }) {
   const path = usePathname();
+  const router = useRouter();
+  // signed out: go to sign-in first, then come back here
+  const [allowed, setAllowed] = useState(false);
+  useEffect(() => {
+    if (isSignedIn()) setAllowed(true);
+    else router.replace(`/signin?next=${encodeURIComponent(path + window.location.search)}`);
+  }, [path, router]);
   const { setup, steps, runStep, pendingChanges, uploads, uploadsReady } = useStore();
   const uploadedCount = uploads.filter((u) => u.status === "uploaded").length;
   // the pipeline order: upload source first, then data quality
@@ -100,6 +108,8 @@ export function Shell({ children }: { children: ReactNode }) {
     await runStep("canonical");
     await runStep("target");
   };
+
+  if (!allowed) return <div className="min-h-screen" />;
 
   return (
     <div className="min-h-screen lg:pl-[232px]">
@@ -145,7 +155,7 @@ export function Shell({ children }: { children: ReactNode }) {
             <p className="text-[12.5px] text-white font-medium truncate">Naya Damptey</p>
             <p className="text-[11px] truncate">Harrow & Finch Recruitment</p>
           </div>
-          <Link href="/signin" className="text-[11px] hover:text-white" title="Sign out">Sign out</Link>
+          <Link href="/signin" className="text-[11px] hover:text-white" title="Sign out" onClick={() => signOut()}>Sign out</Link>
         </div>
       </aside>
 
