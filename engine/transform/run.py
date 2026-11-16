@@ -44,11 +44,11 @@ def run(project: str, run_id: str, ingest: bool = True, csv_dir: Path | None = N
         from_sqlserver(src)
     built = build_dbt.build(src)
 
-    env = {"MIGRYR_SOURCE_DIR": src.as_posix(), "MIGRYR_WAREHOUSE": (rd / "warehouse.duckdb").as_posix(),
-           "MIGRYR_DBT_TARGET": (rd / "dbt_target").as_posix(), "MIGRYR_DBT_LOGS": (rd / "dbt_logs").as_posix()}
+    env = {"MIGRYR_SOURCE_DIR": src.as_posix(), "MIGRYR_WAREHOUSE": (rd / "warehouse.duckdb").as_posix()}
     os.environ.update(env)
     from dbt.cli.main import dbtRunner
-    res = dbtRunner().invoke(["build", "--project-dir", str(DBT), "--profiles-dir", str(DBT), "--quiet"])
+    res = dbtRunner().invoke(["build", "--project-dir", str(DBT), "--profiles-dir", str(DBT), "--quiet",
+                "--target-path", (rd / "dbt_target").as_posix(), "--log-path", (rd / "dbt_logs").as_posix()])
     results = []
     for r in (res.result or []):
         node = getattr(r, "node", None)

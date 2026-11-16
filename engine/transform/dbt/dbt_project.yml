@@ -8,8 +8,7 @@ profile: migryr
 model-paths: ["models"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
-target-path: "{{ env_var('MIGRYR_DBT_TARGET', 'target') }}"
-log-path: "{{ env_var('MIGRYR_DBT_LOGS', 'logs') }}"
+# target and log folders are passed per run on the command line (--target-path, --log-path)
 
 models:
   migryr:

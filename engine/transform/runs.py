@@ -123,9 +123,9 @@ def build(run: str, layer: str = "all", select: list[str] | None = None, project
             shutil.copy(f, snap / f.name)
         for f in (DBT / "seeds").glob("*.csv"):
             shutil.copy(f, snap / f.name)
-        os.environ.update({"MIGRYR_SOURCE_DIR": (rd / "source").as_posix(), "MIGRYR_WAREHOUSE": (rd / "warehouse.duckdb").as_posix(),
-                           "MIGRYR_DBT_TARGET": (rd / "dbt_target").as_posix(), "MIGRYR_DBT_LOGS": (rd / "dbt_logs").as_posix()})
-        args = ["build", "--project-dir", str(DBT), "--profiles-dir", str(DBT), "--quiet"]
+        os.environ.update({"MIGRYR_SOURCE_DIR": (rd / "source").as_posix(), "MIGRYR_WAREHOUSE": (rd / "warehouse.duckdb").as_posix()})
+        args = ["build", "--project-dir", str(DBT), "--profiles-dir", str(DBT), "--quiet",
+                "--target-path", (rd / "dbt_target").as_posix(), "--log-path", (rd / "dbt_logs").as_posix()]
         if select:
             args += ["--select", *select]
         elif layer == "middle":

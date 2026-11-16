@@ -31,3 +31,4 @@ tools/
 engine/transform/dbt/target/
 engine/transform/dbt/logs/
 engine/transform/dbt/dbt_packages/
+engine/transform/dbt/*env_var*/
