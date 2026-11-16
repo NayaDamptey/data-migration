@@ -59,7 +59,7 @@ STANDARD_CHECKS: list[StandardCheck] = [
     StandardCheck("jobs_no_company", "Jobs linked to no company",
                   "A job that belongs to no company.",
                   _cat("JOB_NO_COMPANY")),
-    StandardCheck("dates", "Dates that don't make sense",
+    StandardCheck("dates", "Invalid dates",
                   "End before start, placements outside their job's dates, placeholder or future dates.",
                   _cat("DATE_LOGIC", "SENTINEL_DATE")),
 ]

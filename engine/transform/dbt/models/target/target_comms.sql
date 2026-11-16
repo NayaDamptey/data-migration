@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Comms
 {{ config(alias='Comms') }}
 SELECT
     TRY_CAST(TRY_CAST(ca.candidate_id AS INT) * 10 + 1 AS INTEGER) AS ID,

@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(d.DepartmentID AS VARCHAR) AS department_id,
     TRY_CAST(d.Name AS VARCHAR) AS name,

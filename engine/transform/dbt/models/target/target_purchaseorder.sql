@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> PurchaseOrder
 {{ config(alias='PurchaseOrder') }}
 SELECT
     TRY_CAST(po.po_no AS VARCHAR) AS PONo,

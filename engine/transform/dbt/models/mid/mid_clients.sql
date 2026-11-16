@@ -1,4 +1,3 @@
--- generated: the middle tier for Clients, with the reviewer's duplicate merges applied
 {{ config(alias='Clients') }}
 SELECT
     s.client_id,

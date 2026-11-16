@@ -1,4 +1,3 @@
--- generated: the middle tier for Applications, with the reviewer's duplicate merges applied
 {{ config(alias='Applications') }}
 SELECT
     s.application_id,

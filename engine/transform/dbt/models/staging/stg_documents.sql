@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST('D' || CAST(d.Doc_ID AS VARCHAR) AS VARCHAR) AS document_id,
     TRY_CAST(CASE d.ObjectType WHEN 'Person' THEN CASE WHEN NOT pc.AssociateID IS NULL THEN 'contact' ELSE 'candidate' END WHEN 'Associate' THEN 'contact' WHEN 'Req' THEN 'job' WHEN 'Account' THEN 'client' END AS VARCHAR) AS entity_type,

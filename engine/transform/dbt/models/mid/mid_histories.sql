@@ -1,4 +1,3 @@
--- generated: the middle tier for Histories, with the reviewer's duplicate merges applied
 {{ config(alias='Histories') }}
 SELECT
     s.history_id,

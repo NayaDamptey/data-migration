@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> TimesheetActivity
 {{ config(alias='TimesheetActivity') }}
 SELECT
     TRY_CAST(TRY_CAST(l.line_id AS INT) AS INTEGER) AS ActivityID,

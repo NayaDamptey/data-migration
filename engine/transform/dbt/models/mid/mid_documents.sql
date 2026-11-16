@@ -1,4 +1,3 @@
--- generated: the middle tier for Documents, with the reviewer's duplicate merges applied
 {{ config(alias='Documents') }}
 SELECT
     s.document_id,

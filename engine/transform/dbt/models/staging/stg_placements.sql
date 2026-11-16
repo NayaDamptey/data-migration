@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(h.Req_HiredID AS VARCHAR) AS placement_id,
     TRY_CAST(h.Invoiced_PersonID AS VARCHAR) AS candidate_id,

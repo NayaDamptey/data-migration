@@ -1,4 +1,3 @@
--- generated: the middle tier for References, with the reviewer's duplicate merges applied
 {{ config(alias='References') }}
 SELECT
     s.reference_id,

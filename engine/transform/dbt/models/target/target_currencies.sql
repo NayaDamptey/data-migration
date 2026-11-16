@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Currencies
 {{ config(alias='Currencies') }}
 SELECT
     TRY_CAST(ROW_NUMBER() OVER (ORDER BY cu.currency NULLS FIRST) AS INTEGER) AS CurrencyID,

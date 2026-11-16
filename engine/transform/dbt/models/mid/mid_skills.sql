@@ -1,4 +1,3 @@
--- generated: the middle tier for Skills, with the reviewer's duplicate merges applied
 {{ config(alias='Skills') }}
 SELECT
     s.skill_id,

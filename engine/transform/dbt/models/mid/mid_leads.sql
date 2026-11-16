@@ -1,4 +1,3 @@
--- generated: the middle tier for Leads, with the reviewer's duplicate merges applied
 {{ config(alias='Leads') }}
 SELECT
     s.lead_id,

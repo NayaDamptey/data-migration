@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Offer
 {{ config(alias='Offer') }}
 SELECT
     TRY_CAST(TRY_CAST(a.application_id AS INT) AS INTEGER) AS ID,

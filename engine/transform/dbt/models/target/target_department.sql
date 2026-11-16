@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Department
 {{ config(alias='Department') }}
 SELECT
     TRY_CAST(TRY_CAST(d.department_id AS INT) AS INTEGER) AS ID,

@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Position_Details
 {{ config(alias='Position_Details') }}
 SELECT
     TRY_CAST(TRY_CAST(j.job_id AS INT) AS INTEGER) AS ID,

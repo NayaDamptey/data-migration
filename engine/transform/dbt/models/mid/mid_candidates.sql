@@ -1,4 +1,3 @@
--- generated: the middle tier for Candidates, with the reviewer's duplicate merges applied
 {{ config(alias='Candidates') }}
 SELECT
     s.candidate_id,

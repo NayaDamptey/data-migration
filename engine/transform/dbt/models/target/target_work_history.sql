@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Work_History
 {{ config(alias='Work_History') }}
 SELECT
     TRY_CAST(TRY_CAST(w.history_id AS INT) AS INTEGER) AS ID,

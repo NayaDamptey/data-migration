@@ -192,7 +192,7 @@ def build(source_dir: Path | None = None) -> dict:
         types = {c: _duck_type(t) for c, t in types.items()}
         body = "\nUNION ALL\n".join(_select(s, "middle", tables, types) for s in e["selects"])
         (DBT / "models" / "staging" / f"stg_{key}.sql").write_text(
-            "-- generated from spec/middle.yml: source -> canonical shape\n" + body + "\n", encoding="utf-8")
+            body + "\n", encoding="utf-8")
         kind, idc = SELF_KIND.get(key, (None, None))
         cols = list(e["selects"][0]["columns"])
         out = []
@@ -208,8 +208,7 @@ def build(source_dir: Path | None = None) -> dict:
                 out.append(f"    COALESCE((SELECT m.survivor FROM {{{{ ref('merges') }}}} m WHERE m.kind = s.entity_type AND m.duplicate = s.entity_id), s.entity_id) AS entity_id")
             else:
                 out.append(f"    s.{c}")
-        sql = (f"-- generated: the middle tier for {e['label']}, with the reviewer's duplicate merges applied\n"
-               f"{{{{ config(alias='{e['table']}') }}}}\n"
+        sql = (f"{{{{ config(alias='{e['table']}') }}}}\n"
                f"SELECT\n" + ",\n".join(out) + f"\nFROM {{{{ ref('stg_{key}') }}}} s")
         if kind:
             sql += f"\nWHERE s.{idc} NOT IN (SELECT duplicate FROM {{{{ ref('merges') }}}} WHERE kind = '{kind}')"
@@ -227,7 +226,7 @@ def build(source_dir: Path | None = None) -> dict:
         ttypes = {c.name: _duck_type(c.type) for c in tgt_schema.tables[t].values()}
         body = "\nUNION ALL\n".join(_select(s, "target", tables, ttypes, keep_checks=True) for s in e["selects"])
         (DBT / "models" / "target" / f"target_{t.lower()}.sql").write_text(
-            f"-- generated from spec/target.yml: middle tier -> {t}\n{{{{ config(alias='{t}') }}}}\n" + body + "\n", encoding="utf-8")
+            f"{{{{ config(alias='{t}') }}}}\n" + body + "\n", encoding="utf-8")
         for s in e["selects"]:
             key_expr = _src(str(next(iter(s["columns"].values()))), "target", tables)
             base = [f"({_src(s['where'], 'target', tables)})"] if s.get("where") else []
@@ -251,8 +250,7 @@ def build(source_dir: Path | None = None) -> dict:
                 cols_tests.setdefault(col, []).append(rel)
         tests.append({"name": f"target_{t.lower()}", "columns": [{"name": c, "data_tests": v} for c, v in cols_tests.items()]})
     (DBT / "models" / "audit" / "migration_rejects.sql").write_text(
-        "-- generated: rows the target load rejected (not loaded) or flagged (loaded, needs a look)\n"
-        + ("\nUNION ALL\n".join(rejects) if rejects else "SELECT NULL AS target_table, NULL AS source_key, NULL AS action, NULL AS reason WHERE FALSE") + "\n",
+        ("\nUNION ALL\n".join(rejects) if rejects else "SELECT NULL AS target_table, NULL AS source_key, NULL AS action, NULL AS reason WHERE FALSE") + "\n",
         encoding="utf-8")
     (DBT / "models" / "target" / "schema.yml").write_text(yaml.safe_dump({"version": 2, "models": tests}, sort_keys=False), encoding="utf-8")
     return {"middle": len(middle["entities"]), "target": len(target["entities"]), "merges": len(merges), "checks": len(rejects)}

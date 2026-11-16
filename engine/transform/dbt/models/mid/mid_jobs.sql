@@ -1,4 +1,3 @@
--- generated: the middle tier for Jobs, with the reviewer's duplicate merges applied
 {{ config(alias='Jobs') }}
 SELECT
     s.job_id,

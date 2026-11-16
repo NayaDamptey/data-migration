@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Marketing
 {{ config(alias='Marketing') }}
 SELECT
     TRY_CAST(TRY_CAST(c.consent_id AS INT) AS INTEGER) AS ID,

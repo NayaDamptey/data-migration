@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> TaskItem
 {{ config(alias='TaskItem') }}
 SELECT
     TRY_CAST(TRY_CAST(a.activity_id AS INT) * 10 + 1 AS INTEGER) AS ID,

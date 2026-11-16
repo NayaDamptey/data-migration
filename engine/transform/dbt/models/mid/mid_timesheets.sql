@@ -1,4 +1,3 @@
--- generated: the middle tier for Timesheets, with the reviewer's duplicate merges applied
 {{ config(alias='Timesheets') }}
 SELECT
     s.timesheet_id,

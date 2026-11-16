@@ -1,4 +1,3 @@
--- generated: the middle tier for Timesheet lines, with the reviewer's duplicate merges applied
 {{ config(alias='TimesheetLines') }}
 SELECT
     s.line_id,

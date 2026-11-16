@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> ContactAttachment
 {{ config(alias='ContactAttachment') }}
 SELECT
     TRY_CAST(CASE WHEN d.document_id LIKE 'CV%' THEN 100000 + TRY_CAST(SUBSTRING(d.document_id, 3, 20) AS INT) ELSE TRY_CAST(SUBSTRING(d.document_id, 2, 20) AS INT) END AS INTEGER) AS ID,

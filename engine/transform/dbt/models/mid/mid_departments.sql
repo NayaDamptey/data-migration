@@ -1,4 +1,3 @@
--- generated: the middle tier for Departments, with the reviewer's duplicate merges applied
 {{ config(alias='Departments') }}
 SELECT
     s.department_id,

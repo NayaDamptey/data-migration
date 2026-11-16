@@ -1,4 +1,3 @@
--- generated: the middle tier for Marketing consent, with the reviewer's duplicate merges applied
 {{ config(alias='Consents') }}
 SELECT
     s.consent_id,

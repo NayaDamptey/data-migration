@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Applicant
 {{ config(alias='Applicant') }}
 SELECT
     TRY_CAST(ca.candidate_id AS VARCHAR) AS ApplicantID,

@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(l.LogID AS VARCHAR) AS history_id,
     TRY_CAST(LOWER(l.Entity_Type) AS VARCHAR) AS entity_type,

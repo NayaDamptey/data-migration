@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Invoice
 {{ config(alias='Invoice') }}
 SELECT
     TRY_CAST(TRY_CAST(inv.invoice_id AS INT) AS INTEGER) AS ID,

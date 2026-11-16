@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Timesheets
 {{ config(alias='Timesheets') }}
 SELECT
     TRY_CAST(TRY_CAST(t.timesheet_id AS INT) AS INTEGER) AS ID,

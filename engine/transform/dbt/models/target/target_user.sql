@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> User
 {{ config(alias='User') }}
 SELECT
     TRY_CAST(u.user_id AS VARCHAR) AS UserID,

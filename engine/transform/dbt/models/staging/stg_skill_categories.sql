@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(sc.CategoryID AS VARCHAR) AS category_id,
     TRY_CAST(sc.Name AS VARCHAR) AS name,

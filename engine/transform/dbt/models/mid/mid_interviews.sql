@@ -1,4 +1,3 @@
--- generated: the middle tier for Interviews, with the reviewer's duplicate merges applied
 {{ config(alias='Interviews') }}
 SELECT
     s.interview_id,

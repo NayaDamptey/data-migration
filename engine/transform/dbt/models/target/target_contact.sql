@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Contact
 {{ config(alias='Contact') }}
 SELECT
     TRY_CAST(ct.contact_id AS VARCHAR) AS ID,

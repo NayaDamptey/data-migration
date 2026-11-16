@@ -1,4 +1,3 @@
--- generated: the middle tier for Users, with the reviewer's duplicate merges applied
 {{ config(alias='Users') }}
 SELECT
     s.user_id,

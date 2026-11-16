@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Leads
 {{ config(alias='Leads') }}
 SELECT
     TRY_CAST(TRY_CAST(ld.lead_id AS INT) AS INTEGER) AS ID,

@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(sc.Schedule_ID AS VARCHAR) AS activity_id,
     TRY_CAST(sc.ScheduleType AS VARCHAR) AS activity_type,

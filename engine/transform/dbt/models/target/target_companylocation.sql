@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> CompanyLocation
 {{ config(alias='CompanyLocation') }}
 SELECT
     TRY_CAST(c.client_id AS VARCHAR) AS ID,

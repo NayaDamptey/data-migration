@@ -1,4 +1,3 @@
--- generated: the middle tier for Activities, with the reviewer's duplicate merges applied
 {{ config(alias='Activities') }}
 SELECT
     s.activity_id,

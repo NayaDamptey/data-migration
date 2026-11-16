@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(r.RecruiterID AS VARCHAR) AS user_id,
     TRY_CAST(LEFT(CAST(r.Fullname AS TEXT), STRPOS(r.Fullname || ' ', ' ') - 1) AS VARCHAR) AS first_name,

@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Skills
 {{ config(alias='Skills') }}
 SELECT
     TRY_CAST(sk.skill_id AS VARCHAR) AS ID,

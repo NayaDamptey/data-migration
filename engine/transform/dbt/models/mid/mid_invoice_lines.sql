@@ -1,4 +1,3 @@
--- generated: the middle tier for Invoice lines, with the reviewer's duplicate merges applied
 {{ config(alias='InvoiceLines') }}
 SELECT
     s.line_id,

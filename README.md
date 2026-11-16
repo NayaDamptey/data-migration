@@ -57,7 +57,7 @@ export INSERT scripts in any SQL dialect with SQLGlot.
    upload source → run data quality → run canonical layer → run target → get data.
 2. **Data quality** (`/quality`): locked until source data is uploaded. Two tabs:
    - **Checks:** 4 checks: duplicate records; placements linked to no job; jobs linked to no company;
-     dates that don't make sense (end before start, placements outside their job's dates, placeholder or
+     invalid dates (end before start, placements outside their job's dates, placeholder or
      future dates). Each problem is described technically (table, key, values).
    - **Duplicates:** each suspected pair side by side. Merge (keep one record, pick each value) or keep
      both. A decision is applied to the middle tier and target straight away, as a new version.

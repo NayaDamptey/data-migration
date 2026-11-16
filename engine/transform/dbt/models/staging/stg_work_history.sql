@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(eh.Hist_ID AS VARCHAR) AS history_id,
     TRY_CAST(ep.Person_ID AS VARCHAR) AS candidate_id,

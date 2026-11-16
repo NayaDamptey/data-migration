@@ -1,4 +1,3 @@
--- generated: the middle tier for Work history, with the reviewer's duplicate merges applied
 {{ config(alias='WorkHistory') }}
 SELECT
     s.history_id,

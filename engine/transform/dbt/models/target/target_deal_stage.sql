@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Deal_Stage
 {{ config(alias='Deal_Stage') }}
 SELECT
     TRY_CAST(TRY_CAST(pl.placement_id AS INT) AS INTEGER) AS ID,

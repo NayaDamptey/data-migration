@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> References
 {{ config(alias='References') }}
 SELECT
     TRY_CAST(r.reference_id AS VARCHAR) AS ID,

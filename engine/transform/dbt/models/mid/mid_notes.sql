@@ -1,4 +1,3 @@
--- generated: the middle tier for Notes, with the reviewer's duplicate merges applied
 {{ config(alias='Notes') }}
 SELECT
     s.note_id,

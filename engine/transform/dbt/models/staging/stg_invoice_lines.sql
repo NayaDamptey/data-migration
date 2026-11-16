@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(ie.Invoice_EntryID AS VARCHAR) AS line_id,
     TRY_CAST(ie.Invoice_ID AS VARCHAR) AS invoice_id,

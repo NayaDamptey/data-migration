@@ -1,4 +1,3 @@
--- generated: rows the target load rejected (not loaded) or flagged (loaded, needs a look)
 SELECT 'Contact' AS target_table, CAST(ct.contact_id AS VARCHAR) AS source_key, 'rejected' AS action, 'contact linked to no company (orphan)' AS reason
 FROM {{ ref('mid_contacts') }} AS ct
 

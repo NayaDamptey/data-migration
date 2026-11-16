@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(s.AssociateID AS VARCHAR) AS contact_id,
     TRY_CAST(co.AccountID AS VARCHAR) AS client_id,

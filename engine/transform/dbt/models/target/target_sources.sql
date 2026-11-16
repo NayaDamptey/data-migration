@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Sources
 {{ config(alias='Sources') }}
 SELECT
     TRY_CAST(CAST(ROW_NUMBER() OVER (ORDER BY s.source NULLS FIRST) AS VARCHAR) AS VARCHAR) AS ID,

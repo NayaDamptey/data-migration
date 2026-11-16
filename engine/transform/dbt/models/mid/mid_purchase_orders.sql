@@ -1,4 +1,3 @@
--- generated: the middle tier for Purchase orders, with the reviewer's duplicate merges applied
 {{ config(alias='PurchaseOrders') }}
 SELECT
     s.po_no,

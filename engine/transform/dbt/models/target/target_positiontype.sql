@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> PositionType
 {{ config(alias='PositionType') }}
 SELECT
     TRY_CAST(ROW_NUMBER() OVER (ORDER BY j.employment_type NULLS FIRST) AS INTEGER) AS ID,

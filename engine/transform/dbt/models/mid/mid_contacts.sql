@@ -1,4 +1,3 @@
--- generated: the middle tier for Contacts, with the reviewer's duplicate merges applied
 {{ config(alias='Contacts') }}
 SELECT
     s.contact_id,

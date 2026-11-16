@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> Notes
 {{ config(alias='Notes') }}
 SELECT
     TRY_CAST(TRY_CAST(n.note_id AS INT) AS INTEGER) AS ID,

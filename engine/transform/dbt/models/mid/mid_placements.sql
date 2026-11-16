@@ -1,4 +1,3 @@
--- generated: the middle tier for Placements, with the reviewer's duplicate merges applied
 {{ config(alias='Placements') }}
 SELECT
     s.placement_id,

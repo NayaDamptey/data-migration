@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(g.GDPR_ConsentID AS VARCHAR) AS consent_id,
     TRY_CAST(g.Person_ID AS VARCHAR) AS person_id,

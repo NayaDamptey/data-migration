@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(ld.Lead_ID AS VARCHAR) AS lead_id,
     TRY_CAST(ld.Name AS VARCHAR) AS full_name,

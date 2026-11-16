@@ -1,4 +1,3 @@
--- generated from spec/target.yml: middle tier -> PurchaseOrderItems
 {{ config(alias='PurchaseOrderItems') }}
 SELECT
     TRY_CAST(ROW_NUMBER() OVER (ORDER BY po.po_no NULLS FIRST) AS INTEGER) AS ID,

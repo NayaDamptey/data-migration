@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(f.Interview_FeedbackID AS VARCHAR) AS interview_id,
     TRY_CAST(f.Interviewee_ID AS VARCHAR) AS candidate_id,

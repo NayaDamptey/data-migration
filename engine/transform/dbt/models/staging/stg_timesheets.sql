@@ -1,4 +1,3 @@
--- generated from spec/middle.yml: source -> canonical shape
 SELECT
     TRY_CAST(t.ID AS VARCHAR) AS timesheet_id,
     TRY_CAST(t.PONo AS VARCHAR) AS po_no,
