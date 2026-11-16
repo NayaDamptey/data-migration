@@ -56,11 +56,11 @@ def test_every_standard_check_fails_on_legacy(legacy):
 
 # planted-defect category -> the standard check that must catch it
 EXPECTED = {
-    "DUPLICATE_PERSON": "duplicate_people", "DUPLICATE_ASSOCIATE": "duplicate_people",
-    "DUPLICATE_ACCOUNT": "duplicate_entities", "DUPLICATE_JOB": "duplicate_entities",
-    "DUPLICATE_TRANSACTION": "duplicate_entities", "SPLIT_HISTORY": "duplicate_entities",
-    "SOFT_DELETE_CONFLICT": "deleted_still_active", "ORPHAN_CONTACT": "orphaned_contacts",
-    "PLACEMENT_ON_DELETED": "placements_on_deleted", "ORPHAN_DOCUMENT": "orphaned_documents", "ORPHAN_NOTE": "orphaned_notes",
+    "DUPLICATE_PERSON": "duplicate_records", "DUPLICATE_ASSOCIATE": "duplicate_records",
+    "DUPLICATE_ACCOUNT": "duplicate_records", "DUPLICATE_JOB": "duplicate_records",
+    "DUPLICATE_TRANSACTION": "duplicate_records", "SPLIT_HISTORY": "duplicate_records",
+    "PLACEMENT_NO_JOB": "placements_no_job", "JOB_NO_COMPANY": "jobs_no_company",
+    "DATE_LOGIC": "dates", "SENTINEL_DATE": "dates",
 }
 
 

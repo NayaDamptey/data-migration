@@ -5,6 +5,12 @@ TRUNCATE TABLE dbo.Shortlist;
 DELETE FROM dbo.MigrationRejects WHERE target_table = N'Shortlist';
 
 INSERT INTO dbo.MigrationRejects (target_table, source_key, action, reason)
+SELECT N'Shortlist', CAST(TRY_CAST(a.application_id AS INT) AS NVARCHAR(200)), N'rejected', N'linked to no job, or to a job with no company'
+FROM Migration_Staging.mid.Applications a
+WHERE (a.stage IN ('screening', 'interview', 'offer'))
+  AND NOT (EXISTS (SELECT 1 FROM Migration_Staging.mid.Jobs x WHERE x.job_id = a.job_id AND x.client_id IS NOT NULL));
+
+INSERT INTO dbo.MigrationRejects (target_table, source_key, action, reason)
 SELECT N'Shortlist', CAST(TRY_CAST(a.application_id AS INT) AS NVARCHAR(200)), N'rejected', N'not a migrated candidate (a contact, a removed duplicate or missing)'
 FROM Migration_Staging.mid.Applications a
 WHERE (a.stage IN ('screening', 'interview', 'offer'))
@@ -29,4 +35,5 @@ SELECT
     a.applied_at                                         AS AddedAt
 FROM Migration_Staging.mid.Applications a
 WHERE (a.stage IN ('screening', 'interview', 'offer'))
+  AND (EXISTS (SELECT 1 FROM Migration_Staging.mid.Jobs x WHERE x.job_id = a.job_id AND x.client_id IS NOT NULL))
   AND (EXISTS (SELECT 1 FROM Migration_Staging.mid.Candidates x WHERE x.candidate_id = a.candidate_id));

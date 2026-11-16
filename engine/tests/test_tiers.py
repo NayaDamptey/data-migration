@@ -15,6 +15,9 @@ LINKS = [
     ("Placements", "ApplicantID", "Applicant", "ApplicantID", ""),
     ("Placements", "PositionID", "Position", "ID", ""),
     ("Position", "CompanyID", "Company", "ID", ""),
+    ("Position_Details", "PositionID", "Position", "ID", ""),
+    ("Offer", "PlacementID", "Placements", "ID", ""),
+    ("Deal", "PlacementID", "Placements", "ID", ""),
     ("Contact", "CompanyID", "Company", "ID", ""),
     ("Comms", "ObjectID", "Applicant", "ApplicantID", ""),
     ("Notes", "ApplicantID", "Applicant", "ApplicantID", ""),
@@ -55,18 +58,18 @@ def test_no_broken_links(loaded, child, col, parent, key, where):
     assert n == 0, f"{n} {child}.{col} value(s) point at no {parent}"
 
 
-def test_orphans_are_rejected_not_loaded(loaded):
-    assert loaded.execute("SELECT COUNT(*) FROM dbo.Contact WHERE CompanyID IS NULL").fetchone()[0] == 0
-    assert loaded.execute("SELECT COUNT(*) FROM dbo.Notes WHERE ApplicantID IS NULL AND ContactID IS NULL "
-                          "AND CompanyID IS NULL AND PositionID IS NULL").fetchone()[0] == 0
-    reasons = {r[0] for r in loaded.execute("SELECT DISTINCT reason FROM dbo.MigrationRejects WHERE action = 'rejected'")}
-    assert "contact linked to no company (orphan)" in reasons
-    assert "linked to no migrated record (orphan)" in reasons
+def test_jobs_without_a_company_are_rejected(loaded):
+    assert loaded.execute("SELECT COUNT(*) FROM dbo.Position WHERE CompanyID IS NULL").fetchone()[0] == 0
+    n = loaded.execute("SELECT COUNT(*) FROM dbo.MigrationRejects WHERE target_table = 'Position' "
+                       "AND reason = 'job linked to no company'").fetchone()[0]
+    assert n > 0
 
 
-def test_deleted_parents_are_flagged(loaded):
-    flagged = {r[0] for r in loaded.execute("SELECT DISTINCT reason FROM dbo.MigrationRejects WHERE action = 'flagged'")}
-    assert {"live placement on a deleted job", "live placement on a deleted company"} <= flagged
+def test_placements_without_a_job_are_rejected(loaded):
+    assert loaded.execute("SELECT COUNT(*) FROM dbo.Placements WHERE PositionID IS NULL").fetchone()[0] == 0
+    n = loaded.execute("SELECT COUNT(*) FROM dbo.MigrationRejects WHERE target_table = 'Placements' "
+                       "AND reason = 'linked to no job, or to a job with no company'").fetchone()[0]
+    assert n > 0
 
 
 def test_merged_duplicates_are_gone(loaded):

@@ -174,22 +174,36 @@ RULES: list[Rule] = [
          "SELECT AddressID, '[' || ZipCode || ']' FROM Addresses WHERE ZipCode <> TRIM(ZipCode)"),
 
     # ── dates ────────────────────────────────────────────────────────────────
-    Rule("dob.range", "SENTINEL_DATE", "Person", "DOB between 1940 and 16 years ago",
+    Rule("dob.range", "SENTINEL_DATE", "Person", "Person.DOB before 1940 or less than 16 years ago",
          "SELECT Person_ID, CAST(DOB AS VARCHAR) FROM Person WHERE DOB < DATE '1940-01-01' OR DOB > current_date - INTERVAL 16 YEAR"),
-    Rule("req.start.placeholder", "SENTINEL_DATE", "Req", "Req.StartDate after 2000",
+    Rule("req.start.placeholder", "SENTINEL_DATE", "Req", "Req.StartDate is a placeholder (before 2000)",
          "SELECT ReqID, CAST(StartDate AS VARCHAR) FROM Req WHERE StartDate < DATE '2000-01-01'"),
-    Rule("placement.end_after_start", "DATE_LOGIC", "Req_Hired", "Placement EndDate >= StartDate",
+    Rule("placement.end_after_start", "DATE_LOGIC", "Req_Hired", "Req_Hired.EndDate before StartDate",
          "SELECT Req_HiredID, CAST(StartDate AS VARCHAR) || ' > ' || CAST(EndDate AS VARCHAR) FROM Req_Hired WHERE EndDate < StartDate"),
-    Rule("req.end_after_start", "DATE_LOGIC", "Req", "Job EndDate >= StartDate",
+    Rule("req.end_after_start", "DATE_LOGIC", "Req", "Req.EndDate before StartDate",
          "SELECT ReqID, CAST(EndDate AS VARCHAR) FROM Req WHERE EndDate < StartDate"),
-    Rule("invoice.due_after_issue", "DATE_LOGIC", "Invoice", "Invoice DateDue >= InvoiceDate",
+    Rule("invoice.due_after_issue", "DATE_LOGIC", "Invoice", "Invoice.DateDue before InvoiceDate",
          "SELECT InvoiceID, CAST(DateDue AS VARCHAR) FROM Invoice WHERE DateDue < InvoiceDate"),
-    *[Rule(f"created.not_future.{t}", "DATE_LOGIC", t, f"{t}.CreatedAt not in the future",
+    *[Rule(f"created.not_future.{t}", "DATE_LOGIC", t, f"{t}.CreatedAt in the future",
            f"SELECT {q(PK[t])}, CAST(CreatedAt AS VARCHAR) FROM {q(t)} WHERE CreatedAt > now()")
       for t in ("Req", "Accounts", "Person", "Req_Hired")],
-    Rule("req.updated_after_created", "DATE_LOGIC", "Req", "Req UpdatedAt >= CreatedAt",
+    Rule("req.updated_after_created", "DATE_LOGIC", "Req", "Req.UpdatedAt before CreatedAt",
          "SELECT ReqID, CAST(CreatedAt AS VARCHAR) FROM Req WHERE UpdatedAt < CreatedAt"),
-    Rule("placement.after_job_created", "DATE_LOGIC", "Req_Hired", "Placement starts on/after its job was raised",
+    Rule("placement.within_job", "DATE_LOGIC", "Req_Hired", "Req_Hired.StartDate after its Req.EndDate",
+         "SELECT h.Req_HiredID, 'starts ' || CAST(CAST(h.StartDate AS DATE) AS VARCHAR) || ', job ended ' || CAST(CAST(r.EndDate AS DATE) AS VARCHAR) "
+         "FROM Req_Hired h JOIN Req r ON r.ReqID = h.Req_ID WHERE h.Pipeline_Stage = 'Placed' AND r.EndDate IS NOT NULL "
+         "AND CAST(h.StartDate AS DATE) > CAST(r.EndDate AS DATE)"),
+    Rule("placement.after_candidate_created", "DATE_LOGIC", "Req_Hired", "Req_Hired.StartDate before the Person was created",
+         "SELECT h.Req_HiredID, 'starts ' || CAST(CAST(h.StartDate AS DATE) AS VARCHAR) || ', candidate added ' || CAST(CAST(p.CreatedAt AS DATE) AS VARCHAR) "
+         "FROM Req_Hired h JOIN Person p ON p.Person_ID = h.Invoiced_PersonID WHERE h.Pipeline_Stage = 'Placed' "
+         "AND CAST(h.StartDate AS DATE) < CAST(p.CreatedAt AS DATE)"),
+    Rule("placement.no_job", "PLACEMENT_NO_JOB", "Req_Hired", "Req_Hired (Placed) with NULL or unresolved Req_ID",
+         "SELECT h.Req_HiredID, 'Req_ID = ' || COALESCE(CAST(h.Req_ID AS VARCHAR), 'NULL') FROM Req_Hired h "
+         "WHERE h.Pipeline_Stage = 'Placed' AND (h.Req_ID IS NULL OR h.Req_ID NOT IN (SELECT ReqID FROM Req))"),
+    Rule("job.no_company", "JOB_NO_COMPANY", "Req", "Req with NULL or unresolved AccountID",
+         "SELECT r.ReqID, 'AccountID = ' || COALESCE(CAST(r.AccountID AS VARCHAR), 'NULL') FROM Req r "
+         "WHERE r.AccountID IS NULL OR r.AccountID NOT IN (SELECT Account_ID FROM Accounts)"),
+    Rule("placement.after_job_created", "DATE_LOGIC", "Req_Hired", "Req_Hired.StartDate before its Req was created",
          "SELECT h.Req_HiredID, CAST(h.StartDate AS VARCHAR) || ' < job created ' || CAST(r.CreatedAt AS VARCHAR) "
          "FROM Req_Hired h JOIN Req r ON r.ReqID = h.Req_ID WHERE CAST(h.StartDate AS DATE) < CAST(r.CreatedAt AS DATE)"),
 
@@ -348,15 +362,15 @@ RULES: list[Rule] = [
                           AND h.Pipeline_Stage = 'Placed' AND h.Worktype = 'Contract')"""),
 
     # ── timesheets ───────────────────────────────────────────────────────────
-    Rule("timesheet.week_shape", "DATE_LOGIC", "TimeSheets", "Timesheet covers one Monday-Sunday week",
+    Rule("timesheet.week_shape", "DATE_LOGIC", "TimeSheets", "TimeSheets row does not cover one Monday-Sunday week",
          "SELECT ID, CAST(StartDate AS VARCHAR) || '..' || CAST(Enddate AS VARCHAR) FROM TimeSheets "
          "WHERE isodow(StartDate) <> 1 OR date_diff('day', StartDate, Enddate) <> 6"),
-    Rule("timesheet.not_future", "DATE_LOGIC", "TimeSheets", "Timesheet week is not in the future",
+    Rule("timesheet.not_future", "DATE_LOGIC", "TimeSheets", "TimeSheets week is in the future",
          "SELECT ID, CAST(StartDate AS VARCHAR) FROM TimeSheets WHERE StartDate > current_date"),
     Rule("timesheet.one_job_one_person", "CONSISTENCY", "TimeSheets", "All lines of a timesheet are for one contractor and one job",
          "SELECT Timesheet_ID, 'mixed lines' FROM TimesheetItems GROUP BY Timesheet_ID "
          "HAVING COUNT(DISTINCT Person_ID) > 1 OR COUNT(DISTINCT Req_ID) > 1"),
-    Rule("timesheet.within_placement", "DATE_LOGIC", "TimeSheets", "Timesheet week falls inside the contractor's placement", """
+    Rule("timesheet.within_placement", "DATE_LOGIC", "TimeSheets", "TimeSheets week outside the contractor's placement dates", """
         SELECT DISTINCT t.ID, CAST(t.StartDate AS VARCHAR) || ' not in ' || CAST(CAST(h.StartDate AS DATE) AS VARCHAR)
                || '..' || CAST(CAST(h.EndDate AS DATE) AS VARCHAR)
         FROM TimeSheets t JOIN TimesheetItems i ON i.Timesheet_ID = t.ID
@@ -374,7 +388,7 @@ RULES: list[Rule] = [
         SELECT ItemID, CAST(TotalHours AS VARCHAR) || 'h for ' || CAST(StartTime AS VARCHAR) || '-' || CAST(EndTime AS VARCHAR)
         FROM TimesheetItems, LATERAL (SELECT date_diff('minute', StartTime, EndTime) / 60.0 AS span)
         WHERE abs(TotalHours - (span - CASE WHEN span >= 6 THEN 0.5 ELSE 0 END)) > 0.01"""),
-    Rule("timesheet.line_submitted_in_week", "DATE_LOGIC", "TimesheetItems", "Line submitted at the end of its timesheet week",
+    Rule("timesheet.line_submitted_in_week", "DATE_LOGIC", "TimesheetItems", "TimesheetItems line not submitted at the end of its week",
          "SELECT i.ItemID, CAST(i.CreatedAt AS VARCHAR) FROM TimesheetItems i JOIN TimeSheets t ON t.ID = i.Timesheet_ID "
          "WHERE CAST(i.CreatedAt AS DATE) < t.StartDate OR CAST(i.CreatedAt AS DATE) > t.Enddate + INTERVAL 7 DAY"),
     Rule("timesheet.approval", "CONSISTENCY", "TimeSheets", "Approved <=> approval date + approver; approved after the week ends", """

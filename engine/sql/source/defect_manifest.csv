@@ -36,26 +36,30 @@ D0034,DUPLICATE_TRANSACTION,TimesheetItems,ItemID,805,*,copy of ItemID=122,,doub
 D0035,DUPLICATE_JOB,Req,ReqID,321,*,copy of ReqID=236,CreatedAt=2024-11-04 10:00:00; UpdatedAt=2024-11-04 10:00:00,job 236 raised a second time
 D0036,DUPLICATE_JOB,Req,ReqID,322,*,copy of ReqID=127,CreatedAt=2024-11-04 10:00:00; UpdatedAt=2024-11-04 10:00:00,job 127 raised a second time
 D0037,DUPLICATE_JOB,Req,ReqID,323,*,copy of ReqID=88,CreatedAt=2024-11-04 10:00:00; UpdatedAt=2024-11-04 10:00:00,job 88 raised a second time
-D0038,ORPHAN_CONTACT,Associates,AssociateID,302,*,copy of AssociateID=161,Person_ID=10201; AssociateTitle=Ms; Active=1; CreatedAt=2024-09-01 09:05:00,Harriet Lindqvist: contact linked to no company
-D0039,ORPHAN_CONTACT,Associates,AssociateID,303,*,copy of AssociateID=235,Person_ID=10202; AssociateTitle=Mr; Active=1; CreatedAt=2024-09-01 09:05:00,Graham Achterberg: contact linked to no company
-D0040,ORPHAN_CONTACT,Associates,AssociateID,304,*,copy of AssociateID=136,Person_ID=10203; AssociateTitle=Ms; Active=1; CreatedAt=2024-09-01 09:05:00,Mhairi Vasudevan: contact linked to no company
-D0041,ORPHAN_CONTACT,Associates,AssociateID,305,*,copy of AssociateID=103,Person_ID=10204; AssociateTitle=Mr; Active=1; CreatedAt=2024-09-01 09:05:00,Fraser Rennie: contact linked to no company
-D0042,ORPHAN_NOTE,Notes,Note_ID,281,ObjectId,237,NULL,Associate note lost its record id
-D0043,ORPHAN_NOTE,Notes,Note_ID,35,ObjectId,80,NULL,Person note lost its record id
-D0044,ORPHAN_NOTE,Notes,Note_ID,327,ObjectId,90,NULL,Account note lost its record id
-D0045,ORPHAN_NOTE,Notes,Note_ID,270,ObjectId,121,NULL,Account note lost its record id
-D0046,ORPHAN_NOTE,Notes,Note_ID,320,ObjectId,64,91184,Account note points at a record that does not exist
-D0047,ORPHAN_NOTE,Notes,Note_ID,299,ObjectId,73,96676,Account note points at a record that does not exist
-D0048,ORPHAN_NOTE,Notes,Note_ID,23,ObjectId,24,90882,Req note points at a record that does not exist
-D0049,ORPHAN_DOCUMENT,Documents,Doc_ID,450,Doc_AssocID,171,NULL,Associate document lost its owner
-D0050,ORPHAN_DOCUMENT,Documents,Doc_ID,362,Doc_AssocID,245,NULL,Req document lost its owner
-D0051,ORPHAN_DOCUMENT,Documents,Doc_ID,429,Doc_AssocID,272,NULL,Req document lost its owner
-D0052,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,168,Req.Deleted,0,1,job 101 deleted while placement is live
-D0053,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,197,Req.Deleted,0,1,job 73 deleted while placement is live
-D0054,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,64,Accounts.Deleted,0,1,company 89 deleted while placement is live
-D0055,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,10,Accounts.Deleted,0,1,company 63 deleted while placement is live
-D0056,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,196,Accounts.Deleted,0,1,company 63 deleted while placement is live
-D0057,PLACEMENT_ON_DELETED,Req_Hired,Req_HiredID,236,Accounts.Deleted,0,1,company 63 deleted while placement is live
-D0058,SOFT_DELETE_CONFLICT,Accounts,Account_ID,99,Deleted,0,1,account deleted but has open jobs
-D0059,SOFT_DELETE_CONFLICT,Accounts,Account_ID,59,Deleted,0,1,account deleted but has open jobs
-D0060,SOFT_DELETE_CONFLICT,Accounts,Account_ID,7,Deleted,0,1,account deleted but has open jobs
+D0038,PLACEMENT_NO_JOB,Req_Hired,Req_HiredID,119,Req_ID,188,NULL,placement lost its job
+D0039,PLACEMENT_NO_JOB,Req_Hired,Req_HiredID,241,Req_ID,123,NULL,placement lost its job
+D0040,PLACEMENT_NO_JOB,Req_Hired,Req_HiredID,244,Req_ID,126,NULL,placement lost its job
+D0041,JOB_NO_COMPANY,Req,ReqID,235,AccountID,94,NULL,job lost its company
+D0042,JOB_NO_COMPANY,Req,ReqID,320,AccountID,125,NULL,job lost its company
+D0043,JOB_NO_COMPANY,Req,ReqID,136,AccountID,188,NULL,job lost its company
+D0044,SENTINEL_DATE,Person,Person_ID,448,DOB,1992-05-16,1900-01-01,
+D0045,SENTINEL_DATE,Person,Person_ID,112,DOB,1993-06-08,1900-01-01,
+D0046,SENTINEL_DATE,Person,Person_ID,301,DOB,1976-09-02,1900-01-01,
+D0047,SENTINEL_DATE,Person,Person_ID,35,DOB,2000-05-11,1900-01-01,
+D0048,SENTINEL_DATE,Person,Person_ID,352,DOB,1994-07-08,1900-01-01,
+D0049,SENTINEL_DATE,Person,Person_ID,292,DOB,1982-11-30,2031-03-14,DOB in the future
+D0050,SENTINEL_DATE,Person,Person_ID,345,DOB,1992-04-17,2045-03-14,DOB in the future
+D0051,SENTINEL_DATE,Req,ReqID,296,StartDate,2024-01-19 00:00:00,1900-01-01 00:00:00,
+D0052,SENTINEL_DATE,Req,ReqID,23,StartDate,2023-01-01 00:00:00,1900-01-01 00:00:00,
+D0053,SENTINEL_DATE,Req,ReqID,37,StartDate,2023-01-01 00:00:00,1900-01-01 00:00:00,
+D0054,DATE_LOGIC,Req_Hired,Req_HiredID,105,EndDate,2024-09-03,2023-08-17,EndDate before StartDate
+D0055,DATE_LOGIC,Req_Hired,Req_HiredID,247,EndDate,,2022-03-12,EndDate before StartDate
+D0056,DATE_LOGIC,Req_Hired,Req_HiredID,168,EndDate,2023-05-31,2022-05-23,EndDate before StartDate
+D0057,DATE_LOGIC,Req_Hired,Req_HiredID,231,EndDate,,2022-03-22,EndDate before StartDate
+D0058,DATE_LOGIC,Req_Hired,Req_HiredID,159,EndDate,2023-05-31,2022-04-07,EndDate before StartDate
+D0059,DATE_LOGIC,Req,ReqID,101,CreatedAt,2022-04-16 00:00:00,2099-12-31 00:00:00,CreatedAt in the future
+D0060,DATE_LOGIC,Req,ReqID,54,CreatedAt,2022-10-27 00:00:00,2099-12-31 00:00:00,CreatedAt in the future
+D0061,DATE_LOGIC,Invoice,InvoiceID,73,DateDue,2023-03-31,2023-01-30,DateDue before InvoiceDate
+D0062,DATE_LOGIC,Invoice,InvoiceID,51,DateDue,2023-03-31,2023-01-30,DateDue before InvoiceDate
+D0063,DATE_LOGIC,Invoice,InvoiceID,116,DateDue,2023-03-31,2023-01-30,DateDue before InvoiceDate
+D0064,DATE_LOGIC,Invoice,InvoiceID,192,DateDue,2023-03-31,2023-01-30,DateDue before InvoiceDate

@@ -12,13 +12,13 @@ data is generated.
 
 ```
 Cobaltdesk_Legacy (SQL Server)            legacy CRM: 58 tables
-   │  data quality       7 standard checks (DuckDB rules) + duplicate review (merge or keep both)
+   │  data quality       4 checks (DuckDB rules) + duplicate review (merge or keep both)
    ▼
 Migration_Staging.mid.<Entity>            middle tier: one INSERT ... SELECT script per entity (25),
    │                                      then the reviewer's duplicate merges are applied
    ▼
 RecruitPlatform_Target.dbo.<Table>        target: one INSERT ... SELECT script per table (37);
-                                          orphans are rejected, rows on deleted parents are flagged
+                                          jobs with no company, placements with no job and orphans are rejected
                                           (dbo.MigrationRejects)
    │
    ▼
@@ -30,9 +30,9 @@ Dolt                                      every run, field change and merge is a
 1. **Setup** (`/`): source and destination, the source upload (CSVs, folders or zips) and the pipeline:
    upload source → run data quality → run canonical layer → run target → get data.
 2. **Data quality** (`/quality`): locked until source data is uploaded. Two tabs:
-   - **Checks:** the 7 standard checks: duplicate people; duplicate companies, jobs and transactions;
-     deleted records still active; placements on deleted jobs or companies; orphaned contacts,
-     documents and notes. Each problem is described technically (table, key, values).
+   - **Checks:** 4 checks: duplicate records; placements linked to no job; jobs linked to no company;
+     dates that don't make sense (end before start, placements outside their job's dates, placeholder or
+     future dates). Each problem is described technically (table, key, values).
    - **Duplicates:** each suspected pair side by side. Merge (keep one record, pick each value) or keep
      both. A decision is applied to the middle tier and target straight away, as a new version.
 3. **Schema mapping** (`/canonical`): the middle tier.
@@ -88,7 +88,7 @@ Plain Python, used by the API through `backend/app/engine_bridge.py` and `backen
 
 | Folder | What it does |
 |---|---|
-| `engine/sample_data/` | Builds the legacy CRM source (58 tables, foreign keys, 60 planted problems with an answer key) |
+| `engine/sample_data/` | Builds the legacy CRM source (58 tables, foreign keys, 64 planted problems with an answer key) |
 | `engine/validation/` | Data quality rules (DuckDB), the 7 standard checks and duplicate pairs |
 | `engine/mapping/tiers.py` | The middle tier and target: every field as one expression, scripts, checks, merges |
 | `engine/sql/middle/`, `engine/sql/load/` | The generated middle tier and target scripts |

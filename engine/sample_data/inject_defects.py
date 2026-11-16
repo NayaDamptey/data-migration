@@ -54,6 +54,8 @@ CATEGORY_INFO = {
     "DUPLICATE_JOB":        "Same job raised twice under a new ID",
     "ORPHAN_CONTACT":       "Contact linked to no company",
     "PLACEMENT_ON_DELETED": "Live placement on a soft-deleted job or company",
+    "PLACEMENT_NO_JOB":     "Placement linked to no job",
+    "JOB_NO_COMPANY":       "Job linked to no company",
     "ORPHAN_DOCUMENT":      "Document linked to no record",
     "ORPHAN_NOTE":          "Note linked to no record",
 }
@@ -427,6 +429,18 @@ class Injector:
                 self.record("PLACEMENT_ON_DELETED", "Req_Hired", h["Req_HiredID"], "Accounts.Deleted", "0", "1",
                             f"company {a['Account_ID']} deleted while placement is live")
 
+    def placements_without_job(self):
+        """Placements whose job reference was lost in a past import."""
+        on_timesheets = {(i["Person_ID"], i["Req_ID"]) for i in self.rows("TimesheetItems")}
+        for r in self.pick("Req_Hired", "Req_ID", 3, lambda r: r["Pipeline_Stage"] == "Placed" and r["Deleted"] == "0"
+                           and (r["Invoiced_PersonID"], r["Req_ID"]) not in on_timesheets):
+            self.set("PLACEMENT_NO_JOB", "Req_Hired", r, "Req_ID", None, "placement lost its job")
+
+    def jobs_without_company(self):
+        """Jobs whose company reference was lost."""
+        for r in self.pick("Req", "AccountID", 3, lambda r: r["Deleted"] == "0" and r["AccountID"] != ""):
+            self.set("JOB_NO_COMPANY", "Req", r, "AccountID", None, "job lost its company")
+
     def unattached(self):
         """Notes and documents linked to no record: the id was lost, or points at a record that does not exist."""
         for r in self.pick("Notes", "ObjectId", 4, lambda r: r["ObjectId"] != ""):
@@ -466,8 +480,7 @@ class Injector:
         # duplicates first: INSERT..SELECT copies must see the clean source rows
         # (orphans() — broken links in other tables — is kept but not run: fixed at source)
         for step in (self.account_dupes, self.person_dupes, self.transaction_dupes, self.job_dupes,
-                     self.orphan_contacts, self.unattached, self.placements_on_deleted,
-                     self.soft_delete):
+                     self.placements_without_job, self.jobs_without_company, self.dates):
             step()
 
 

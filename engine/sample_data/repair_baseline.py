@@ -623,6 +623,28 @@ def run(read_csv, write_csv, columns: dict, root: Path) -> list[str]:
             n_new += 1
     log.append(f"Candidates: {n_new} home addresses with email and mobile added ({n_upd} values refreshed)")
 
+    # ── placement dates: a job is still open when its placement starts; a candidate is in the CRM before placed ──
+    def day(v):
+        try:
+            return datetime.strptime((v or "")[:10], "%Y-%m-%d").date()
+        except ValueError:
+            return None
+    req_by = {r["ReqID"]: r for r in T["Req"]}
+    person_by = {p["Person_ID"]: p for p in T["Person"]}
+    n_job = n_cand = 0
+    for h in T["Req_Hired"]:
+        if h["Pipeline_Stage"] != "Placed":
+            continue
+        start = day(h["StartDate"])
+        job = req_by.get(h["Req_ID"])
+        if start and job and day(job["EndDate"]) and day(job["EndDate"]) < start:
+            end = day(h["EndDate"]) or (start + timedelta(days=90))
+            n_job += setv("Req", job, "EndDate", f"{max(end, start).isoformat()} 00:00:00")
+        cand = person_by.get(h["Invoiced_PersonID"])
+        if start and cand and day(cand["CreatedAt"]) and day(cand["CreatedAt"]) > start:
+            n_cand += setv("Person", cand, "CreatedAt", f"{(start - timedelta(days=45)).isoformat()} 09:30:00")
+    log.append(f"Placement dates: {n_job} job end dates extended, {n_cand} candidates added to the CRM before placement")
+
     for t in sorted(changed):
         write_csv(t, T[t], columns[t])
     return log

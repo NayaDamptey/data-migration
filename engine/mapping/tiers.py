@@ -458,10 +458,15 @@ def contact_ok(col: str) -> str:   # contacts are only migrated when they belong
     return f"EXISTS (SELECT 1 FROM {{src}}Contacts x WHERE x.contact_id = {col} AND x.client_id IS NOT NULL)"
 
 
+def job_ok(col: str) -> Check:   # jobs are only migrated when they belong to a company
+    return Check(f"EXISTS (SELECT 1 FROM {{src}}Jobs x WHERE x.job_id = {col} AND x.client_id IS NOT NULL)",
+                 "linked to no job, or to a job with no company")
+
+
 def parent_ok(a: str) -> Check:   # notes and documents: the record they belong to is migrated
     return Check(f"({a}.entity_type = 'candidate' AND EXISTS (SELECT 1 FROM {{src}}Candidates x WHERE x.candidate_id = {a}.entity_id))"
                  f" OR ({a}.entity_type = 'contact' AND {contact_ok(a + '.entity_id')})"
-                 f" OR ({a}.entity_type = 'job' AND EXISTS (SELECT 1 FROM {{src}}Jobs x WHERE x.job_id = {a}.entity_id))"
+                 f" OR ({a}.entity_type = 'job' AND EXISTS (SELECT 1 FROM {{src}}Jobs x WHERE x.job_id = {a}.entity_id AND x.client_id IS NOT NULL))"
                  f" OR ({a}.entity_type = 'client' AND EXISTS (SELECT 1 FROM {{src}}Clients x WHERE x.client_id = {a}.entity_id))",
                  "linked to no migrated record (orphan)")
 
@@ -567,7 +572,7 @@ TARGET = Layer("target", TARGET_DB, "dbo", f"{STAGING_DB}.mid.", ROOT / "sql" / 
         "DateEnds": "j.closed_at",
         "Addedby": "j.owner_user_id",
         "PositionOwnerID": "j.owner_user_id",
-    }, checks=[Check("j.status NOT IN ('open', 'interviewing', 'offer made') OR NOT EXISTS (SELECT 1 FROM {src}Clients x WHERE x.client_id = j.client_id AND x.status = 'deleted')", "open job on a deleted company", "flag")])]),
+    }, checks=[Check("j.client_id IS NOT NULL AND EXISTS (SELECT 1 FROM {src}Clients x WHERE x.client_id = j.client_id)", "job linked to no company")])]),
     Entity("Placements", "Placements", "Placements", [Insert("{src}Placements pl", {
         "ID": "TRY_CAST(pl.placement_id AS INT)",
         "ApplicantID": "pl.candidate_id",
@@ -579,7 +584,7 @@ TARGET = Layer("target", TARGET_DB, "dbo", f"{STAGING_DB}.mid.", ROOT / "sql" / 
         "Fee": "pl.fee",
         "Status": "'Placed'",
         "OwnerID": "pl.owner_user_id",
-    }, joins=["LEFT JOIN {src}Jobs j ON j.job_id = pl.job_id"], checks=[is_candidate("pl.candidate_id"), Check("NOT EXISTS (SELECT 1 FROM {src}Jobs x WHERE x.job_id = pl.job_id AND x.status = 'deleted')", "live placement on a deleted job", "flag"), Check("NOT EXISTS (SELECT 1 FROM {src}Clients x WHERE x.client_id = j.client_id AND x.status = 'deleted')", "live placement on a deleted company", "flag")])]),
+    }, joins=["LEFT JOIN {src}Jobs j ON j.job_id = pl.job_id"], checks=[job_ok("pl.job_id"), is_candidate("pl.candidate_id"), Check("NOT EXISTS (SELECT 1 FROM {src}Jobs x WHERE x.job_id = pl.job_id AND x.status = 'deleted')", "live placement on a deleted job", "flag"), Check("NOT EXISTS (SELECT 1 FROM {src}Clients x WHERE x.client_id = j.client_id AND x.status = 'deleted')", "live placement on a deleted company", "flag")])]),
     Entity("Notes", "Notes", "Notes", [Insert("{src}Notes n", {
         "ID": "TRY_CAST(n.note_id AS INT)",
         "Text": "n.body",
@@ -682,7 +687,7 @@ TARGET = Layer("target", TARGET_DB, "dbo", f"{STAGING_DB}.mid.", ROOT / "sql" / 
         "ClosingDate": "j.closed_at",
         "PayFrequency": "CASE WHEN j.rate_unit = 'day' THEN 'Daily' WHEN j.salary_min IS NOT NULL THEN 'Annual' END",
         "AddedBy": "j.owner_user_id",
-    })]),
+    }, checks=[Check("j.client_id IS NOT NULL", "job linked to no company")])]),
     Entity("Position_Applicant", "Position_Applicant", "Applications", [Insert("{src}Applications a", {
         "ID": "TRY_CAST(a.application_id AS INT)",
         "PositionID": "TRY_CAST(a.job_id AS INT)",
@@ -693,7 +698,7 @@ TARGET = Layer("target", TARGET_DB, "dbo", f"{STAGING_DB}.mid.", ROOT / "sql" / 
         "AddedBy": "a.owner_user_id",
         "AddedAt": "a.applied_at",
         "Active": "CASE WHEN a.stage IN ('placed', 'rejected') OR a.deleted = 1 THEN 0 ELSE 1 END",
-    }, checks=[is_candidate("a.candidate_id")])]),
+    }, checks=[job_ok("a.job_id"), is_candidate("a.candidate_id")])]),
     Entity("Shortlist", "Shortlist", "Shortlists", [Insert("{src}Applications a", {
         "ID": "TRY_CAST(a.application_id AS INT)",
         "PositionID": "TRY_CAST(a.job_id AS INT)",
@@ -702,14 +707,14 @@ TARGET = Layer("target", TARGET_DB, "dbo", f"{STAGING_DB}.mid.", ROOT / "sql" / 
         "Status": "UPPER(LEFT(a.stage, 1)) + SUBSTRING(a.stage, 2, 50)",
         "AddedBy": "a.owner_user_id",
         "AddedAt": "a.applied_at",
-    }, where="a.stage IN ('screening', 'interview', 'offer')", checks=[is_candidate("a.candidate_id")])]),
+    }, where="a.stage IN ('screening', 'interview', 'offer')", checks=[job_ok("a.job_id"), is_candidate("a.candidate_id")])]),
     Entity("Offer", "Offer", "Offers", [Insert("{src}Applications a", {
         "ID": "TRY_CAST(a.application_id AS INT)",
         "PlacementID": "CASE WHEN a.stage = 'placed' THEN TRY_CAST(a.application_id AS INT) END",
         "Accepted": "CASE WHEN a.stage = 'placed' THEN 1 ELSE 0 END",
         "Terms": "a.employment_type",
         "RecruiterID": "a.owner_user_id",
-    }, where="a.stage IN ('offer', 'placed')", checks=[is_candidate("a.candidate_id")])]),
+    }, where="a.stage IN ('offer', 'placed')", checks=[job_ok("a.job_id"), is_candidate("a.candidate_id")])]),
     Entity("Deal", "Deal", "Deals", [Insert("{src}Placements pl", {
         "ID": "TRY_CAST(pl.placement_id AS INT)",
         "PlacementID": "TRY_CAST(pl.placement_id AS INT)",
@@ -718,12 +723,12 @@ TARGET = Layer("target", TARGET_DB, "dbo", f"{STAGING_DB}.mid.", ROOT / "sql" / 
         "DealDate": "pl.start_date",
         "DealType": "pl.placement_type",
         "DealValue": "pl.fee",
-    }, joins=["LEFT JOIN {src}Jobs j ON j.job_id = pl.job_id"], checks=[is_candidate("pl.candidate_id")])]),
+    }, joins=["LEFT JOIN {src}Jobs j ON j.job_id = pl.job_id"], checks=[job_ok("pl.job_id"), is_candidate("pl.candidate_id")])]),
     Entity("Deal_Stage", "Deal_Stage", "Deal stages", [Insert("{src}Placements pl", {
         "ID": "TRY_CAST(pl.placement_id AS INT)",
         "DealID": "TRY_CAST(pl.placement_id AS INT)",
         "Stage": "'Won'",
-    }, checks=[is_candidate("pl.candidate_id")])]),
+    }, checks=[job_ok("pl.job_id"), is_candidate("pl.candidate_id")])]),
     Entity("Work_History", "Work_History", "Work history", [Insert("{src}WorkHistory w", {
         "ID": "TRY_CAST(w.history_id AS INT)",
         "ApplicationID": "w.candidate_id",

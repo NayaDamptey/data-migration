@@ -53,6 +53,8 @@ CATEGORY_LABELS = {
     "DUPLICATE_JOB": "Duplicate jobs",
     "ORPHAN_CONTACT": "Contacts linked to no company",
     "PLACEMENT_ON_DELETED": "Placements on deleted jobs or companies",
+    "PLACEMENT_NO_JOB": "Placements linked to no job",
+    "JOB_NO_COMPANY": "Jobs linked to no company",
     "ORPHAN_DOCUMENT": "Documents linked to no record",
     "ORPHAN_NOTE": "Notes linked to no record",
     "CONSISTENCY": "Records that contradict each other",
@@ -62,7 +64,7 @@ CATEGORY_LABELS = {
 # Categories that block a clean migration if left unfixed
 CRITICAL = {"INTEGRITY", "ORPHAN_FK", "MISSING_REQUIRED", "DUPLICATE_ACCOUNT", "DUPLICATE_PERSON",
             "DUPLICATE_ASSOCIATE", "DUPLICATE_TRANSACTION", "SPLIT_HISTORY", "FINANCE", "DUPLICATE_JOB",
-            "ORPHAN_CONTACT", "PLACEMENT_ON_DELETED", "ORPHAN_DOCUMENT", "ORPHAN_NOTE", "SOFT_DELETE_CONFLICT"}
+            "ORPHAN_CONTACT", "PLACEMENT_ON_DELETED", "PLACEMENT_NO_JOB", "JOB_NO_COMPANY", "DATE_LOGIC", "SENTINEL_DATE", "ORPHAN_DOCUMENT", "ORPHAN_NOTE", "SOFT_DELETE_CONFLICT"}
 
 _lock = threading.Lock()
 _cache: dict[str, tuple[float, dict, object]] = {}     # source -> (built_at, report, duckdb con)

@@ -5,9 +5,9 @@ TRUNCATE TABLE dbo.Position;
 DELETE FROM dbo.MigrationRejects WHERE target_table = N'Position';
 
 INSERT INTO dbo.MigrationRejects (target_table, source_key, action, reason)
-SELECT N'Position', CAST(TRY_CAST(j.job_id AS INT) AS NVARCHAR(200)), N'flagged', N'open job on a deleted company'
+SELECT N'Position', CAST(TRY_CAST(j.job_id AS INT) AS NVARCHAR(200)), N'rejected', N'job linked to no company'
 FROM Migration_Staging.mid.Jobs j
-WHERE NOT (j.status NOT IN ('open', 'interviewing', 'offer made') OR NOT EXISTS (SELECT 1 FROM Migration_Staging.mid.Clients x WHERE x.client_id = j.client_id AND x.status = 'deleted'));
+WHERE NOT (j.client_id IS NOT NULL AND EXISTS (SELECT 1 FROM Migration_Staging.mid.Clients x WHERE x.client_id = j.client_id));
 
 INSERT INTO dbo.Position (
     ID,
@@ -42,4 +42,5 @@ SELECT
     j.closed_at                                                      AS DateEnds,
     j.owner_user_id                                                  AS Addedby,
     j.owner_user_id                                                  AS PositionOwnerID
-FROM Migration_Staging.mid.Jobs j;
+FROM Migration_Staging.mid.Jobs j
+WHERE (j.client_id IS NOT NULL AND EXISTS (SELECT 1 FROM Migration_Staging.mid.Clients x WHERE x.client_id = j.client_id));

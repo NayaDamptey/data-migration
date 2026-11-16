@@ -5,6 +5,12 @@ TRUNCATE TABLE dbo.Offer;
 DELETE FROM dbo.MigrationRejects WHERE target_table = N'Offer';
 
 INSERT INTO dbo.MigrationRejects (target_table, source_key, action, reason)
+SELECT N'Offer', CAST(TRY_CAST(a.application_id AS INT) AS NVARCHAR(200)), N'rejected', N'linked to no job, or to a job with no company'
+FROM Migration_Staging.mid.Applications a
+WHERE (a.stage IN ('offer', 'placed'))
+  AND NOT (EXISTS (SELECT 1 FROM Migration_Staging.mid.Jobs x WHERE x.job_id = a.job_id AND x.client_id IS NOT NULL));
+
+INSERT INTO dbo.MigrationRejects (target_table, source_key, action, reason)
 SELECT N'Offer', CAST(TRY_CAST(a.application_id AS INT) AS NVARCHAR(200)), N'rejected', N'not a migrated candidate (a contact, a removed duplicate or missing)'
 FROM Migration_Staging.mid.Applications a
 WHERE (a.stage IN ('offer', 'placed'))
@@ -25,4 +31,5 @@ SELECT
     a.owner_user_id                                                          AS RecruiterID
 FROM Migration_Staging.mid.Applications a
 WHERE (a.stage IN ('offer', 'placed'))
+  AND (EXISTS (SELECT 1 FROM Migration_Staging.mid.Jobs x WHERE x.job_id = a.job_id AND x.client_id IS NOT NULL))
   AND (EXISTS (SELECT 1 FROM Migration_Staging.mid.Candidates x WHERE x.candidate_id = a.candidate_id));

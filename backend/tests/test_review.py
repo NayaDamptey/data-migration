@@ -27,11 +27,11 @@ def test_record_has_fields_flags_and_related(R):
     assert {g["label"] for g in rec["related"]} >= {"Candidate", "Job", "Company"}
 
 
-def test_orphan_contact_is_flagged_in_plain_words(R):
-    flagged = [r for r in R.records("contacts", flagged_only=True)["records"]]
+def test_job_without_company_is_flagged_in_plain_words(R):
+    flagged = R.records("jobs", flagged_only=True)["records"]
     assert flagged
-    messages = [f["message"] for f in R.record("contacts", flagged[0]["id"])["flags"]]
-    assert any("company" in m.lower() for m in messages)
+    messages = [f["message"] for r in flagged for f in R.record("jobs", r["id"])["flags"]]
+    assert any("no company" in m.lower() for m in messages)
 
 
 def test_value_traces_back_to_its_source_row(R):
