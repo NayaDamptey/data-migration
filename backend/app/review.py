@@ -199,57 +199,50 @@ def record(key: str, rid: str) -> dict:
 
 
 def source(key: str, rid: str, column: str) -> dict:
-    """Where one value came from: the middle-tier expression, and the legacy table/column/row it reads."""
-    import tiers as TI
-    e = TI.MIDDLE.entity(key)
-    _, _, PK, _ = bridge._engine()
-    overrides = TI.load_overrides()
-    for n, ins in enumerate(e.inserts):
-        if column not in ins.columns:
+    """Where one value came from: the field's expression in the mapping spec, and the source table, column
+    and row it reads (looked up in the current run's Parquet files)."""
+    import re
+    B, RU = layers._engine()
+    _, _, PK, schema = bridge._engine()
+    run = layers._current()
+    src_dir = RU.run_dir(run) / "source"
+    ent = next((e for e in B.load_spec("middle")["entities"] if e["key"] == key), None)
+    if ent is None:
+        raise KeyError(key)
+    has = lambda t, c: any(x["col"] == c for x in schema.get(t, []))     # noqa: E731
+    for sel in ent["selects"]:
+        if column not in sel["columns"]:
             continue
-        fmt = lambda s: s.replace("{src}", TI.MIDDLE.src)                 # noqa: E731
-        expr = TI.expression(TI.MIDDLE, e, n, column, overrides)
-        id_expr = TI.expression(TI.MIDDLE, e, n, next(iter(ins.columns)), overrides)
-        aliases = {}
-        applied = {}                                     # OUTER APPLY alias -> tables it reads
-        for frag in [ins.source, *ins.joins]:
-            is_apply = frag.lstrip().upper().startswith("OUTER APPLY")
-            m = re.search(r"\{src\}(\w+)\s+(\w+)(?:\s|$)", frag)
-            if m and not is_apply:
-                aliases[m.group(2)] = m.group(1)
-            ma = re.search(r"\)\s*(\w+)\s*$", frag)
-            if is_apply and ma:
-                applied[ma.group(1)] = re.findall(r"\{src\}(\w+)", frag)
-        all_refs = re.findall(r"\b([A-Za-z_]\w*)\.([A-Za-z_]\w*)\b", expr)
-        refs = [(a, c) for a, c in all_refs if a in aliases]
-        derived = [(a, c) for a, c in all_refs if a in applied]
-        cols = [f"CAST(({fmt(expr)}) AS NVARCHAR(MAX)) AS [value]"]
-        for i, (a, c) in enumerate(refs):
+        expr = str(sel["columns"][column])
+        id_expr = str(next(iter(sel["columns"].values())))
+        aliases, applied = {}, {}
+        for frag in [sel["from"], *(sel.get("joins") or [])]:
+            if "LATERAL" in frag:
+                m = re.search(r"\)\s+AS\s+(\w+)\s+ON\s+TRUE\s*$", frag)
+                if m:
+                    applied[m.group(1)] = re.findall(r"src__(\w+)", frag)
+            else:
+                m = re.search(r"src__(\w+)\s+AS\s+(\w+)", frag)
+                if m:
+                    aliases[m.group(2)] = m.group(1)
+        refs = re.findall(r"\b([A-Za-z_]\w*)\.([A-Za-z_]\w*)\b", expr)
+        direct = [(a, c) for a, c in refs if a in aliases]
+        derived = [(a, c) for a, c in refs if a in applied]
+        par = lambda s: re.sub(r"\bsrc__(\w+)", lambda m: f"read_parquet('{(src_dir / (m.group(1) + '.parquet')).as_posix()}')", s)  # noqa: E731
+        cols = [f"CAST(({par(expr)}) AS VARCHAR)"]
+        for a, c in direct:
             pk = PK.get(aliases[a])
-            cols.append(f"CAST({a}.[{c}] AS NVARCHAR(MAX)) AS [raw{i}]")
-            cols.append(f"CAST({a}.[{pk}] AS NVARCHAR(200)) AS [key{i}]" if pk else f"NULL AS [key{i}]")
-        sql = (f"SELECT TOP 1 {', '.join(cols)} FROM {fmt(ins.source)} " + " ".join(fmt(j) for j in ins.joins)
-               + f" WHERE CAST(({fmt(id_expr)}) AS NVARCHAR(200)) = ?")
-        cn = TI._connect(TI.SOURCE_DB)
-        try:
-            row = cn.cursor().execute(sql, rid).fetchone()
-        finally:
-            cn.close()
+            cols += [f"CAST({a}.{c} AS VARCHAR)", f"CAST({a}.{pk} AS VARCHAR)" if pk else "NULL"]
+        sql = f"SELECT {', '.join(cols)} FROM {par(sel['from'])} " + " ".join(par(j) for j in sel.get("joins") or [])             + f" WHERE CAST(({par(id_expr)}) AS VARCHAR) = ? LIMIT 1"
+        row = RU.connect(run).execute(sql, [rid]).fetchone()
         if row is None:
             continue
-        schema = bridge._engine()[3]
-        has = lambda t, c: any(x["col"] == c for x in schema.get(t, []))   # noqa: E731
-        via = [{"table": next((t for t in applied[a] if has(t, c)), applied[a][0]), "column": c, "key_column": None,
-                "key": None, "raw": row[0], "derived": True} for a, c in derived]
-        if via:
-            note = "Taken from the most recent related row (latest job / latest application)"
-        elif not refs:
-            note = "A fixed value set by the mapping, not read from the source"
-        else:
-            note = None
-        return {"column": column, "expression": expr, "value": row[0],
-                "sources": [{"table": aliases[a], "column": c, "key_column": PK.get(aliases[a]), "key": row[2 + 2 * i],
-                             "raw": row[1 + 2 * i]} for i, (a, c) in enumerate(refs)] + via,
-                "note": note}
+        sources = [{"table": aliases[a], "column": c, "key_column": PK.get(aliases[a]), "key": row[2 + 2 * i], "raw": row[1 + 2 * i]}
+                   for i, (a, c) in enumerate(direct)]
+        sources += [{"table": next((t for t in applied[a] if has(t, c)), applied[a][0]), "column": c, "key_column": None,
+                     "key": None, "raw": row[0], "derived": True} for a, c in derived]
+        note = ("Taken from the most recent related row (latest job / latest application)" if derived
+                else None if direct else "A fixed value set by the mapping, not read from the source")
+        return {"column": column, "expression": expr, "value": row[0], "sources": sources, "note": note}
     return {"column": column, "expression": None, "value": None, "sources": [],
             "note": "This record was merged or comes from a duplicate; its source row isn't the one shown"}

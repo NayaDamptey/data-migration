@@ -1,120 +1,157 @@
-"""The two script layers of the migration (engine/mapping/tiers.py) for the UI:
-middle tier (source -> Migration_Staging.mid) and target (mid -> RecruitPlatform_Target).
+"""The middle tier and the target for the UI, on the dbt engine (engine/transform):
+the mapping spec -> generated dbt models -> dbt build on the current run's DuckDB warehouse.
 
-Run a layer, read its tables, show its scripts, and let a developer change any field's expression.
+Run a layer, read its tables, show each entity's dbt model, and let a developer change any field's
+expression (the spec is updated and the affected models rebuilt; a failing change is undone).
 """
 
 from __future__ import annotations
 
 import threading
 
-from app import engine_bridge as bridge  # noqa: F401  (puts engine/mapping on sys.path)
-from app import versions
+from app import engine_bridge as bridge  # noqa: F401  (puts engine/ on sys.path)
 
 _lock = threading.RLock()
-_rows: dict[str, dict[str, list[dict]]] = {}
-_ran: set[str] = set()
+_rows: dict[tuple, list[dict]] = {}
+LAYERS = ("middle", "target")
 
 
-def _tiers():
-    import tiers as TI                    # engine/mapping/tiers.py
-    return TI
+def _engine():
+    import sys
+    t = str(bridge.ENGINE / "transform")
+    if t not in sys.path:
+        sys.path.insert(0, t)
+    import build_dbt as B
+    import runs as RU
+    return B, RU
 
 
-def _layer(name: str):
-    TI = _tiers()
-    if name not in TI.LAYERS:
+def _check(name: str):
+    if name not in LAYERS:
         raise KeyError(name)
-    return TI, TI.LAYERS[name]
+
+
+def _current() -> str:
+    """The run the app shows; the first time, a run is made from the legacy database."""
+    B, RU = _engine()
+    rid = RU.current()
+    if rid is None:
+        with _lock:
+            rid = RU.current()
+            if rid is None:
+                rid = RU.new_run("Initial load", source="legacy")
+                RU.build(rid, "all")
+                _name_merges(rid)
+    return rid
+
+
+def _name_merges(rid: str):
+    """A run's message names the duplicate merges it applied that the previous run didn't."""
+    B, RU = _engine()
+    data = RU.info(rid)
+    prev = data.get("previous")
+    key = lambda m: (m["kind"], m["duplicate"], m["survivor"])                     # noqa: E731
+    now = {key(m) for m in RU.merges_of(rid)}
+    before = {key(m) for m in RU.merges_of(prev)} if prev else set()
+    new, undone = sorted(now - before), sorted(before - now)
+    if not prev:
+        return
+    parts = ([f"Merged duplicate {', '.join(f'{k} {d} into {s}' for k, d, s in new)}"] if new else []) \
+        + ([f"Undid merge of {', '.join(f'{k} {d} into {s}' for k, d, s in undone)}"] if undone else [])
+    if parts:
+        data["message"] = "; ".join(parts)
+        RU._save(rid, data)
 
 
 def run(name: str) -> dict:
-    TI, layer = _layer(name)
+    """Run canonical layer: a new run from the legacy database (middle tier). Run target: the target on
+    the current run."""
+    _check(name)
+    B, RU = _engine()
     with _lock:
-        if name == "target" and "middle" not in _ran:     # the target reads the middle tier
-            TI.run(TI.MIDDLE)
-            _ran.add("middle")
-            _rows.pop("middle", None)
-        TI.write(layer)
-        counts = TI.run(layer)
-        _ran.add(name)
-        _rows.pop(name, None)
-    # new version in Dolt (in the background: the run is done either way)
-    versions.snapshot_async(_run_message(name), wait_for=_lock)
-    return {"layer": name, "entities": counts}
-
-
-def _run_message(name: str) -> str:
-    """Version message for a run; a middle-tier run names the duplicate merges it applied for the first time."""
-    if name != "middle":
-        return "Target run"
-    import json
-    try:
-        from validation.duplicates import merges
-        now = {f"{m['table']}:{m['duplicate']}:{m['survivor']}" for m in merges("legacy")}
-    except Exception:                                        # noqa: BLE001
-        return "Middle tier run"
-    seen_file = versions.REPO.parent / "applied_merges.json"
-    seen = set(json.loads(seen_file.read_text())) if seen_file.exists() else set()
-    new, undone = sorted(now - seen), sorted(seen - now)
-    seen_file.parent.mkdir(parents=True, exist_ok=True)
-    seen_file.write_text(json.dumps(sorted(now)))
-    names = {"Person": "person", "Associates": "contact", "Accounts": "company", "Req": "job", "TimesheetItems": "timesheet line"}
-    say = lambda keys: ", ".join(f"{names.get(t, t)} {d} into {k}" for t, d, k in (x.split(":") for x in keys))  # noqa: E731
-    parts = ([f"Merged duplicate {say(new)}"] if new else []) + ([f"Undid merge of {say(undone)}"] if undone else [])
-    return "; ".join(parts) if parts else "Middle tier run"
+        if name == "middle":
+            rid = RU.new_run("Run canonical layer", source="legacy")
+            data = RU.build(rid, "all")      # the target always follows the middle tier it reads
+            _name_merges(rid)
+        else:
+            rid = _current()
+            data = RU.build(rid, "target")
+        _rows.clear()
+    return {"layer": name, "run": rid, "entities": _counts(name, data)}
 
 
 _pending = threading.Event()
 
 
 def apply_decisions_async():
-    """A duplicate decision was saved: re-run the middle tier (merges) and the target in the background,
-    then save a version. Several quick decisions are applied together in one run."""
+    """A duplicate decision was saved: a new run on the same source with the merges applied, built in the
+    background. Several quick decisions are applied together."""
     if _pending.is_set():
         return
     _pending.set()
 
     def go():
-        TI = _tiers()
+        B, RU = _engine()
         with _lock:
             _pending.clear()
             try:
-                TI.write(TI.MIDDLE)
-                TI.run(TI.MIDDLE)
-                TI.run(TI.TARGET)
-                _ran.update({"middle", "target"})
+                rid = RU.new_run("Duplicate decisions applied", source="copy")
+                RU.build(rid, "all")
+                _name_merges(rid)
                 _rows.clear()
             except Exception as e:                       # noqa: BLE001
                 print(f"[layers] applying decisions failed: {e}")
-                return
-            message = _run_message("middle")
-        if message != "Middle tier run":
-            versions.snapshot_async(message, wait_for=_lock)
     threading.Thread(target=go, daemon=True).start()
 
 
-def _ensure(name: str):
-    """Make sure a layer's tables exist: reuse what is already in SQL Server, run the scripts only if not."""
-    if name in _ran:
-        return
-    TI, layer = _layer(name)
-    try:
-        TI.read(layer, layer.entities[0].key)
-        TI.read(layer, layer.entities[-1].key)
-        _ran.add(name)
-    except Exception:                                        # noqa: BLE001 — not loaded yet
-        run(name)
+def _schema(name: str) -> str:
+    return "mid" if name == "middle" else "target"
+
+
+def _spec(name: str, with_overrides: bool = True) -> dict:
+    B, _ = _engine()
+    return B.load_spec(name, with_overrides)
+
+
+def _entity(name: str, key: str) -> dict:
+    e = next((x for x in _spec(name)["entities"] if x["key"] == key), None)
+    if e is None:
+        raise KeyError(key)
+    return e
+
+
+def _counts(name: str, data: dict) -> dict:
+    by_table = data.get("counts", {}).get(_schema(name), {})
+    return {e["key"]: by_table.get(e["table"]) for e in _spec(name)["entities"]}
 
 
 def rows(name: str, key: str, limit: int = 100, q: str | None = None) -> dict:
-    TI, layer = _layer(name)
-    _ensure(name)
+    _check(name)
+    B, RU = _engine()
+    rid = _current()
+    e = _entity(name, key)
+    ck = (rid, name, key)
     with _lock:
-        cache = _rows.setdefault(name, {})
-        if key not in cache:
-            cache[key] = TI.read(layer, key)
-        data = cache[key]
+        if ck not in _rows:
+            con = RU.connect(rid)
+            cur = con.execute(f'SELECT * FROM {_schema(name)}."{e["table"]}"')
+            cols = [d[0] for d in cur.description]
+            out = []
+            for r in cur.fetchall():
+                rec = {}
+                for c, v in zip(cols, r):
+                    if v is None:
+                        rec[c] = None
+                    elif isinstance(v, bool):
+                        rec[c] = "true" if v else "false"
+                    else:
+                        s = str(v)
+                        rec[c] = s[:-9] if s.endswith(" 00:00:00") else s
+                out.append(rec)
+            first = cols[0]
+            out.sort(key=lambda r: (len(r[first] or ""), r[first] or ""))
+            _rows[ck] = out
+        data = _rows[ck]
     found = data
     if q:
         ql = q.lower()
@@ -123,73 +160,86 @@ def rows(name: str, key: str, limit: int = 100, q: str | None = None) -> dict:
 
 
 def summary(name: str) -> dict:
-    TI, layer = _layer(name)
-    _ensure(name)
-    counts = {e.key: rows(name, e.key, limit=1)["total"] for e in layer.entities}
-    return {"layer": name, "entities": counts}
+    _check(name)
+    _, RU = _engine()
+    return {"layer": name, "entities": _counts(name, RU.info(_current()))}
+
+
+def _model_file(name: str, e: dict):
+    B, _ = _engine()
+    return (B.DBT / "models" / "staging" / f"stg_{e['key']}.sql") if name == "middle" \
+        else (B.DBT / "models" / "target" / f"target_{e['table'].lower()}.sql")
 
 
 def detail(name: str) -> dict:
-    """Scripts and field expressions per entity (the developer view)."""
-    TI, layer = _layer(name)
-    o = TI.load_overrides()
-    mine = o.get(name, {})
-    cached = _rows.get(name, {})
+    """Each entity's dbt model and its field expressions (the developer view)."""
+    _check(name)
+    B, RU = _engine()
+    rid = _current()
+    spec, base = _spec(name), _spec(name, with_overrides=False)
+    mine = B.load_overrides().get(name, {})
+    counts = _counts(name, RU.info(rid))
     ents = []
-    for e in layer.entities:
+    for e in spec["entities"]:
+        be = next(x for x in base["entities"] if x["key"] == e["key"])
+        f = _model_file(name, e)
+        import re
+        sources = sorted({m for s in e["selects"] for m in re.findall(r"\b(?:src|mid)__(\w+)", s["from"])})
         ents.append({
-            "key": e.key, "label": e.label, "table": f"{layer.schema}.{e.table}", "file": TI.script_name(layer, e),
-            "sources": sorted({i.source.replace("{src}", "").split()[0] for i in e.inserts}),
-            "rows": len(cached[e.key]) if e.key in cached else None,
-            "inserts": [{"n": n, "source": i.source.replace("{src}", layer.src), "fields": [
-                {"column": c, "expression": TI.expression(layer, e, n, c, o), "default": i.columns[c],
-                 "overridden": TI.field_key(e.key, n, c) in mine}
-                for c in i.columns]} for n, i in enumerate(e.inserts)],
-            "sql": TI.insert_sql(layer, e, o),
+            "key": e["key"], "label": e["label"], "table": f"{_schema(name)}.{e['table']}",
+            "file": f.relative_to(B.DBT).as_posix(), "sources": sources, "rows": counts.get(e["key"]),
+            "inserts": [{"n": n, "source": s["from"], "fields": [
+                {"column": c, "expression": str(x), "default": str(be["selects"][n]["columns"][c]),
+                 "overridden": f"{e['key']}:{n}:{c}" in mine}
+                for c, x in s["columns"].items()]} for n, s in enumerate(e["selects"])],
+            "sql": f.read_text(encoding="utf-8") if f.exists() else "",
         })
-    src_db = layer.src.split(".")[0]
-    return {"layer": name, "source_db": src_db, "db": layer.db, "entities": ents}
+    return {"layer": name, "source_db": "source Parquet" if name == "middle" else "mid",
+            "db": f"run {rid} · {_schema(name)}", "entities": ents}
 
 
 def set_field(name: str, key: str, n: int, column: str, expression: str | None) -> dict:
-    """Override one field's expression (None = back to the default), then re-run that entity's script.
-    If the script fails, the change is undone and the SQL Server error is raised."""
-    TI, layer = _layer(name)
-    e = layer.entity(key)
-    if n >= len(e.inserts) or column not in e.inserts[n].columns:
+    """Change one field's expression in the mapping spec (None = back to the default), then rebuild the
+    affected dbt models on the current run. If dbt fails, the change is undone and the error raised."""
+    _check(name)
+    B, RU = _engine()
+    e = _entity(name, key)
+    base = next(x for x in _spec(name, with_overrides=False)["entities"] if x["key"] == key)
+    if n >= len(e["selects"]) or column not in e["selects"][n]["columns"]:
         raise KeyError(column)
+    rid = _current()
     with _lock:
-        o = TI.load_overrides()
-        before = dict(o.get(name, {}))
-        fk = TI.field_key(key, n, column)
-        default = e.inserts[n].columns[column]
-        layer_o = o.setdefault(name, {})
-        if expression is None or expression.strip() == "" or expression.strip() == default:
-            layer_o.pop(fk, None)
+        o = B.load_overrides()
+        before = {k: dict(v) for k, v in o.items()}
+        fk = f"{key}:{n}:{column}"
+        default = str(base["selects"][n]["columns"][column])
+        mine = o.setdefault(name, {})
+        if expression is None or not expression.strip() or expression.strip() == default:
+            mine.pop(fk, None)
         else:
-            layer_o[fk] = expression.strip()
-        TI.save_overrides(o)
+            mine[fk] = expression.strip()
+        B.save_overrides(o)
+        select = [f"stg_{key}+"] if name == "middle" else [f"target_{e['table'].lower()}", "migration_rejects"]
         try:
-            if name not in _ran:
-                TI.run(layer)
-                _ran.add(name)
-            else:
-                TI.run(layer, only=key, create=False)
-        except Exception as ex:                    # noqa: BLE001 — undo, report the SQL error
-            o[name] = before
-            TI.save_overrides(o)
+            RU.build(rid, select=select)
+        except Exception as ex:                          # noqa: BLE001 — undo, report dbt's error
+            B.save_overrides(before)
+            try:
+                RU.build(rid, select=select)
+            except Exception:                            # noqa: BLE001
+                pass
             msg = str(ex)
-            raise ValueError(msg.split("]")[-1].split("(SQLExecDirectW)")[0].strip() or msg) from None
-        TI.write(layer)
-        _rows.get(name, {}).pop(key, None)
-    what = "middle tier" if name == "middle" else "target"
-    versions.snapshot_async(f"Changed {what} {e.table}.{column} to {expression.strip() if expression and expression.strip() else 'its default'}",
-                            only=[(name, key)], wait_for=_lock)
+            raise ValueError(msg[msg.find("Binder Error"):] if "Binder Error" in msg else msg[-600:]) from None
+        what = "middle tier" if name == "middle" else "target"
+        RU.log_change(rid, f"Changed {what} {e['table']}.{column} to {expression.strip() if expression and expression.strip() else 'its default'}")
+        _rows.clear()
     return detail(name)
 
 
 def rejects() -> list[dict]:
     """Rows the target load rejected (not loaded) or flagged (loaded, needs a look)."""
-    TI = _tiers()
-    _ensure("target")
-    return TI.rejects()
+    _, RU = _engine()
+    con = RU.connect(_current())
+    return [{"table": t, "key": k, "action": a, "reason": r} for t, k, a, r in
+            con.execute("SELECT target_table, source_key, action, reason FROM audit.migration_rejects "
+                        "ORDER BY action DESC, target_table, source_key").fetchall()]

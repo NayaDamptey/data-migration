@@ -56,8 +56,28 @@ LINKS = [
 ]
 
 
-def load_spec(layer: str) -> dict:
-    return yaml.safe_load((HERE / "spec" / f"{layer}.yml").read_text(encoding="utf-8"))
+OVERRIDES = HERE / "spec" / "overrides.json"
+
+
+def load_overrides() -> dict:
+    return json.loads(OVERRIDES.read_text(encoding="utf-8")) if OVERRIDES.exists() else {}
+
+
+def save_overrides(o: dict):
+    o = {layer: v for layer, v in o.items() if v}
+    OVERRIDES.write_text(json.dumps(o, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def load_spec(layer: str, with_overrides: bool = True) -> dict:
+    """The mapping spec for a layer; developer field edits (spec/overrides.json, key:select:column) applied."""
+    spec = yaml.safe_load((HERE / "spec" / f"{layer}.yml").read_text(encoding="utf-8"))
+    if with_overrides:
+        for k, expr in load_overrides().get(layer, {}).items():
+            key, n, col = k.split(":", 2)
+            ent = next((e for e in spec["entities"] if e["key"] == key), None)
+            if ent and int(n) < len(ent["selects"]) and col in ent["selects"][int(n)]["columns"]:
+                ent["selects"][int(n)]["columns"][col] = expr
+    return spec
 
 
 def _duck_type(t: str) -> str:

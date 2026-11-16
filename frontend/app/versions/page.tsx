@@ -12,7 +12,7 @@ type Count = { table: string; rows: number | null };
 type Recon = { entity: string; source: Count[]; middle: Count; target: Count[] };
 type Row = Record<string, string | null>;
 type Merge = { entity: string; id_column: string; kept: Row | null; duplicate: Row | null; merged: Row | null; taken_from_duplicate: string[] };
-type Commit = { hash: string; message: string; date: string; tables: Stat[]; counts: Recon[]; merges: Merge[] };
+type Commit = { hash: string; message: string; date: string; tables: Stat[]; counts: Recon[]; merges: Merge[]; changes?: { at: string; change: string }[] };
 type Log = { available: boolean; commits: Commit[] };
 
 
@@ -57,7 +57,16 @@ export default function VersionsPage() {
               <h2 className="text-[17px] font-semibold">{commit.message}</h2>
             </div>
 
-            {commit.merges.length > 0 ? commit.merges.map((m, i) => <MergeView key={i} m={m} />) : <Summary c={commit} />}
+            {(commit.changes ?? []).length > 0 && (
+              <div className="px-5 pt-4">
+                <h3 className="text-[13px] font-semibold mb-1.5">Changes made in this version</h3>
+                <ul className="text-[13px] space-y-1">
+                  {commit.changes!.map((c, i) => <li key={i}><span className="text-muted tabular-nums mr-2">{c.at.slice(11, 16)}</span>{c.change}</li>)}
+                </ul>
+              </div>
+            )}
+            {commit.merges.map((m, i) => <MergeView key={i} m={m} />)}
+            <Summary c={commit} />
 
           </section>
         </div>
@@ -105,10 +114,6 @@ function MergeView({ m }: { m: Merge }) {
 
 // A version without merges: what it did, then an audit trail of source tables read and target tables loaded.
 function Summary({ c }: { c: Commit }) {
-  const sum = (k: "added" | "modified" | "deleted") => c.tables.reduce((n, t) => n + t[k], 0);
-  const tables = c.tables.filter((t) => t.added || t.modified || t.deleted).length;
-  const [added, changed, removed] = [sum("added"), sum("modified"), sum("deleted")];
-  const parts = [added && `${added.toLocaleString()} rows added`, changed && `${changed.toLocaleString()} changed`, removed && `${removed.toLocaleString()} removed`].filter(Boolean);
   // one line per source table (or set of tables), each target table listed once
   const groups = new Map<string, { source: Count[]; target: Count[] }>();
   for (const r of c.counts.filter((x) => x.target.length > 0)) {
@@ -123,9 +128,7 @@ function Summary({ c }: { c: Commit }) {
   const totalTarget = uniq(audit.flatMap((r) => r.target));
   return (
     <>
-      <p className="px-5 pt-4 text-[13px]">
-        {parts.length ? <>{parts.join(", ")} across {tables} table{tables === 1 ? "" : "s"}.</> : "No data changed."}
-      </p>
+      <p className="px-5 pt-4 text-[13px]">{totalTarget.toLocaleString()} rows loaded into {new Set(audit.flatMap((r) => r.target.map((t) => t.table))).size} target tables from {totalSource.toLocaleString()} source rows.</p>
       {audit.length > 0 && (
         <div className="px-5 pt-4 pb-5 overflow-x-auto">
           <table className="w-full text-[12.5px]">

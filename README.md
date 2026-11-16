@@ -22,7 +22,7 @@ RecruitPlatform_Target.dbo.<Table>        target: one INSERT ... SELECT script p
                                           (dbo.MigrationRejects)
    │
    ▼
-Dolt                                      every run, field change and merge is a version
+Runs (engine/transform/runs.py)          every run, field change and merge is a version
 ```
 
 ## Platform data core (in progress: dbt on DuckDB)
@@ -45,8 +45,11 @@ python engine/transform/run.py --run r1 --csv engine/sample_data/source   # from
 
 Each run keeps its own Parquet input and DuckDB warehouse in `storage/projects/<project>/runs/<run>/`.
 Its output matches the SQL Server scripts table for table (25 middle-tier and 37 target tables, the same
-rejects). Next: run it from the API as a Celery job, keep mappings, decisions, approvals and run
-history in Postgres, and export INSERT scripts in any SQL dialect with SQLGlot.
+rejects). The app runs on it: Run canonical layer starts a new run (`engine/transform/runs.py`), field
+edits in the developer view change the spec and rebuild the affected dbt models (downstream included),
+duplicate decisions start a new run with the merges applied, and every run is a version.
+Next: run builds as Celery jobs, keep mappings, decisions, approvals and run history in Postgres, and
+export INSERT scripts in any SQL dialect with SQLGlot.
 
 ## Screens (in order)
 
@@ -60,16 +63,16 @@ history in Postgres, and export INSERT scripts in any SQL dialect with SQLGlot.
      both. A decision is applied to the middle tier and target straight away, as a new version.
 3. **Schema mapping** (`/canonical`): the middle tier.
    - **Extracted data:** the rows of each `mid` table.
-   - **Developer view:** each entity's INSERT script; any field's expression can be changed (it is saved,
-     re-run on SQL Server and undone if it fails).
+   - **Developer view:** each entity's dbt model and its field expressions; any field can be changed (the
+     mapping spec is updated and the model and everything downstream rebuilt; a failing change is undone).
    - **Request a change:** plain-English change requests.
 4. **Review records** (`/review`): the customer's own data as records (Candidates, Clients, Contacts, Jobs,
    Placements), records to check first. Each record shows its details, related records and plain-language
    flags; clicking a value shows where it came from in the legacy source (table, column, row).
-5. **Destination data** (`/target`): the target tables, their INSERT scripts (editable), the rows that
+5. **Destination data** (`/target`): the target tables, their dbt models (editable), the rows that
    were rejected or flagged, and Get data (CSV files or SQL inserts).
-6. **Version review** (`/versions`): every version stored in Dolt. A merge shows both records side by
-   side and the record they became; a load shows an audit trail of source tables read and target
+6. **Version review** (`/versions`): every run is a version: the changes made in it, each merge as both
+   records side by side and the record they became, and an audit trail of source tables read and target
    tables loaded.
 
 ## Run it locally
@@ -91,9 +94,6 @@ python engine/sample_data/build_source_db.py --load
 # Middle tier + target scripts (also run from the UI): write them, or write and run them
 python engine/mapping/tiers.py --run
 ```
-
-Version review needs [Dolt](https://github.com/dolthub/dolt) on the PATH (or in `tools/dolt`); the
-version database is kept in `storage/dolt/migration`.
 
 ## Portfolio demo (no API or database)
 
@@ -133,6 +133,6 @@ Plain Python, used by the API through `backend/app/engine_bridge.py` and `backen
 - **Languages:** TypeScript, Python, T-SQL, SQL (DuckDB)
 - **Frontend:** Next.js, React, Tailwind CSS
 - **API:** FastAPI, Uvicorn, Pydantic
-- **Data:** Parquet, DuckDB, Polars, dbt Core (dbt-duckdb), SQLGlot; SQL Server Express (restoring the legacy backup), pyodbc; Dolt (versions, being replaced)
+- **Data:** Parquet, DuckDB, Polars, dbt Core (dbt-duckdb), SQLGlot; SQL Server Express (restoring the legacy backup), pyodbc
 - **Testing and CI:** pytest, GitHub Actions
 - **Hosting (demo):** Vercel

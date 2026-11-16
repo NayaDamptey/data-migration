@@ -18,7 +18,7 @@ app.include_router(runs.router, tags=["runs"])
 app.include_router(dq.router, prefix="/dq", tags=["data quality"])
 app.include_router(local_files.router, tags=["local uploads"])
 app.include_router(layers.router, prefix="/layers", tags=["middle tier and target"])
-app.include_router(versions.router, prefix="/versions", tags=["versions (Dolt)"])
+app.include_router(versions.router, prefix="/versions", tags=["versions"])
 app.include_router(review.router, prefix="/review", tags=["review by records"])
 
 
